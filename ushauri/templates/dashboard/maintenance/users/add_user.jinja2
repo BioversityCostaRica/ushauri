@@ -1,0 +1,109 @@
+{% extends 'dashboard/index.jinja2' %}
+
+{% block css %}
+    {% cssresource request,'dashboard','select2' %}
+{% endblock css %}
+
+{% block breadcrumbs %}
+    <div class="col-sm-12">
+        <h2>{{ _("Ushauri - Maintenance") }}</h2>
+        <ol class="breadcrumb">
+            {% block breadcrumbitems %}
+                <li>
+                    <a href="{{ request.route_url('dashboard') }}">{{ _("Main Dashboard") }}</a>
+                </li>
+                <li>
+                    Maintenance
+                </li>
+                <li>
+                    <a href="{{ request.route_url('users') }}">{{ _("Extension Agents") }}</a>
+                </li>
+                <li class="active">
+                    <a href="{{ request.route_url('adduser') }}">{{ _("Add") }}</a>
+                </li>
+            {% endblock breadcrumbitems %}
+        </ol>
+    </div>
+{% endblock breadcrumbs %}
+
+{% block maincontent %}
+    <div class="row">
+        <div class="col-md-12">
+            <h3 class="font-bold text-center">Add new extension agent</h3>
+            <hr>
+            {% snippet 'dashboard/snippets/error.jinja2', error_summary=error_summary %}
+            <form class="form-horizontal" role="form" method="post" action="{{ request.path }}">
+                <input type="hidden" name="csrf_token" value="{{ request.session.get_csrf_token() }}">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">{{ _('ID:') }}</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" value="{{ data.user_id }}" id="user_id" name="user_id" placeholder=" "><span class="help-block m-b-none text-left">The ID must be unique</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">{{ _('Name:') }}</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" value="{{ data.user_name }}" id="user_name" name="user_name" placeholder=" ">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">{{ _('Telephone:') }}</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" value="{{ data.user_telef }}" id="user_telef" name="user_telef" placeholder=" ">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">{{ _('Email:') }}</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" value="{{ data.user_email }}" id="user_email" name="user_email" placeholder=" ">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">{{ _('District:') }}</label>
+                    <div class="col-sm-10">
+                        <select class="form-control m-b" id="district" name="district">
+                            {% for county in subcounties %}
+                                <optgroup label="{{ county.name }}">
+                                    {% for subcounty in county.subcounties %}
+                                        <option value="{{ subcounty.id }}">{{ subcounty.name }}</option>
+                                    {% endfor %}
+                                </optgroup>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">{{ _('Active menu:') }}</label>
+                    <div class="col-sm-10">
+                        <select class="form-control m-b" id="menu_id" name="menu_id">
+                            {% for menu in menus %}
+                                <option value="{{ menu.menu_id }}">{{ menu.menu_name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">{{ _('Password:') }}</label>
+                    <div class="col-sm-10">
+                        <input type="password" class="form-control" id="password1" name="password1" placeholder=" ">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">{{ _('Password confirmation:') }}</label>
+                    <div class="col-sm-10">
+                        <input type="password" class="form-control" id="password2" name="password2" placeholder=" ">
+                    </div>
+                </div>
+                <button class="btn btn-primary" type="submit" name="add"> {{ _('Add') }}</button>
+            </form>
+        </div>
+    </div>
+{% endblock maincontent %}
+
+{% block mainscripts %}
+    {% jsresource request,'dashboard','select2' %}
+    <script>
+            $("#district").select2();
+            $("#menu_id").select2();
+    </script>
+{% endblock mainscripts %}

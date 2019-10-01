@@ -1,0 +1,87 @@
+{% extends 'dashboard/page.jinja2' %}
+
+{% block title %}
+    <title>{{ _("Ushauri | Dashboard") }}</title>
+{% endblock title %}
+
+{% block css %}
+    {% cssresource request,'dashboard','font-awesome' %}
+    {% cssresource request,'dashboard','toastr' %}
+    {% cssresource request,'dashboard','style' %}
+{% endblock css %}
+
+{% block mainnav %}
+    {% snippet 'dashboard/snippets/mainnav.jinja2', request=request, activeUser=activeUser, groups=groups %}
+{% endblock mainnav %}
+
+{% block pageheader %}
+    {% snippet 'dashboard/snippets/header.jinja2', request=request %}
+{% endblock pageheader %}
+
+{% block breadcrumbs %}
+    {% snippet 'dashboard/snippets/breadcrumbs.jinja2', request=request %}
+{% endblock breadcrumbs %}
+
+{% block maincontent %}
+        {% snippet 'dashboard/question/snippets/question_list.jinja2', request=request,activeUser=activeUser,questions=questions,groupdetails=groupdetails,groupid=groupid %}
+{% endblock maincontent %}
+
+{% block footer %}
+    {% snippet 'dashboard/snippets/footer.jinja2', request=request, fixed=True %}
+{% endblock footer %}
+
+{% block sidebar %}
+    {% snippet 'dashboard/snippets/sidebar.jinja2', request=request %}
+{% endblock sidebar %}
+
+{% block bodybottom %}
+    <div class="modal inmodal" id="modal1" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content animated fadeIn">
+                <div class="modal-header">
+                    <button type="button" class="close" onclick="closeModal()"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title" id="modaltitle">Terms of service</h4>
+                </div>
+                <div class="modal-body">
+
+                    <div id="modaliframecont" class="embed-responsive embed-responsive-16by9">
+                        <iframe class="embed-responsive-item" id="modaliframe"></iframe>
+                    </div>
+
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-white" onclick="closeModal()">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock bodybottom %}
+
+{% block mainscripts %}
+    {% jsresource request,'dashboard','modal' %}
+    <script>
+        audio = new Audio();
+        currUrl = "";
+        function playAudio(url)
+        {
+            if (currUrl != url)
+            {
+                currUrl = url;
+                audio.pause();
+                audio.src = url;
+                audio.play();
+            }
+            else {
+                audio.pause();
+                currUrl = ''
+            }
+        }
+
+    </script>
+{% endblock mainscripts %}
+
+{% block toastr %}
+{#    {% snippet 'dashboard/snippets/toastr.jinja2', request=request, timeout=4000, title="Hello!", message='Welcome to Ushauri', type='info' %}#}
+{% endblock toastr %}
+

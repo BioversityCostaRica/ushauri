@@ -43,9 +43,12 @@ htmlcov/
 .cache
 nosetests.xml
 coverage.xml
+development.ini
+alembic.ini
 *.cover
 .hypothesis/
 .pytest_cache/
+.idea/
 
 # Translations
 *.mo

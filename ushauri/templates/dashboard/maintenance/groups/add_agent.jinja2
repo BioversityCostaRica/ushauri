@@ -1,0 +1,73 @@
+{% extends 'dashboard/index.jinja2' %}
+
+{% block css %}
+    {% cssresource request,'dashboard','select2' %}
+{% endblock css %}
+
+{% block breadcrumbs %}
+    <div class="col-sm-12">
+        <h2>{{ _("Ushauri - Maintenance") }}</h2>
+        <ol class="breadcrumb">
+            {% block breadcrumbitems %}
+                <li>
+                    <a href="{{ request.route_url('dashboard') }}">{{ _("Main Dashboard") }}</a>
+                </li>
+                <li class="active">
+                    Maintenance
+                </li>
+                <li>
+                    <a href="{{ request.route_url('groups') }}">{{ _("Groups") }}</a>
+                </li>
+                <li>
+                    <a href="{{ request.route_url('agents',group=groupid) }}">{{ _("Agents in ") }} {{ groupname }}</a>
+                </li>
+                <li class="active">
+                    <a href="{{ request.route_url('addagent',group=groupid) }}">{{ _("Add") }}</a>
+                </li>
+            {% endblock breadcrumbitems %}
+        </ol>
+    </div>
+{% endblock breadcrumbs %}
+
+{% block maincontent %}
+    <div class="row">
+        <div class="col-md-12">
+            {% snippet 'dashboard/snippets/error.jinja2', error_summary=error_summary %}
+            <form class="form-horizontal" role="form" method="post" action="{{ request.path }}">
+                <input type="hidden" name="csrf_token" value="{{ request.session.get_csrf_token() }}">
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">{{ _('Agent:') }}</label>
+                    <div class="col-sm-10">
+                        <select class="form-control m-b" id="user_id" name="user_id">
+                            {% for user in agents %}
+                                {% if user.user_id != "admin" %}
+                                    <option value="{{ user.user_id }}">{{ user.user_name }}</option>
+                                {% endif %}
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">{{ _('Access:') }}</label>
+                    <div class="col-sm-10">
+                        <select class="form-control m-b" id="access_type" name="access_type">
+                            <option value="1">Can comment</option>
+                            <option value="2">Can comment and register</option>
+                        </select>
+                    </div>
+                </div>
+
+                <button class="btn btn-primary btn-block" type="submit" name="add"> {{ _('Add') }}</button>
+            </form>
+        </div>
+    </div>
+{% endblock maincontent %}
+
+{% block mainscripts %}
+    {% jsresource request,'dashboard','select2' %}
+    <script>
+            $("#user_id").select2();
+    </script>
+{% endblock mainscripts %}

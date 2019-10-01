@@ -1,0 +1,58 @@
+{% if questions|length > 0 %}
+    <h5 class="text-center">All questions directed to "{{ groupdetails.group_name }}"</h5>
+    <div class="row">
+        <div class="col-md-2">
+            <button type="button" onclick="location.href='{{ request.route_url('dashboard', _query={'group':groupid}) }}';" id="loading-example-btn" class="btn btn-white btn-block" ><i class="fa fa-refresh"></i> Refresh</button>
+        </div>
+        <div class="col-md-10">
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <tbody>
+                    {% for question in questions %}
+                        {% snippet 'dashboard/question/snippets/question_item.jinja2',request=request,activeUser=activeUser,question=question %}
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% else %}
+    <div class="row">
+        <div class="col-md-12">
+            <h5 class="text-center" style="color: red">"{{ groupdetails.group_name }}" do not have questions</h5>
+        </div>
+    </div>
+{% endif %}
+
+{#<div class="ibox">#}
+{#    <div class="ibox-title">#}
+{#        <h5>All questions directed to "{{ groupdetails.group_name }}"</h5>#}
+{#    </div>#}
+{#    <div class="ibox-content">#}
+{#        <div class="row m-b-sm m-t-sm">#}
+{#            <div class="col-xs-1">#}
+{#                #}
+{#            </div>#}
+{#            <div class="col-xs-11">#}
+{#                <div class="input-group"><input type="text" placeholder="Search" class="input-sm form-control"> <span class="input-group-btn">#}
+{#                                        <button type="button" class="btn btn-sm btn-primary"> Go!</button> </span></div>#}
+{#            </div>#}
+{#        </div>#}
+{#        <div class="project-list">#}
+{#            <div class="table-responsive">#}
+{#                <table class="table table-hover">#}
+{#                    <tbody>#}
+{#                    {% for question in questions %}#}
+{#                        {% snippet 'dashboard/question/snippets/question_item.jinja2',request=request,activeUser=activeUser,question=question %}#}
+{#                    {% endfor %}#}
+{#                    </tbody>#}
+{#                </table>#}
+{#            </div>#}
+{#        </div>#}
+{#    </div>#}
+{#</div>#}

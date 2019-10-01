@@ -1,0 +1,97 @@
+{% extends 'dashboard/index.jinja2' %}
+
+{% block css %}
+    {% cssresource request,'dashboard','select2' %}
+{% endblock css %}
+
+{% block breadcrumbs %}
+    <div class="col-sm-12">
+        <h2>{{ _("Ushauri - Maintenance") }}</h2>
+        <ol class="breadcrumb">
+            {% block breadcrumbitems %}
+                <li>
+                    <a href="{{ request.route_url('dashboard') }}">{{ _("Main Dashboard") }}</a>
+                </li>
+                <li class="active">
+                    Maintenance
+                </li>
+                <li>
+                    <a href="{{ request.route_url('groups') }}">{{ _("Groups") }}</a>
+                </li>
+                <li class="active">
+                    <a href="{{ request.route_url('addgroup') }}">{{ _("Add") }}</a>
+                </li>
+            {% endblock breadcrumbitems %}
+        </ol>
+    </div>
+{% endblock breadcrumbs %}
+
+{% block maincontent %}
+    <div class="row">
+        <div class="col-md-12">
+            <h3 class="font-bold text-center">Add new Advisory Group</h3>
+            <hr>
+            {% snippet 'dashboard/snippets/error.jinja2', error_summary=error_summary %}
+            <form class="form-horizontal" role="form" method="post" action="{{ request.path }}">
+                <input type="hidden" name="csrf_token" value="{{ request.session.get_csrf_token() }}">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">{{ _('Name:') }}</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" value="{{ data.group_sname }}" id="group_sname" name="group_sname" placeholder=" "><span class="help-block m-b-none text-left">This short name must be unique</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">{{ _('Three letters ID:') }}</label>
+                    <div class="col-sm-10">
+                        <input type="text" maxlength="3" pattern="[A-Za-z]{3}" class="form-control" value="{{ data.group_twoword }}" id="group_twoword" name="group_twoword" placeholder=" "><span class="help-block m-b-none text-left">A three letter unique identification </span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">{{ _('Full name:') }}</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" value="{{ data.group_name }}" id="group_name" name="group_name" placeholder=" ">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">{{ _('Active menu:') }}</label>
+                    <div class="col-sm-10">
+                        <select class="form-control m-b" id="menu_id" name="menu_id">
+                            {% for menu in menus %}
+                                <option value="{{ menu.menu_id }}">{{ menu.menu_name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">{{ _('District:') }}</label>
+                    <div class="col-sm-10">
+                        <select class="form-control m-b" id="district" name="district">
+                            {% for county in subcounties %}
+                                <optgroup label="{{ county.name }}">
+                                    {% for subcounty in county.subcounties %}
+                                        <option value="{{ subcounty.id }}">{{ subcounty.name }}</option>
+                                    {% endfor %}
+                                </optgroup>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">{{ _('Ward:') }}</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" value="{{ data.group_ward }}" id="group_ward" name="group_ward" placeholder=" ">
+                    </div>
+                </div>
+                <button class="btn btn-primary btn-block" type="submit" name="add"> {{ _('Add') }}</button>
+            </form>
+        </div>
+    </div>
+{% endblock maincontent %}
+
+{% block mainscripts %}
+    {% jsresource request,'dashboard','select2' %}
+    <script>
+            $("#district").select2();
+            $("#menu_id").select2();
+    </script>
+{% endblock mainscripts %}

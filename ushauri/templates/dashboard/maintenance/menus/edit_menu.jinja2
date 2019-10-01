@@ -1,0 +1,43 @@
+{% extends 'dashboard/index.jinja2' %}
+
+{% block breadcrumbs %}
+    <div class="col-sm-12">
+        <h2>{{ _("Ushauri - Maintenance") }}</h2>
+        <ol class="breadcrumb">
+            {% block breadcrumbitems %}
+                <li>
+                    <a href="{{ request.route_url('dashboard') }}">{{ _("Main Dashboard") }}</a>
+                </li>
+                <li>
+                    Maintenance
+                </li>
+                <li>
+                    <a href="{{ request.route_url('menus') }}">{{ _("IVR Menus") }}</a>
+                </li>
+                <li>
+                     <a href="{{ request.route_url('modifymenu',menu=menuid) }}">{{ _("Modify") }} {{ data.menu_name }} </a>
+                </li>
+            {% endblock breadcrumbitems %}
+        </ol>
+    </div>
+{% endblock breadcrumbs %}
+
+{% block maincontent %}
+    <div class="row">
+        <div class="col-md-12">
+            <h3 class="font-bold text-center">Edit menu</h3>
+            <hr>
+            {% snippet 'dashboard/snippets/error.jinja2', error_summary=error_summary %}
+            <form class="form-horizontal" role="form" method="post" action="{{ request.path }}">
+                <input type="hidden" name="csrf_token" value="{{ request.session.get_csrf_token() }}">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">{{ _('Name:') }}</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" value="{{ data.menu_name }}" id="menu_name" name="menu_name" placeholder=" ">
+                    </div>
+                </div>
+                <button class="btn btn-warning btn-block" type="submit" name="modify"> {{ _('Modify') }}</button>
+            </form>
+        </div>
+    </div>
+{% endblock maincontent %}

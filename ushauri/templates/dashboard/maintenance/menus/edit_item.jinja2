@@ -1,0 +1,104 @@
+{% extends 'dashboard/index.jinja2' %}
+
+{% block css %}
+    {% cssresource request,'dashboard','select2' %}
+{% endblock css %}
+
+{% block breadcrumbs %}
+    <div class="col-sm-12">
+        <h2>{{ _("Ushauri - Maintenance") }}</h2>
+        <ol class="breadcrumb">
+            {% block breadcrumbitems %}
+                <li>
+                    <a href="{{ request.route_url('dashboard') }}">{{ _("Main Dashboard") }}</a>
+                </li>
+                <li>
+                    Maintenance
+                </li>
+                <li>
+                    <a href="{{ request.route_url('menus') }}">{{ _("IVR Menus") }}</a>
+                </li>
+                <li>
+                    <a href="{{ request.route_url('items',menu=menuid) }}">{{ _("Items in") }} "{{ menuname }}"</a>
+                </li>
+                <li class="active">
+                    <a href="{{ request.route_url('edititem',menu=menuid,item=itemid) }}">{{ _("Edit") }} "{{ data.item_name }}"</a>
+                </li>
+            {% endblock breadcrumbitems %}
+        </ol>
+    </div>
+{% endblock breadcrumbs %}
+
+{% block maincontent %}
+    <div class="row">
+        <div class="col-md-12">
+            <h3 class="font-bold text-center">Edit item</h3>
+            <hr>
+            {% snippet 'dashboard/snippets/error.jinja2', error_summary=error_summary %}
+            <form class="form-horizontal" role="form" method="post" action="{{ request.path }}">
+                <input type="hidden" name="csrf_token" value="{{ request.session.get_csrf_token() }}">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">{{ _('Name:') }}</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" value="{{ data.item_name }}" id="item_name" name="item_name" placeholder=" ">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">{{ _('Content:') }}</label>
+                    <div class="col-sm-10">
+                        <textarea class="form-control" id="item_desc" name="item_desc">{{ data.item_desc }}</textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">{{ _('Type:') }}</label>
+                    <div class="col-sm-10">
+                        <select class="form-control m-b" id="item_type" name="item_type">
+                            <option value="1" {% if data.item_type == '1' %}selected{% endif %}>Prompt</option>
+                            <option value="2" {% if data.item_type == '2' %}selected{% endif %}>Gather voice</option>
+                            <option value="3" {% if data.item_type == '3' %}selected{% endif %}>Content</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">{{ _('Audio:') }}</label>
+                    <div class="col-sm-10">
+                        <select class="form-control m-b" id="audio_id" name="audio_id">
+                            <option value="None" {% if data.audio_id == "None" %} selected {% endif %}>None</option>
+                            {% for audio in audios %}
+                                <option value="{{ audio.audio_id }}" {% if data.audio_id == audio.audio_id %} selected {% endif %}>{{ audio.audio_desc }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">{{ _('Next item:') }}</label>
+                    <div class="col-sm-10">
+                        <select class="form-control m-b" id="next_item" name="next_item">
+                            <optgroup label="None">
+                                <option value="None" {% if data.next_item == "None" %}selected{% endif %}>None</option>
+                            </optgroup>
+                            {% for menu in menus %}
+                                {% if menu.mitems|length > 0 %}
+                                    <optgroup label="{{ menu.name }}">
+                                        {% for item in menu.mitems %}
+                                            <option value="{{ item.id }}" {% if data.next_item == item.id %}selected{% endif %}>{{ item.name }}</option>
+                                        {% endfor %}
+                                    </optgroup>
+                                {% endif %}
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                <button class="btn btn-warning btn-block" type="submit" name="edit"> {{ _('Edit') }}</button>
+            </form>
+        </div>
+    </div>
+{% endblock maincontent %}
+
+{% block mainscripts %}
+    {% jsresource request,'dashboard','select2' %}
+    <script>
+            $("#next_item").select2();
+            $("#audio_id").select2();
+    </script>
+{% endblock mainscripts %}

@@ -1,0 +1,15 @@
+<div class="col-sm-12">
+    <h2>{{ _("Ushauri - Main Dashboard") }}</h2>
+    <ol class="breadcrumb">
+        {% block breadcrumbitems %}
+            <li>
+                <a href="{{ request.route_url('dashboard') }}">{{ _("Main Dashboard") }}</a>
+            </li>
+            {#
+            <li class="active">
+                <strong>Breadcrumb</strong>
+            </li>
+             #}
+        {% endblock breadcrumbitems %}
+    </ol>
+</div>

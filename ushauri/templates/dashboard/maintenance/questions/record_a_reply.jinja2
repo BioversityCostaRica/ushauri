@@ -1,0 +1,230 @@
+{% extends 'dashboard/index.jinja2' %}
+
+{% block topjs %}
+    {% jsresource request,'dashboard','jrecord_main' %}
+{% endblock %}
+
+{% block css %}
+    {{ super() }}
+    <style>
+        {#html { overflow: hidden; }#}
+        {#body {#}
+        {#    font: 14pt Arial, sans-serif;#}
+        {#    background: lightgrey;#}
+        {#    display: flex;#}
+        {#    flex-direction: column;#}
+        {#    height: 100vh;#}
+        {#    width: 100%;#}
+        {#    margin: 0 0;#}
+        {#}#}
+        canvas {
+            {#display: inline-block;#}
+            background: #202020;
+            width: 100%;
+            height: auto;
+            max-height: 150px;
+            {#width: 95%;#}
+            {#height: 45%;#}
+            {#box-shadow: 0px 0px 10px blue;#}
+        }
+        #controls {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-around;
+            height: 20%;
+            width: 100%;
+        }
+        #record { height: 15vh; }
+        #record.recording {
+            background: red;
+            background: -webkit-radial-gradient(center, ellipse cover, #ff0000 0%,lightgrey 75%,lightgrey 100%,#7db9e8 100%);
+            background: -moz-radial-gradient(center, ellipse cover, #ff0000 0%,lightgrey 75%,lightgrey 100%,#7db9e8 100%);
+            background: radial-gradient(center, ellipse cover, #ff0000 0%,lightgrey 75%,lightgrey 100%,#7db9e8 100%);
+        }
+        #save, #save img { height: 10vh; }
+        #save { opacity: 0.25;}
+        #save[download] { opacity: 1;}
+
+        #play, #play img { height: 10vh; }
+        #play { opacity: 0.25;}
+        #play[download] { opacity: 1;}
+
+        {##viz {#}
+        {#    height: 80%;#}
+        {#    width: 100%;#}
+        {#    display: flex;#}
+        {#    flex-direction: column;#}
+        {#    justify-content: space-around;#}
+        {#    align-items: center;#}
+        {#}#}
+        {#@media (orientation: landscape) {#}
+        {#    body { flex-direction: row;}#}
+        {#    #controls { flex-direction: column; height: 100%; width: 10%;}#}
+        {#    #viz { height: 100%; width: 90%;}#}
+        {#}#}
+
+    </style>
+{% endblock css %}
+
+{% block breadcrumbs %}
+    <div class="col-sm-12">
+        <h2>{{ _("Ushauri - Maintenance") }}</h2>
+        <ol class="breadcrumb">
+            {% block breadcrumbitems %}
+                <li>
+                    <a href="{{ request.route_url('dashboard') }}">{{ _("Main Dashboard") }}</a>
+                </li>
+                <li>
+                    <a href="{{ request.route_url('replytomember',group=groupid,question=questionid) }}">{{ _("Reply to member") }}</a>
+                </li>
+                <li class="active">
+                    <a href="{{ request.route_url('recordandreplytomember',group=groupid,question=questionid) }}">{{ _("Record and reply to member") }}</a>
+                </li>
+            {% endblock breadcrumbitems %}
+        </ol>
+    </div>
+{% endblock breadcrumbs %}
+
+{% block maincontent %}
+    <div class="row">
+        <div class="col-md-12">
+            <h3 class="font-bold text-center">Record and reply to question by {{ data.member.member_name }} on {{ data.question_dtime }}</h3>
+            <form class="form-horizontal">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">{{ _('Audio description:') }}</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="audio_desc" placeholder=" ">
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-10">
+            <canvas id="analyser"></canvas>
+        </div>
+        <div class="col-md-2">
+            <img id="record" src="{{request.url_for_static('static/mic128.png')}}" onclick="toggleRecording(this);">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-8">
+            <canvas id="wavedisplay"></canvas>
+        </div>
+        <div class="col-md-2">
+            <a id="save" href="#" onclick="postAudio(); return false;"><img src="{{request.url_for_static('static/save.svg')}}"></a>
+        </div>
+        <div class="col-md-2">
+            <a id="play" href="#" onclick="playAudio(); return false;"><img src="{{request.url_for_static('static/play.svg')}}"></a>
+        </div>
+    </div>
+{#    <div class="row">#}
+{#        <div class="col-md-12">#}
+{#            <div id="viz">#}
+{#                <canvas id="analyser" width="1024" height="500"></canvas>#}
+{#                <canvas id="wavedisplay" width="1024" height="500"></canvas>#}
+{#            </div>#}
+{#            <div id="controls">#}
+{#                <img id="record" src="{{request.url_for_static('static/mic128.png')}}" onclick="toggleRecording(this);">#}
+{#                <a id="save" href="#"><img src="{{request.url_for_static('static/save.svg')}}"></a>#}
+{#            </div>#}
+{#        </div>#}
+{#    </div>#}
+{% endblock maincontent %}
+
+{% block bodybottom %}
+    <div class="modal inmodal" id="sending" tabindex="-1" role="dialog"  aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title" id="confirm_title">Sending audio</h4>
+                </div>
+                <div class="modal-body">
+                    We are sending your audio. Please wait... Once the audio is uploaded this window will close.
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock bodybottom %}
+
+{% block mainscripts %}
+    {% jsresource request,'dashboard','pace' %}
+    <script>
+        audio = new Audio();
+        currUrl = "";
+        function playAudio()
+        {
+            var link = document.getElementById("play");
+            url = link.href;
+            if (link != "{{ request.route_url('recordandreplytomember',group=groupid,question=questionid) }}#")
+            {
+                if (currUrl != url)
+                {
+                    currUrl = url;
+                    audio.pause();
+                    audio.src = url;
+                    audio.play();
+                }
+                else {
+                    audio.pause();
+                    currUrl = ''
+                }
+            }
+            else {
+                alert("Record an audio first");
+            }
+        }
+    </script>
+    <script>
+        function postAudio()
+        {
+            var link = document.getElementById("save");
+            var dataURL = link.href;
+            if (dataURL != "{{ request.route_url('recordandreplytomember',group=groupid,question=questionid) }}#")
+            {
+                $("#save").attr("href", "#");
+                var audioDescription = $('#audio_desc').val();
+                if (audioDescription != "")
+                {
+                    $('#sending').modal('show');
+                    var xhr = new XMLHttpRequest();
+                    xhr.open('GET', dataURL, true);
+                    xhr.responseType = 'blob';
+                    xhr.onload = function(e) {
+                        if (this.status == 200) {
+                            var myBlob = this.response;
+                            var fd = new FormData();
+                            fd.append('fname', 'test.wav');
+                            fd.append('data', myBlob);
+                            fd.append('csrf_token','{{ request.session.get_csrf_token() }}');
+                            fd.append('audio_desc',audioDescription);
+                            $.ajax({
+                                type: 'POST',
+                                url: "{{ request.route_url('recordandreplytomember',group=groupid,question=questionid) }}",
+                                data: fd,
+                                processData: false,
+                                contentType: false
+                            }).done(function(data) {
+                                window.location.href = '{{ request.route_url("dashboard") }}';
+                            });
+                        }
+                    };
+                    xhr.send();
+                }
+                else {
+                    alert("Audio description cannot be empty")
+                }
+            }
+            else
+            {
+                alert("Record an audio first")
+            }
+        }
+    </script>
+
+{% endblock mainscripts %}
