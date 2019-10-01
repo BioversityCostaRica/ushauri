@@ -19,7 +19,7 @@ DEALINGS IN THE SOFTWARE.
 
 (function(window){
 
-    var WORKER_PATH = 'https://ushauri.info/kenya/dashboard/js/plugins/jrecord/recorderWorker.js';
+    var WORKER_PATH = 'https://ushauri.info/tanzania/dashboard/js/plugins/jrecord/recorderWorker.js';
 
     var Recorder = function(source, cfg){
         var config = cfg || {};

@@ -186,11 +186,11 @@
             var link = document.getElementById("save");
             var dataURL = link.href;
             if (dataURL != "{{ request.route_url('recordandreplytomember',group=groupid,question=questionid) }}#")
-            {
-                $("#save").attr("href", "#");
+            {                
                 var audioDescription = $('#audio_desc').val();
                 if (audioDescription != "")
                 {
+                    $("#save").attr("href", "#");
                     $('#sending').modal('show');
                     var xhr = new XMLHttpRequest();
                     xhr.open('GET', dataURL, true);

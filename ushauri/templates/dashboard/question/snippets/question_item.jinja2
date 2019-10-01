@@ -38,7 +38,7 @@
             <button class="btn btn-success btn-circle" style="background-color: #3ec641" type="button" onclick="location.href='{{ request.route_url('replytomember',group=question.group_id,question=question.question_id) }}';" title="Reply"><i class="fa fa-undo"></i></button>
         {% endif %}
         {% if question.question_status == -1 %}
-            <button class="btn btn-danger btn-circle" type="button" onclick="location.href='{{ request.route_url('replytomember',group=question.group_id,question=question.question_id) }}';" title="Try again"><i class="fa fa-undo"></i></button>
+            <button class="btn btn-danger btn-circle resend_question" type="button" data-action-url="{{ request.route_url('replytomember',group=question.group_id,question=question.question_id,_query={'next': request.url}) }}" data-audio-id="{{ question.audioreply_id }}" title="Try again"><i class="fa fa-undo"></i></button>
         {% endif %}
         <button class="btn btn-warning btn-circle" type="button" onclick="location.href='{{ request.route_url('modifyquestion',group=question.group_id,question=question.question_id) }}';" title="Edit"><i class="fa fa-pencil"></i></button>
     </td>

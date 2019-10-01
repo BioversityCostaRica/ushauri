@@ -218,7 +218,11 @@ def getAudioDesc2(request, audioID):
 
 def getQuestions(request, groupID):
     result = []
-    questions = request.dbsession.query(Question).filter(Question.group_id == groupID)
+    questions = (
+        request.dbsession.query(Question)
+        .filter(Question.group_id == groupID)
+        .order_by(Question.question_dtime.desc())
+    )
     for question in questions:
         tags = []
         stags = question.question_tags

@@ -36,7 +36,11 @@ def sendReply(request, number, audioID, questionID):
     account_sid = request.registry.settings["account_sid"]
     auth_token = request.registry.settings["auth_token"]
     client = Client(account_sid, auth_token)
-
+    # print("*************************R33")
+    # print(number)
+    # print("-----------------------")
+    # print(audioID)
+    # print("*************************R33")
     call = client.calls.create(
         to=number,
         from_=request.registry.settings["call_from"],
@@ -64,6 +68,7 @@ def ivrReplyStatus_view(request):
         questionID = request.matchdict["questionid"]
         audioID = request.matchdict["audioid"]
         print("************************A99")
+        print(request.POST)
         classStatus = request.POST.get("CallStatus", "failed")
         if classStatus == "completed":
             setQuestionStatus(request, questionID, 3, audioID)
@@ -76,14 +81,16 @@ def ivrReplyStatus_view(request):
 
 def ivrVoiceStart_view(request):
     number = request.params["From"]
-    # If the number is malformed like +792490972 then remove the + and add +254
-    if number[:4] != "+254":
+    # If the number is malformed like +792490972 then remove the + and add +255
+    if number[:4] != "+255":
         print("*****************90")
         print("Fixing" + number)
         print("--------------------------")
         print(request.params)
+        print("-------------------------")
+        number = "+255" + number[2:]
+        print(number)
         print("*****************90")
-        number = "+254" + number[1:]
 
     agent = isNumberAnAgent(request, number)
     # agent = None #Only for Skype test. Remove soon
@@ -104,7 +111,7 @@ def ivrVoiceStart_view(request):
     else:
         member = isNumberAMember(request, number)
 
-        # member = "2aade9ca2adb" #Only for Skype test. Remove soon
+        # member = "ce8576be358a" #Only for Skype test. Remove soon
 
         if member is not None:
             menuItem = getMemberStartItem(request, member)
@@ -113,6 +120,9 @@ def ivrVoiceStart_view(request):
                 response.redirect(
                     request.route_url("ivrget", itemid=menuItem), method="GET"
                 )
+                # print("*****************13")
+                # print(str(response))
+                # print("*****************13")
                 return twiml(response)
             else:
                 resp = VoiceResponse()
@@ -130,14 +140,14 @@ def ivrVoiceStart_view(request):
 
 def ivrMessage_view(request):
     number = request.params["From"]
-    # If the number is malformed like +792490972 then remove the + and add +254
-    if number[:4] != "+254":
+    # If the number is malformed like +792490972 then remove the + and add +255
+    if number[:4] != "+255":
         print("*****************91")
         print("Fixing" + number)
         print("------------------------")
         print(request.params)
         print("*****************91")
-        number = "+254" + number[1:]
+        number = "+255" + number[2:]
     agent = isNumberAnAgent(request, number)
     if agent is not None:
         menuItem = getAgentStartItem(request, agent)
@@ -206,14 +216,19 @@ def ivrGet_view(request):
     itemID = request.matchdict["itemid"]
     itemData = getItemData(request, itemID)
     number = request.params["From"]
-    # If the number is malformed like +792490972 then remove the + and add +254
-    if number[:4] != "+254":
+    # If the number is malformed like +792490972 then remove the + and add +255
+    if number[:4] != "+255":
         print("*****************92")
         print("Fixing" + number)
         print("----------------------------")
         print(request.params)
+        print("-------------------")
+        number = "+255" + number[2:]
+        print(number)
         print("*****************92")
-        number = "+254" + number[1:]
+
+    # number = "+50662365878" # Only for Skype
+
     recordLog(request, number, itemID)
     if itemData is not None:
         if request.method == "GET":
@@ -244,6 +259,9 @@ def ivrGet_view(request):
                             ),
                             loop=3,
                         )
+                # print("*****************14")
+                # print(str(response))
+                # print("*****************14")
                 return twiml(response)
 
             if itemData["item_type"] == 2:
@@ -265,6 +283,9 @@ def ivrGet_view(request):
                     finish_on_key="*",
                 )
                 resp.hangup()
+                # print("*****************15")
+                # print(str(resp))
+                # print("*****************15")
                 return twiml(resp)
             if itemData["item_type"] == 3:
                 audioData = getAudioFile(request, itemID, "en")
@@ -278,9 +299,15 @@ def ivrGet_view(request):
                         request.route_url("ivrget", itemid=itemData["next_item"]),
                         method="GET",
                     )
+                    # print("*****************16")
+                    # print(str(response))
+                    # print("*****************16")
                     return twiml(response)
                 else:
                     response.hangup()
+                    # print("*****************17")
+                    # print(str(response))
+                    # print("*****************17")
                     return twiml(response)
         else:
             resp = VoiceResponse()
@@ -343,12 +370,14 @@ def ivrStore_view(request):
             number = request.POST.get(
                 "From", ""
             )  # We assume here that the platform made the call. Change to From
-            # If the number is malformed like +792490972 then remove the + and add +254
-            if number[:4] != "+254":
+            # If the number is malformed like +792490972 then remove the + and add +255
+            if number[:4] != "+255":
                 print("*****************93")
                 print("Fixing" + number)
+                print("---------------------")
+                number = "+255" + number[2:]
+                print(number)
                 print("*****************93")
-                number = "+254" + number[1:]
             agent = isNumberAnAgent(request, number)
 
             # agent = None #Only for Skype test. Remove soon
@@ -374,8 +403,8 @@ def ivrStore_view(request):
             else:
                 group, member = getMemberAndGroup(request, number)
 
-                # group = "eb3f40b10ca4"
-                # member = "2aade9ca2adb"
+                # group = "35f59a27debc" # Only for Skype test. Remove soon
+                # member = "ce8576be358a" # Only for Skype test. Remove soon
 
                 path = os.path.join(
                     request.registry.settings["repository"], *[uid + ".wav"]

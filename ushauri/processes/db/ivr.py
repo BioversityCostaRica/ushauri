@@ -31,6 +31,10 @@ def getItemResponses(request, itemID):
 
 def getAudioFileName(request, audioID):
     res = request.dbsession.query(Audio).filter(Audio.audio_id == audioID).first()
+    if res is None:
+        print("***************Audio Error****************")
+        print(audioID)
+        print("***************Audio Error****************")
     return res.audio_file
 
 

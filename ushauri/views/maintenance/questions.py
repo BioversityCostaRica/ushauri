@@ -20,9 +20,7 @@ class modifyQuestion_view(privateView):
         error_summary = {}
         if self.request.method == "POST":
             data = self.getPostDict()
-            updateQuestion(
-                self.request, questionID, data["question_tags"], data["question_text"]
-            )
+            updateQuestion(self.request, questionID, data["question_tags"], "")
             return HTTPFound(location=self.request.route_url("dashboard"))
 
         return {
@@ -46,10 +44,25 @@ class replyToMember_view(privateView):
         else:
             replied = True
         if self.request.method == "POST":
-            data = self.getPostDict()
-            setQuestionStatus(self.request, questionID, 2, data["audio_id"])
-            sendReply(self.request, number, data["audio_id"], questionID)
-            replied = True
+            next_page = self.request.params.get("next")
+            if next_page is None:
+                data = self.getPostDict()
+                setQuestionStatus(self.request, questionID, 2, data["audio_id"])
+                sendReply(self.request, number, data["audio_id"], questionID)
+                replied = True
+            else:
+                self.justReturn = True
+                data = self.getPostDict()
+                # print("*********************************8887")
+                # print(questionID)
+                # print("-------------------------")
+                # print(number)
+                # print("-------------------------")
+                # print(data["audio_id"])
+                # print("*********************************8887")
+                setQuestionStatus(self.request, questionID, 2, data["audio_id"])
+                sendReply(self.request, number, data["audio_id"], questionID)
+                return HTTPFound(next_page)
 
         return {
             "error_summary": error_summary,

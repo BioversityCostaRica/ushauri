@@ -53,9 +53,9 @@ def storeRegistration(request, JSONFile, groupID):
         uid = uid[-12:]
         data = json.load(open(JSONFile))
         tele = data["grpaitechinfo/mobile"]
-        if tele[:4] != "+254":
+        if tele[:4] != "+255":
             if tele[:1] == "0":
-                tele = "+254" + tele[1:]
+                tele = "+255" + tele[1:]
 
         newMember = Member(
             group_id=groupID,
@@ -64,7 +64,6 @@ def storeRegistration(request, JSONFile, groupID):
             member_tele=tele,
             member_gender=data["grpaitechinfo/gender"],
             member_village=data["grpaitechinfo/village"],
-            member_gardentype=data["grpaitechinfo/gardentype"],
         )
         request.dbsession.add(newMember)
         return True, ""

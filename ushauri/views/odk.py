@@ -39,6 +39,7 @@ class formList_view(odkView):
 
 class push_view(odkView):
     def processView(self):
+        print("******************* Push")
         groupName = self.request.matchdict["group"]
         groupID = getGroupIDFromName(self.request, groupName)
         if groupID is not None:
@@ -46,6 +47,9 @@ class push_view(odkView):
                 if isUserActive(self.request, self.user):
                     if userCanRegister(self.request, groupID, self.user):
                         if self.authorize(getUserPassword(self.request, self.user)):
+                            print("***********************77")
+                            print("Storing")
+                            print("***********************77")
                             stored, error = storeSubmission(
                                 groupID, self.user, self.request
                             )
@@ -58,9 +62,11 @@ class push_view(odkView):
                         else:
                             return self.askForCredentials()
                     else:
+                        print("******************* Can register")
                         response = Response(status=401)
                         return response
                 else:
+                    print("******************* User is not active")
                     response = Response(status=401)
                     return response
             else:
@@ -73,6 +79,7 @@ class push_view(odkView):
 
 class submission_view(odkView):
     def processView(self):
+        print("******************* Submission")
         groupName = self.request.matchdict["group"]
         groupID = getGroupIDFromName(self.request, groupName)
         if groupID is not None:
@@ -92,9 +99,12 @@ class submission_view(odkView):
                 else:
                     return self.askForCredentials()
             else:
+                print("******************* Not head")
+                print(self.request.method)
                 response = Response(status=404)
                 return response
         else:
+            print("******************* Group is None")
             response = Response(status=404)
             return response
 
