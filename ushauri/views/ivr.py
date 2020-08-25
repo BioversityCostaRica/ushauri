@@ -60,6 +60,9 @@ def ivrSend_view(request):
         loop=0,
     )
     response.hangup()
+    print("****************ivrSend_view******************")
+    print(response.to_xml())
+    print("****************ivrSend_view******************")
     return twiml(response)
 
 
@@ -102,6 +105,9 @@ def ivrVoiceStart_view(request):
             response.redirect(
                 request.route_url("ivrget", itemid=menuItem), method="GET"
             )
+            print("****************Agent menu******************")
+            print(response.to_xml())
+            print("****************Agent menu******************")
             return twiml(response)
         else:
             resp = VoiceResponse()
@@ -120,9 +126,9 @@ def ivrVoiceStart_view(request):
                 response.redirect(
                     request.route_url("ivrget", itemid=menuItem), method="GET"
                 )
-                # print("*****************13")
-                # print(str(response))
-                # print("*****************13")
+                print("****************Member menu******************")
+                print(response.to_xml())
+                print("****************Member menu******************")
                 return twiml(response)
             else:
                 resp = VoiceResponse()
@@ -135,6 +141,9 @@ def ivrVoiceStart_view(request):
                 "Contact your extension agent so he/she register you for this service"
             )
             resp.hangup()
+            print("****************No member response******************")
+            print(resp.to_xml())
+            print("****************No member response******************")
             return twiml(resp)
 
 
@@ -259,9 +268,9 @@ def ivrGet_view(request):
                             ),
                             loop=3,
                         )
-                # print("*****************14")
-                # print(str(response))
-                # print("*****************14")
+                print("****************ivrGet_view type 1******************")
+                print(response.to_xml())
+                print("****************ivrGet_view type 1******************")
                 return twiml(response)
 
             if itemData["item_type"] == 2:
@@ -283,9 +292,13 @@ def ivrGet_view(request):
                     finish_on_key="*",
                 )
                 resp.hangup()
-                # print("*****************15")
-                # print(str(resp))
-                # print("*****************15")
+                print(
+                    "****************Record the message after the tone******************"
+                )
+                print(resp.to_xml())
+                print(
+                    "****************Record the message after the tone******************"
+                )
                 return twiml(resp)
             if itemData["item_type"] == 3:
                 audioData = getAudioFile(request, itemID, "en")
@@ -299,15 +312,23 @@ def ivrGet_view(request):
                         request.route_url("ivrget", itemid=itemData["next_item"]),
                         method="GET",
                     )
-                    # print("*****************16")
-                    # print(str(response))
-                    # print("*****************16")
+                    print(
+                        "****************ivrGet_view type 3 with next******************"
+                    )
+                    print(response.to_xml())
+                    print(
+                        "****************ivrGet_view type 3 with next******************"
+                    )
                     return twiml(response)
                 else:
                     response.hangup()
-                    # print("*****************17")
-                    # print(str(response))
-                    # print("*****************17")
+                    print(
+                        "****************ivrGet_view type 3 without next******************"
+                    )
+                    print(response.to_xml())
+                    print(
+                        "****************ivrGet_view type 3 without next******************"
+                    )
                     return twiml(response)
         else:
             resp = VoiceResponse()
@@ -345,6 +366,9 @@ def ivrPost_view(request):
                         request.route_url("ivrget", itemid=resp["target_item"]),
                         method="GET",
                     )
+                    print("****************ivrPost_view redirect******************")
+                    print(response.to_xml())
+                    print("****************ivrPost_view redirect******************")
                     return twiml(response)
             resp = VoiceResponse()
             resp.say("Error, was not able to find a response")
@@ -413,6 +437,9 @@ def ivrStore_view(request):
                 storeQuestion(request, group, member, uid)
             resp = VoiceResponse()
             resp.hangup()
+            print("****************Hangup after store******************")
+            print(resp.to_xml())
+            print("****************Hangup after store******************")
             return twiml(resp)
         else:
             resp = VoiceResponse()

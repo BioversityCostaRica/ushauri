@@ -1,0 +1,579 @@
+# English translations for ushauri.
+# Copyright (C) 2020 ORGANIZATION
+# This file is distributed under the same license as the ushauri project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2020.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: ushauri 0.0\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2020-08-25 13:03-0600\n"
+"PO-Revision-Date: 2020-08-25 13:04-0600\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: en\n"
+"Language-Team: en <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.8.0\n"
+
+#: ushauri/templates/layout.jinja2:58
+msgid "Copyright &copy; Pylons Project"
+msgstr ""
+
+#: ushauri/templates/dashboard/base.jinja2:15
+msgid "FormShare | Dashboard"
+msgstr ""
+
+#: ushauri/templates/dashboard/index.jinja2:4
+msgid "Ushauri | Dashboard"
+msgstr ""
+
+#: ushauri/templates/dashboard/login.jinja2:5
+msgid "Ushauri | Login"
+msgstr ""
+
+#: ushauri/templates/dashboard/login.jinja2:23
+msgid "Welcome to Ushauri"
+msgstr ""
+
+#: ushauri/templates/dashboard/login.jinja2:24
+msgid "If you have an account please sign in"
+msgstr ""
+
+#: ushauri/templates/dashboard/login.jinja2:31
+msgid "Username"
+msgstr ""
+
+#: ushauri/templates/dashboard/login.jinja2:34
+#: ushauri/templates/dashboard/register.jinja2:39
+msgid "Password"
+msgstr ""
+
+#: ushauri/templates/dashboard/login.jinja2:36
+#: ushauri/templates/dashboard/register.jinja2:53
+msgid "Login"
+msgstr ""
+
+#: ushauri/templates/dashboard/register.jinja2:5
+msgid "FormShare | Register"
+msgstr ""
+
+#: ushauri/templates/dashboard/register.jinja2:23
+msgid "Join Ushauri"
+msgstr ""
+
+#: ushauri/templates/dashboard/register.jinja2:30
+msgid "User name"
+msgstr ""
+
+#: ushauri/templates/dashboard/maintenance/groups/groups.jinja2:38
+#: ushauri/templates/dashboard/register.jinja2:33
+msgid "Full name"
+msgstr ""
+
+#: ushauri/templates/dashboard/maintenance/users/users.jinja2:40
+#: ushauri/templates/dashboard/register.jinja2:36
+msgid "Email"
+msgstr ""
+
+#: ushauri/templates/dashboard/register.jinja2:42
+msgid "Retype password"
+msgstr ""
+
+#: ushauri/templates/dashboard/register.jinja2:47
+msgid "Register"
+msgstr ""
+
+#: ushauri/templates/dashboard/register.jinja2:52
+msgid "Already have an account?"
+msgstr ""
+
+#: ushauri/templates/dashboard/maintenance/audios/add_audio.jinja2:9
+#: ushauri/templates/dashboard/maintenance/audios/audios.jinja2:5
+#: ushauri/templates/dashboard/maintenance/audios/edit_audio.jinja2:9
+#: ushauri/templates/dashboard/maintenance/audios/record.jinja2:72
+#: ushauri/templates/dashboard/maintenance/counties/add_county.jinja2:5
+#: ushauri/templates/dashboard/maintenance/counties/add_subcounty.jinja2:5
+#: ushauri/templates/dashboard/maintenance/counties/counties.jinja2:5
+#: ushauri/templates/dashboard/maintenance/counties/modify_county.jinja2:5
+#: ushauri/templates/dashboard/maintenance/counties/modify_subcounty.jinja2:5
+#: ushauri/templates/dashboard/maintenance/counties/subcounties.jinja2:5
+#: ushauri/templates/dashboard/maintenance/groups/add_agent.jinja2:9
+#: ushauri/templates/dashboard/maintenance/groups/add_group.jinja2:9
+#: ushauri/templates/dashboard/maintenance/groups/agents.jinja2:5
+#: ushauri/templates/dashboard/maintenance/groups/edit_group.jinja2:9
+#: ushauri/templates/dashboard/maintenance/groups/edit_member.jinja2:9
+#: ushauri/templates/dashboard/maintenance/groups/groups.jinja2:5
+#: ushauri/templates/dashboard/maintenance/groups/members.jinja2:5
+#: ushauri/templates/dashboard/maintenance/menus/add_item.jinja2:9
+#: ushauri/templates/dashboard/maintenance/menus/add_menu.jinja2:5
+#: ushauri/templates/dashboard/maintenance/menus/add_response.jinja2:9
+#: ushauri/templates/dashboard/maintenance/menus/edit_item.jinja2:9
+#: ushauri/templates/dashboard/maintenance/menus/edit_menu.jinja2:5
+#: ushauri/templates/dashboard/maintenance/menus/items.jinja2:5
+#: ushauri/templates/dashboard/maintenance/menus/menus.jinja2:5
+#: ushauri/templates/dashboard/maintenance/menus/responses.jinja2:5
+#: ushauri/templates/dashboard/maintenance/questions/edit_question.jinja2:5
+#: ushauri/templates/dashboard/maintenance/questions/record_a_reply.jinja2:72
+#: ushauri/templates/dashboard/maintenance/questions/reply_to_member.jinja2:9
+#: ushauri/templates/dashboard/maintenance/users/add_user.jinja2:9
+#: ushauri/templates/dashboard/maintenance/users/edit_pass.jinja2:9
+#: ushauri/templates/dashboard/maintenance/users/edit_user.jinja2:9
+#: ushauri/templates/dashboard/maintenance/users/users.jinja2:5
+msgid "Ushauri - Maintenance"
+msgstr ""
+
+#: ushauri/templates/dashboard/maintenance/audios/add_audio.jinja2:13
+#: ushauri/templates/dashboard/maintenance/audios/audios.jinja2:9
+#: ushauri/templates/dashboard/maintenance/audios/edit_audio.jinja2:13
+#: ushauri/templates/dashboard/maintenance/audios/record.jinja2:76
+#: ushauri/templates/dashboard/maintenance/counties/add_county.jinja2:9
+#: ushauri/templates/dashboard/maintenance/counties/add_subcounty.jinja2:9
+#: ushauri/templates/dashboard/maintenance/counties/counties.jinja2:9
+#: ushauri/templates/dashboard/maintenance/counties/modify_county.jinja2:9
+#: ushauri/templates/dashboard/maintenance/counties/modify_subcounty.jinja2:9
+#: ushauri/templates/dashboard/maintenance/counties/subcounties.jinja2:9
+#: ushauri/templates/dashboard/maintenance/groups/add_agent.jinja2:13
+#: ushauri/templates/dashboard/maintenance/groups/add_group.jinja2:13
+#: ushauri/templates/dashboard/maintenance/groups/agents.jinja2:9
+#: ushauri/templates/dashboard/maintenance/groups/edit_group.jinja2:13
+#: ushauri/templates/dashboard/maintenance/groups/edit_member.jinja2:13
+#: ushauri/templates/dashboard/maintenance/groups/groups.jinja2:9
+#: ushauri/templates/dashboard/maintenance/groups/members.jinja2:9
+#: ushauri/templates/dashboard/maintenance/menus/add_item.jinja2:13
+#: ushauri/templates/dashboard/maintenance/menus/add_menu.jinja2:9
+#: ushauri/templates/dashboard/maintenance/menus/add_response.jinja2:13
+#: ushauri/templates/dashboard/maintenance/menus/edit_item.jinja2:13
+#: ushauri/templates/dashboard/maintenance/menus/edit_menu.jinja2:9
+#: ushauri/templates/dashboard/maintenance/menus/items.jinja2:9
+#: ushauri/templates/dashboard/maintenance/menus/menus.jinja2:9
+#: ushauri/templates/dashboard/maintenance/menus/responses.jinja2:9
+#: ushauri/templates/dashboard/maintenance/questions/edit_question.jinja2:9
+#: ushauri/templates/dashboard/maintenance/questions/record_a_reply.jinja2:76
+#: ushauri/templates/dashboard/maintenance/questions/reply_to_member.jinja2:13
+#: ushauri/templates/dashboard/maintenance/users/add_user.jinja2:13
+#: ushauri/templates/dashboard/maintenance/users/edit_pass.jinja2:13
+#: ushauri/templates/dashboard/maintenance/users/edit_user.jinja2:13
+#: ushauri/templates/dashboard/maintenance/users/users.jinja2:9
+#: ushauri/templates/dashboard/snippets/breadcrumbs.jinja2:6
+msgid "Main Dashboard"
+msgstr ""
+
+#: ushauri/templates/dashboard/maintenance/audios/add_audio.jinja2:19
+#: ushauri/templates/dashboard/maintenance/audios/audios.jinja2:15
+#: ushauri/templates/dashboard/maintenance/audios/edit_audio.jinja2:19
+#: ushauri/templates/dashboard/maintenance/audios/record.jinja2:82
+msgid "Audios"
+msgstr ""
+
+#: ushauri/templates/dashboard/maintenance/audios/add_audio.jinja2:22
+msgid "Add audio from file"
+msgstr ""
+
+#: ushauri/templates/dashboard/maintenance/audios/add_audio.jinja2:38
+#: ushauri/templates/dashboard/maintenance/menus/add_item.jinja2:63
+#: ushauri/templates/dashboard/maintenance/menus/edit_item.jinja2:63
+#: ushauri/templates/dashboard/maintenance/questions/reply_to_member.jinja2:35
+msgid "Audio:"
+msgstr ""
+
+#: ushauri/templates/dashboard/maintenance/audios/add_audio.jinja2:44
+#: ushauri/templates/dashboard/maintenance/audios/edit_audio.jinja2:38
+#: ushauri/templates/dashboard/maintenance/audios/record.jinja2:97
+msgid "Description:"
+msgstr ""
+
+#: ushauri/templates/dashboard/maintenance/audios/add_audio.jinja2:49
+#: ushauri/templates/dashboard/maintenance/counties/add_county.jinja2:18
+#: ushauri/templates/dashboard/maintenance/counties/add_county.jinja2:39
+#: ushauri/templates/dashboard/maintenance/counties/add_subcounty.jinja2:21
+#: ushauri/templates/dashboard/maintenance/counties/add_subcounty.jinja2:42
+#: ushauri/templates/dashboard/maintenance/groups/add_agent.jinja2:25
+#: ushauri/templates/dashboard/maintenance/groups/add_agent.jinja2:62
+#: ushauri/templates/dashboard/maintenance/groups/add_group.jinja2:22
+#: ushauri/templates/dashboard/maintenance/groups/add_group.jinja2:85
+#: ushauri/templates/dashboard/maintenance/menus/add_item.jinja2:25
+#: ushauri/templates/dashboard/maintenance/menus/add_item.jinja2:92
+#: ushauri/templates/dashboard/maintenance/menus/add_menu.jinja2:18
+#: ushauri/templates/dashboard/maintenance/menus/add_menu.jinja2:39
+#: ushauri/templates/dashboard/maintenance/menus/add_response.jinja2:28
+#: ushauri/templates/dashboard/maintenance/menus/add_response.jinja2:65
+#: ushauri/templates/dashboard/maintenance/users/add_user.jinja2:22
+#: ushauri/templates/dashboard/maintenance/users/add_user.jinja2:97
+msgid "Add"
+msgstr ""
+
+#: ushauri/templates/dashboard/maintenance/audios/audios.jinja2:40
+#: ushauri/templates/dashboard/maintenance/counties/counties.jinja2:37
+#: ushauri/templates/dashboard/maintenance/counties/subcounties.jinja2:40
+#: ushauri/templates/dashboard/maintenance/groups/agents.jinja2:40
+#: ushauri/templates/dashboard/maintenance/groups/groups.jinja2:37
+#: ushauri/templates/dashboard/maintenance/groups/members.jinja2:32
+#: ushauri/templates/dashboard/maintenance/menus/items.jinja2:40
+#: ushauri/templates/dashboard/maintenance/menus/menus.jinja2:37
+#: ushauri/templates/dashboard/maintenance/users/users.jinja2:38
+msgid "Name"
+msgstr ""
+
+#: ushauri/templates/dashboard/maintenance/audios/audios.jinja2:41
+msgid "Date"
+msgstr ""
+
+#: ushauri/templates/dashboard/maintenance/audios/audios.jinja2:42
+msgid "By"
+msgstr ""
+
+#: ushauri/templates/dashboard/maintenance/audios/audios.jinja2:43
+#: ushauri/templates/dashboard/maintenance/counties/counties.jinja2:38
+#: ushauri/templates/dashboard/maintenance/counties/subcounties.jinja2:41
+#: ushauri/templates/dashboard/maintenance/groups/agents.jinja2:42
+#: ushauri/templates/dashboard/maintenance/groups/groups.jinja2:42
+#: ushauri/templates/dashboard/maintenance/groups/members.jinja2:37
+#: ushauri/templates/dashboard/maintenance/menus/items.jinja2:44
+#: ushauri/templates/dashboard/maintenance/menus/menus.jinja2:38
+#: ushauri/templates/dashboard/maintenance/menus/responses.jinja2:45
+#: ushauri/templates/dashboard/maintenance/users/users.jinja2:43
+msgid "Actions"
+msgstr ""
+
+#: ushauri/templates/dashboard/maintenance/audios/edit_audio.jinja2:22
+msgid "Edit audio"
+msgstr ""
+
+#: ushauri/templates/dashboard/maintenance/audios/edit_audio.jinja2:43
+#: ushauri/templates/dashboard/maintenance/counties/modify_county.jinja2:39
+#: ushauri/templates/dashboard/maintenance/counties/modify_subcounty.jinja2:21
+#: ushauri/templates/dashboard/maintenance/counties/modify_subcounty.jinja2:42
+#: ushauri/templates/dashboard/maintenance/groups/edit_group.jinja2:22
+#: ushauri/templates/dashboard/maintenance/groups/edit_group.jinja2:63
+#: ushauri/templates/dashboard/maintenance/menus/edit_item.jinja2:25
+#: ushauri/templates/dashboard/maintenance/menus/edit_item.jinja2:92
+#: ushauri/templates/dashboard/maintenance/users/edit_user.jinja2:65
+msgid "Edit"
+msgstr ""
+
+#: ushauri/templates/dashboard/maintenance/audios/record.jinja2:85
+msgid "Record audio"
+msgstr ""
+
+#: ushauri/templates/dashboard/maintenance/counties/add_county.jinja2:15
+#: ushauri/templates/dashboard/maintenance/counties/add_subcounty.jinja2:15
+#: ushauri/templates/dashboard/maintenance/counties/counties.jinja2:15
+#: ushauri/templates/dashboard/maintenance/counties/modify_county.jinja2:15
+#: ushauri/templates/dashboard/maintenance/counties/modify_subcounty.jinja2:15
+#: ushauri/templates/dashboard/maintenance/counties/subcounties.jinja2:15
+msgid "Regions"
+msgstr ""
+
+#: ushauri/templates/dashboard/maintenance/counties/add_county.jinja2:34
+#: ushauri/templates/dashboard/maintenance/counties/add_subcounty.jinja2:37
+#: ushauri/templates/dashboard/maintenance/counties/modify_county.jinja2:34
+#: ushauri/templates/dashboard/maintenance/counties/modify_subcounty.jinja2:37
+#: ushauri/templates/dashboard/maintenance/groups/add_group.jinja2:38
+#: ushauri/templates/dashboard/maintenance/groups/edit_member.jinja2:39
+#: ushauri/templates/dashboard/maintenance/menus/add_item.jinja2:41
+#: ushauri/templates/dashboard/maintenance/menus/add_menu.jinja2:34
+#: ushauri/templates/dashboard/maintenance/menus/edit_item.jinja2:41
+#: ushauri/templates/dashboard/maintenance/menus/edit_menu.jinja2:34
+#: ushauri/templates/dashboard/maintenance/users/add_user.jinja2:44
+#: ushauri/templates/dashboard/maintenance/users/edit_user.jinja2:38
+msgid "Name:"
+msgstr ""
+
+#: ushauri/templates/dashboard/maintenance/counties/add_subcounty.jinja2:18
+#: ushauri/templates/dashboard/maintenance/counties/modify_subcounty.jinja2:18
+#: ushauri/templates/dashboard/maintenance/counties/subcounties.jinja2:18
+msgid "Districts in"
+msgstr ""
+
+#: ushauri/templates/dashboard/maintenance/counties/modify_county.jinja2:18
+#: ushauri/templates/dashboard/maintenance/groups/edit_member.jinja2:65
+#: ushauri/templates/dashboard/maintenance/menus/edit_menu.jinja2:18
+#: ushauri/templates/dashboard/maintenance/menus/edit_menu.jinja2:39
+msgid "Modify"
+msgstr ""
+
+#: ushauri/templates/dashboard/maintenance/groups/add_agent.jinja2:19
+#: ushauri/templates/dashboard/maintenance/groups/add_group.jinja2:19
+#: ushauri/templates/dashboard/maintenance/groups/agents.jinja2:15
+#: ushauri/templates/dashboard/maintenance/groups/edit_group.jinja2:19
+#: ushauri/templates/dashboard/maintenance/groups/edit_member.jinja2:19
+#: ushauri/templates/dashboard/maintenance/groups/groups.jinja2:15
+#: ushauri/templates/dashboard/maintenance/groups/members.jinja2:15
+msgid "Groups"
+msgstr ""
+
+#: ushauri/templates/dashboard/maintenance/groups/add_agent.jinja2:22
+#: ushauri/templates/dashboard/maintenance/groups/agents.jinja2:18
+msgid "Agents in "
+msgstr ""
+
+#: ushauri/templates/dashboard/maintenance/groups/add_agent.jinja2:40
+msgid "Agent:"
+msgstr ""
+
+#: ushauri/templates/dashboard/maintenance/groups/add_agent.jinja2:53
+msgid "Access:"
+msgstr ""
+
+#: ushauri/templates/dashboard/maintenance/groups/add_group.jinja2:44
+#: ushauri/templates/dashboard/maintenance/groups/edit_group.jinja2:36
+msgid "Three letters ID:"
+msgstr ""
+
+#: ushauri/templates/dashboard/maintenance/groups/add_group.jinja2:50
+#: ushauri/templates/dashboard/maintenance/groups/edit_group.jinja2:42
+msgid "Full name:"
+msgstr ""
+
+#: ushauri/templates/dashboard/maintenance/groups/add_group.jinja2:56
+#: ushauri/templates/dashboard/maintenance/groups/edit_group.jinja2:54
+#: ushauri/templates/dashboard/maintenance/users/add_user.jinja2:76
+#: ushauri/templates/dashboard/maintenance/users/edit_user.jinja2:56
+msgid "Active menu:"
+msgstr ""
+
+#: ushauri/templates/dashboard/maintenance/groups/add_group.jinja2:66
+#: ushauri/templates/dashboard/maintenance/users/add_user.jinja2:62
+msgid "District:"
+msgstr ""
+
+#: ushauri/templates/dashboard/maintenance/groups/add_group.jinja2:80
+#: ushauri/templates/dashboard/maintenance/groups/edit_group.jinja2:48
+msgid "Ward:"
+msgstr ""
+
+#: ushauri/templates/dashboard/maintenance/groups/agents.jinja2:41
+msgid "Privileges"
+msgstr ""
+
+#: ushauri/templates/dashboard/maintenance/groups/edit_member.jinja2:22
+#: ushauri/templates/dashboard/maintenance/groups/members.jinja2:18
+msgid "Members in "
+msgstr ""
+
+#: ushauri/templates/dashboard/maintenance/groups/edit_member.jinja2:25
+msgid "Edit "
+msgstr ""
+
+#: ushauri/templates/dashboard/maintenance/groups/edit_member.jinja2:45
+#: ushauri/templates/dashboard/maintenance/users/add_user.jinja2:50
+#: ushauri/templates/dashboard/maintenance/users/edit_user.jinja2:44
+msgid "Telephone:"
+msgstr ""
+
+#: ushauri/templates/dashboard/maintenance/groups/edit_member.jinja2:51
+msgid "Gender:"
+msgstr ""
+
+#: ushauri/templates/dashboard/maintenance/groups/edit_member.jinja2:60
+msgid "Village:"
+msgstr ""
+
+#: ushauri/templates/dashboard/maintenance/groups/groups.jinja2:39
+#: ushauri/templates/dashboard/maintenance/users/users.jinja2:41
+msgid "Region"
+msgstr ""
+
+#: ushauri/templates/dashboard/maintenance/groups/groups.jinja2:40
+#: ushauri/templates/dashboard/maintenance/users/users.jinja2:42
+msgid "District"
+msgstr ""
+
+#: ushauri/templates/dashboard/maintenance/groups/groups.jinja2:41
+msgid "Ward"
+msgstr ""
+
+#: ushauri/templates/dashboard/maintenance/groups/members.jinja2:33
+#: ushauri/templates/dashboard/maintenance/users/users.jinja2:39
+msgid "Telephone"
+msgstr ""
+
+#: ushauri/templates/dashboard/maintenance/groups/members.jinja2:34
+msgid "Gender"
+msgstr ""
+
+#: ushauri/templates/dashboard/maintenance/groups/members.jinja2:36
+msgid "Village"
+msgstr ""
+
+#: ushauri/templates/dashboard/maintenance/menus/add_item.jinja2:19
+#: ushauri/templates/dashboard/maintenance/menus/add_menu.jinja2:15
+#: ushauri/templates/dashboard/maintenance/menus/add_response.jinja2:19
+#: ushauri/templates/dashboard/maintenance/menus/edit_item.jinja2:19
+#: ushauri/templates/dashboard/maintenance/menus/edit_menu.jinja2:15
+#: ushauri/templates/dashboard/maintenance/menus/items.jinja2:15
+#: ushauri/templates/dashboard/maintenance/menus/menus.jinja2:15
+#: ushauri/templates/dashboard/maintenance/menus/responses.jinja2:15
+msgid "IVR Menus"
+msgstr ""
+
+#: ushauri/templates/dashboard/maintenance/menus/add_item.jinja2:22
+#: ushauri/templates/dashboard/maintenance/menus/add_response.jinja2:22
+#: ushauri/templates/dashboard/maintenance/menus/edit_item.jinja2:22
+#: ushauri/templates/dashboard/maintenance/menus/items.jinja2:18
+#: ushauri/templates/dashboard/maintenance/menus/responses.jinja2:18
+msgid "Items in"
+msgstr ""
+
+#: ushauri/templates/dashboard/maintenance/menus/add_item.jinja2:47
+#: ushauri/templates/dashboard/maintenance/menus/edit_item.jinja2:47
+msgid "Content:"
+msgstr ""
+
+#: ushauri/templates/dashboard/maintenance/menus/add_item.jinja2:53
+#: ushauri/templates/dashboard/maintenance/menus/edit_item.jinja2:53
+msgid "Type:"
+msgstr ""
+
+#: ushauri/templates/dashboard/maintenance/menus/add_item.jinja2:74
+#: ushauri/templates/dashboard/maintenance/menus/edit_item.jinja2:74
+msgid "Next item:"
+msgstr ""
+
+#: ushauri/templates/dashboard/maintenance/menus/add_response.jinja2:25
+#: ushauri/templates/dashboard/maintenance/menus/responses.jinja2:21
+msgid "Responses in "
+msgstr ""
+
+#: ushauri/templates/dashboard/maintenance/menus/add_response.jinja2:44
+msgid "Number:"
+msgstr ""
+
+#: ushauri/templates/dashboard/maintenance/menus/add_response.jinja2:50
+msgid "Target item:"
+msgstr ""
+
+#: ushauri/templates/dashboard/maintenance/menus/items.jinja2:41
+msgid "Type"
+msgstr ""
+
+#: ushauri/templates/dashboard/maintenance/menus/items.jinja2:42
+msgid "Content"
+msgstr ""
+
+#: ushauri/templates/dashboard/maintenance/menus/items.jinja2:43
+msgid "Next item"
+msgstr ""
+
+#: ushauri/templates/dashboard/maintenance/menus/responses.jinja2:43
+msgid "Number"
+msgstr ""
+
+#: ushauri/templates/dashboard/maintenance/menus/responses.jinja2:44
+msgid "Target item"
+msgstr ""
+
+#: ushauri/templates/dashboard/maintenance/questions/edit_question.jinja2:12
+msgid "Question"
+msgstr ""
+
+#: ushauri/templates/dashboard/maintenance/questions/edit_question.jinja2:29
+msgid "Tags:"
+msgstr ""
+
+#: ushauri/templates/dashboard/maintenance/questions/edit_question.jinja2:41
+msgid "Save"
+msgstr ""
+
+#: ushauri/templates/dashboard/maintenance/questions/record_a_reply.jinja2:79
+#: ushauri/templates/dashboard/maintenance/questions/reply_to_member.jinja2:16
+msgid "Reply to member"
+msgstr ""
+
+#: ushauri/templates/dashboard/maintenance/questions/record_a_reply.jinja2:82
+msgid "Record and reply to member"
+msgstr ""
+
+#: ushauri/templates/dashboard/maintenance/questions/record_a_reply.jinja2:95
+msgid "Audio description:"
+msgstr ""
+
+#: ushauri/templates/dashboard/maintenance/questions/reply_to_member.jinja2:46
+msgid "Listen selected answer"
+msgstr ""
+
+#: ushauri/templates/dashboard/maintenance/questions/reply_to_member.jinja2:48
+msgid "Reply selected answer"
+msgstr ""
+
+#: ushauri/templates/dashboard/maintenance/users/add_user.jinja2:19
+#: ushauri/templates/dashboard/maintenance/users/edit_pass.jinja2:19
+#: ushauri/templates/dashboard/maintenance/users/edit_user.jinja2:19
+#: ushauri/templates/dashboard/maintenance/users/users.jinja2:15
+msgid "Extension Agents"
+msgstr ""
+
+#: ushauri/templates/dashboard/maintenance/users/add_user.jinja2:38
+msgid "ID:"
+msgstr ""
+
+#: ushauri/templates/dashboard/maintenance/users/add_user.jinja2:56
+#: ushauri/templates/dashboard/maintenance/users/edit_user.jinja2:50
+msgid "Email:"
+msgstr ""
+
+#: ushauri/templates/dashboard/maintenance/users/add_user.jinja2:86
+#: ushauri/templates/dashboard/maintenance/users/edit_pass.jinja2:38
+msgid "Password:"
+msgstr ""
+
+#: ushauri/templates/dashboard/maintenance/users/add_user.jinja2:92
+#: ushauri/templates/dashboard/maintenance/users/edit_pass.jinja2:44
+msgid "Password confirmation:"
+msgstr ""
+
+#: ushauri/templates/dashboard/maintenance/users/edit_pass.jinja2:22
+msgid "Modify password for"
+msgstr ""
+
+#: ushauri/templates/dashboard/maintenance/users/edit_pass.jinja2:49
+msgid "Change password"
+msgstr ""
+
+#: ushauri/templates/dashboard/maintenance/users/edit_user.jinja2:22
+msgid "Modify user"
+msgstr ""
+
+#: ushauri/templates/dashboard/maintenance/users/users.jinja2:37
+msgid "ID"
+msgstr ""
+
+#: ushauri/templates/dashboard/snippets/breadcrumbs.jinja2:2
+msgid "Ushauri - Main Dashboard"
+msgstr ""
+
+#: ushauri/templates/dashboard/snippets/footer.jinja2:9
+msgid "Copyright"
+msgstr ""
+
+#: ushauri/templates/dashboard/snippets/header.jinja2:19
+msgid "Ushauri"
+msgstr ""
+
+#: ushauri/templates/dashboard/snippets/header.jinja2:54
+msgid "Log out"
+msgstr ""
+
+#: ushauri/templates/landing/index.jinja2:9
+msgid "Toggle navigation"
+msgstr ""
+
+#: ushauri/views/basic_views.py:59
+msgid "Invalid credentials"
+msgstr ""
+
+#: ushauri/views/basic_views.py:61
+msgid "The user account does not exists"
+msgstr ""
+
+#: ushauri/views/basic_views.py:109
+msgid "The password and its retype are not the same"
+msgstr ""
+
+#: ushauri/views/basic_views.py:112
+msgid "The password cannot be empty"
+msgstr ""
+

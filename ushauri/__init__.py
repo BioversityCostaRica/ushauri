@@ -1,3 +1,10 @@
+import sys
+
+if sys.version_info[0] == 3 and sys.version_info[1] >= 6:
+    import gevent.monkey
+
+    gevent.monkey.patch_all()
+
 from ushauri.config.environment import load_environment
 from pyramid.config import Configurator
 import os

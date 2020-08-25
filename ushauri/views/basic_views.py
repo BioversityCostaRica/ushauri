@@ -83,9 +83,10 @@ class register_view(publicView):
                     # Load connected plugins and check if they modify the registration of an user
                     continue_registration = True
                     for plugin in p.PluginImplementations(p.IAuthorize):
-                        continue_with_registration, error_message = plugin.before_register(
-                            self.request, data
-                        )
+                        (
+                            continue_with_registration,
+                            error_message,
+                        ) = plugin.before_register(self.request, data)
                         if not continue_with_registration:
                             self.errors.append(error_message)
                             continue_registration = False
