@@ -218,9 +218,9 @@ class Language(Base):
 
     language_code = Column(String(4), primary_key=True)
     language_name = Column(String(120))
-    audio_id = Column(ForeignKey(u"audio.audio_id"), nullable=False, index=True)
+    # audio_id = Column(ForeignKey(u"audio.audio_id"), nullable=False, index=True)
 
-    audio = relationship(u"Audio")
+    # audio = relationship(u"Audio")
 
 
 class Member(Base):

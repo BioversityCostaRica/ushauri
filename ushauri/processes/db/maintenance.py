@@ -12,7 +12,7 @@ from ushauri.models import (
     Itemaudio,
     Question,
 )
-from ushauri.config.encdecdata import AESCipher
+from ushauri.config.encdecdata import encodeData
 import uuid, sys, datetime
 from sqlalchemy.exc import IntegrityError
 
@@ -419,8 +419,7 @@ def getUsers(request):
 
 
 def addUser(request, userID, name, telef, email, county, subcounty, password, menu):
-    cipher = AESCipher(key=request.registry.settings["aes.key"])
-    encPass = cipher.encrypt(password)
+    encPass = encodeData(request, password)
     newUser = User(
         user_id=userID,
         user_name=name,
@@ -467,8 +466,7 @@ def modifyUser(request, userID, name, telef, email, menu):
 
 def modifyPassword(request, userID, newPassword):
     try:
-        cipher = AESCipher(key=request.registry.settings["aes.key"])
-        encPass = cipher.encrypt(newPassword)
+        encPass = encodeData(request, newPassword)
         request.dbsession.query(User).filter(User.user_id == userID).update(
             {"user_pass": encPass}
         )

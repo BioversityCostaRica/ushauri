@@ -1,4 +1,4 @@
-from ushauri.config.encdecdata import AESCipher
+from ushauri.config.encdecdata import decodeData
 from ushauri.models import User, Groupuser, Advgroup, Member
 import json, uuid
 
@@ -17,9 +17,8 @@ def isUserActive(request, userID):
 def getUserPassword(request, userID):
     user = request.dbsession.query(User).filter(User.user_id == userID).first()
     encodedPass = user.user_pass.encode()
-    cipher = AESCipher(key=request.registry.settings["aes.key"])
-    decrypted = cipher.decrypt(encodedPass)
-    return decrypted
+    decrypted = decodeData(request, encodedPass)
+    return decrypted.decode()
 
 
 def userCanRegister(request, groupID, userID):

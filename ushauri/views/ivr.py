@@ -85,13 +85,13 @@ def ivrReplyStatus_view(request):
 def ivrVoiceStart_view(request):
     number = request.params["From"]
     # If the number is malformed like +792490972 then remove the + and add +cuntry code
-    if number[:4] != request.matchdict["country_code"]:
+    if number[:len(request.registry.settings["country_code"])] != request.registry.settings["country_code"]:
         print("*****************90")
         print("Fixing" + number)
         print("--------------------------")
         print(request.params)
         print("-------------------------")
-        number = request.matchdict["country_code"] + number[2:]
+        number = request.registry.settings["country_code"] + number[2:]
         print(number)
         print("*****************90")
 
@@ -150,13 +150,13 @@ def ivrVoiceStart_view(request):
 def ivrMessage_view(request):
     number = request.params["From"]
     # If the number is malformed like +792490972 then remove the + and add +country code
-    if number[:4] != request.matchdict["country_code"]:
+    if number[:len(request.registry.settings["country_code"])] != request.registry.settings["country_code"]:
         print("*****************91")
         print("Fixing" + number)
         print("------------------------")
         print(request.params)
         print("*****************91")
-        number = request.matchdict["country_code"] + number[2:]
+        number = request.registry.settings["country_code"] + number[2:]
     agent = isNumberAnAgent(request, number)
     if agent is not None:
         menuItem = getAgentStartItem(request, agent)
@@ -226,13 +226,13 @@ def ivrGet_view(request):
     itemData = getItemData(request, itemID)
     number = request.params["From"]
     # If the number is malformed like +792490972 then remove the + and add +country code
-    if number[:4] != request.matchdict["country_code"]:
+    if number[:len(request.registry.settings["country_code"])] != request.registry.settings["country_code"]:
         print("*****************92")
         print("Fixing" + number)
         print("----------------------------")
         print(request.params)
         print("-------------------")
-        number = request.matchdict["country_code"] + number[2:]
+        number = request.registry.settings["country_code"] + number[2:]
         print(number)
         print("*****************92")
 
@@ -395,11 +395,11 @@ def ivrStore_view(request):
                 "From", ""
             )  # We assume here that the platform made the call. Change to From
             # If the number is malformed like +792490972 then remove the + and add +country code
-            if number[:4] != request.matchdict["country_code"]:
+            if number[:len(request.registry.settings["country_code"])] != request.registry.settings["country_code"]:
                 print("*****************93")
                 print("Fixing" + number)
                 print("---------------------")
-                number = request.matchdict["country_code"] + number[2:]
+                number = request.registry.settings["country_code"] + number[2:]
                 print(number)
                 print("*****************93")
             agent = isNumberAnAgent(request, number)

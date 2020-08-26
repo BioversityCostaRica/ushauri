@@ -1,4 +1,4 @@
-from ushauri.config.encdecdata import AESCipher
+from ushauri.config.encdecdata import decodeData, encodeData
 from ushauri.models import User
 from ushauri.models.schema import mapToSchema
 from sqlalchemy.exc import IntegrityError
@@ -11,9 +11,8 @@ def getUserPassword(request, userID):
     user = request.dbsession.query(User).filter(User.user_id == userID).first()
     if user is not None:
         encodedPass = user.user_pass.encode()
-        cipher = AESCipher(key=request.registry.settings["aes.key"])
-        decrypted = cipher.decrypt(encodedPass)
-        return decrypted
+        decrypted = decodeData(request, encodedPass)
+        return decrypted.decode()
     else:
         return None
 
@@ -46,8 +45,7 @@ def register_user(request, userData):
     userData["user_active"] = 1
     userData["user_admin"] = 0
     mappedData = mapToSchema(User, userData)
-    cipher = AESCipher(key=request.registry.settings["aes.key"])
-    encPass = cipher.encrypt(mappedData["user_pass"])
+    encPass = encodeData(request, mappedData["user_pass"])
     mappedData["user_pass"] = encPass
     newUser = User(**mappedData)
     try:
