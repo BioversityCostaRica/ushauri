@@ -31,7 +31,7 @@ plaster-pastedeploy==0.7
 polib==1.1.0
 protobuf==3.14.0
 pycrypto==2.6.1
-Pygments==2.7.3
+Pygments==2.7.4
 PyJWT==1.7.1
 pyramid==1.10.5
 pyramid-debugtoolbar==4.9
