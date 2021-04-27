@@ -9,7 +9,7 @@
                     <a href="{{ request.route_url('dashboard') }}">{{ _("Main Dashboard") }}</a>
                 </li>
                 <li>
-                    Maintenance
+                    {{ _('Maintenance') }}
                 </li>
                 <li class="active">
                     <a href="{{ request.route_url('menus') }}">{{ _("IVR Menus") }}</a>
@@ -24,7 +24,7 @@
         <div class="col-md-10">
         </div>
         <div class="col-md-2">
-            <button type="button" onclick="location.href='{{ request.route_url('addmenu') }}';" class="btn btn-primary btn-block">Add menu</button>
+            <button type="button" onclick="location.href='{{ request.route_url('addmenu') }}';" class="btn btn-primary btn-block">{{ _('Add menu') }}</button>
         </div>
         <hr>
     </div>
@@ -43,9 +43,9 @@
                                 {{ menu.menu_name }}
                             </td>
                             <td class="project-actions">
-                                <button class="btn btn-default btn-circle" onclick="location.href='{{ request.route_url('items',menu=menu.menu_id) }}';" type="button" title="Items"><i class="fa fa-list"></i></button>
-                                <button class="btn btn-warning btn-circle" onclick="location.href='{{ request.route_url('modifymenu',menu=menu.menu_id) }}';" type="button" title="Modify"><i class="fa fa-edit"></i></button>
-                                <button class="btn btn-danger btn-circle" onclick="ShowConfirmModal('{{ request.route_url('deletemenu',menu=menu.menu_id) }}','Delete menu','Do you want to delete the menu {{ menu.menu_name }}?')" type="button" title="Delete"><i class="fa fa-trash"></i></button>
+                                <button class="btn btn-default btn-circle" onclick="location.href='{{ request.route_url('items',menu=menu.menu_id) }}';" type="button" title="{{ _('Items') }}"><i class="fa fa-list"></i></button>
+                                <button class="btn btn-warning btn-circle" onclick="location.href='{{ request.route_url('modifymenu',menu=menu.menu_id) }}';" type="button" title="{{ _('Modify') }}"><i class="fa fa-edit"></i></button>
+                                <button class="btn btn-danger btn-circle" onclick="ShowConfirmModal('{{ request.route_url('deletemenu',menu=menu.menu_id) }}','{{ _('Delete menu') }}','{{ _('Do you want to delete the menu') }} {{ menu.menu_name }}?')" type="button" title="{{ _('Delete') }}"><i class="fa fa-trash"></i></button>
                             </td>
                         </tr>
                     {% endfor %}
@@ -62,7 +62,7 @@
         <div class="modal-dialog modal-sm">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">{{ _('Close') }}</span></button>
                     <h4 class="modal-title" id="confirm_title">Modal title</h4>
                 </div>
                 <div class="modal-body">
@@ -71,8 +71,8 @@
                     <p id="confirm_content"></p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-white" data-dismiss="modal">Cancel</button>
-                    <button type="button" onclick="proceed();" class="btn btn-primary">Confirm</button>
+                    <button type="button" class="btn btn-white" data-dismiss="modal">{{ _('Cancel') }}</button>
+                    <button type="button" onclick="proceed();" class="btn btn-primary">{{ _('Confirm') }}</button>
                 </div>
             </div>
         </div>

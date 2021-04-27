@@ -11,7 +11,6 @@ from ushauri.processes.db.maintenance import (
 from pyramid.httpexceptions import HTTPFound, HTTPNotFound
 import uuid, os, shutil
 from pyramid.response import FileResponse
-from subprocess import Popen, PIPE
 
 
 class audiosList_view(privateView):
@@ -61,60 +60,32 @@ class addAudio_view(privateView):
                     with open(temp_file_path, "wb") as output_file:
                         shutil.copyfileobj(input_file, output_file)
                     os.rename(temp_file_path, file_path)
-                    add_audio = True
-                    if file_extension.lower() == ".m4a":
-                        args = [
-                            "ffmpeg",
-                            "-v",
-                            "5",
-                            "-y",
-                            "-i",
-                            file_path,
-                            "-acodec",
-                            "libmp3lame",
-                            "-ac",
-                            "2",
-                            "-ab",
-                            "192k",
-                            file_path.lower().replace(".m4a", ".mp3"),
-                        ]
-                        print("**********************ffmpeg******************")
-                        print(" ".join(args))
-                        print("**********************ffmpeg******************")
-                        p = Popen(args, stdout=PIPE, stderr=PIPE)
-                        stdout, stderr = p.communicate()
-                        if p.returncode == 0:
-                            file_extension = ".mp3"
-                        else:
-                            add_audio = False
-                            error_summary[
-                                "error"
-                            ] = "Invalid m4a format. Error {}".format(stderr.decode())
-                    if add_audio:
-                        if not self.user.admin:
-                            added, message = addAudio(
-                                self.request,
-                                uid,
-                                data["audio_desc"],
-                                uid + file_extension,
-                                2,
-                                self.user.id,
-                            )
-                        else:
-                            added, message = addAudio(
-                                self.request,
-                                uid,
-                                data["audio_desc"],
-                                uid + file_extension,
-                                1,
-                                self.user.id,
-                            )
-                        if added:
-                            return HTTPFound(location=self.request.route_url("audios"))
-                        else:
-                            error_summary["error"] = message
+                    if not self.user.admin:
+                        added, message = addAudio(
+                            self.request,
+                            uid,
+                            data["audio_desc"],
+                            uid + file_extension,
+                            2,
+                            self.user.id,
+                        )
+                    else:
+                        added, message = addAudio(
+                            self.request,
+                            uid,
+                            data["audio_desc"],
+                            uid + file_extension,
+                            1,
+                            self.user.id,
+                        )
+                    if added:
+                        return HTTPFound(location=self.request.route_url("audios"))
+                    else:
+                        error_summary["error"] = message
                 else:
-                    error_summary["audio_desc"] = "The description cannot be empty"
+                    error_summary["audio_desc"] = self._(
+                        "The description cannot be empty"
+                    )
         return {"error_summary": error_summary, "data": data}
 
 
@@ -164,7 +135,9 @@ class modifyAudio_view(privateView):
                     else:
                         error_summary["error"] = message
                 else:
-                    error_summary["audio_desc"] = "The description cannot be empty"
+                    error_summary["audio_desc"] = self._(
+                        "The description cannot be empty"
+                    )
         return {"error_summary": error_summary, "data": data, "audioid": audioID}
 
 

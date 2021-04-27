@@ -125,56 +125,6 @@ class Groupuser(Base):
     user = relationship(u"User")
 
 
-# class Itemaudio(Base):
-#     __tablename__ = 'itemaudio'
-#
-#     item_id = Column(ForeignKey(u'menuitem.item_id', ondelete=u'CASCADE'), primary_key=True, nullable=False)
-#     language_code = Column(ForeignKey(u'language.language_code'), primary_key=True, nullable=False, index=True)
-#     audio_id = Column(ForeignKey(u'audio.audio_id'), nullable=False, index=True)
-#
-#     audio = relationship(u'Audio')
-#     item = relationship(u'Menuitem')
-#     language = relationship(u'Language')
-
-
-class Itemaudio(Base):
-    __tablename__ = "itemaudio"
-
-    item_id = Column(
-        ForeignKey(u"menuitem.item_id", ondelete=u"CASCADE"),
-        primary_key=True,
-        nullable=False,
-    )
-    language_code = Column(
-        ForeignKey(u"language.language_code"),
-        primary_key=True,
-        nullable=False,
-        index=True,
-    )
-    audio_id = Column(ForeignKey(u"audio.audio_id"), nullable=False, index=True)
-
-    audio = relationship(u"Audio")
-    item = relationship(u"Menuitem")
-    language = relationship(u"Language")
-
-
-# class Ivrlog(Base):
-#     __tablename__ = 'ivrlog'
-#     __table_args__ = (
-#         ForeignKeyConstraint(['group_id', 'member_id'], [u'member.group_id', u'member.member_id']),
-#         Index('fk_ivrlog_member1_idx', 'group_id', 'member_id')
-#     )
-#
-#     log_id = Column(String(80), primary_key=True)
-#     log_dtime = Column(DateTime)
-#     group_id = Column(String(12), nullable=False)
-#     member_id = Column(String(45), nullable=False)
-#     item_id = Column(ForeignKey(u'menuitem.item_id'), nullable=False, index=True)
-#
-#     group = relationship(u'Member')
-#     item = relationship(u'Menuitem')
-
-
 class Ivrlog(Base):
     __tablename__ = "ivrlog"
     __table_args__ = (
@@ -201,28 +151,6 @@ class Ivrmenu(Base):
     menu_name = Column(String(45))
 
 
-# class Ivrmenu(Base):
-#     __tablename__ = 'ivrmenu'
-#
-#     group_id = Column(ForeignKey(u'advgroup.group_id', ondelete=u'CASCADE'), primary_key=True, nullable=False)
-#     menu_id = Column(String(12), primary_key=True, nullable=False)
-#     menu_name = Column(String(45))
-#     menu_current = Column(Integer)
-#     menu_agentcurrent = Column(Integer)
-#
-#     group = relationship(u'Advgroup')
-
-
-class Language(Base):
-    __tablename__ = "language"
-
-    language_code = Column(String(4), primary_key=True)
-    language_name = Column(String(120))
-    # audio_id = Column(ForeignKey(u"audio.audio_id"), nullable=False, index=True)
-
-    # audio = relationship(u"Audio")
-
-
 class Member(Base):
     __tablename__ = "member"
 
@@ -241,25 +169,6 @@ class Member(Base):
     group = relationship(u"Advgroup")
 
 
-# class Menuitem(Base):
-#     __tablename__ = 'menuitem'
-#     __table_args__ = (
-#         ForeignKeyConstraint(['group_id', 'menu_id'], [u'ivrmenu.group_id', u'ivrmenu.menu_id'], ondelete=u'CASCADE'),
-#         Index('fk_menuitem_ivrmenu1_idx', 'group_id', 'menu_id')
-#     )
-#
-#     item_id = Column(String(12), primary_key=True)
-#     item_type = Column(Integer)
-#     item_desc = Column(Text)
-#     item_pos = Column(Integer)
-#     group_id = Column(String(12), nullable=False)
-#     menu_id = Column(String(12), nullable=False)
-#     next_item = Column(ForeignKey(u'menuitem.item_id'), index=True)
-#
-#     group = relationship(u'Ivrmenu')
-#     parent = relationship(u'Menuitem', remote_side=[item_id])
-
-
 class Menuitem(Base):
     __tablename__ = "menuitem"
 
@@ -272,47 +181,11 @@ class Menuitem(Base):
     menu_id = Column(
         ForeignKey(u"ivrmenu.menu_id", ondelete=u"CASCADE"), nullable=False, index=True
     )
+    audio_id = Column(ForeignKey(u"audio.audio_id"), nullable=False, index=True)
 
     menu = relationship(u"Ivrmenu")
     parent = relationship(u"Menuitem", remote_side=[item_id])
-
-
-# class Menuwelcome(Base):
-#     __tablename__ = 'menuwelcome'
-#     __table_args__ = (
-#         ForeignKeyConstraint(['group_id', 'menu_id'], [u'ivrmenu.group_id', u'ivrmenu.menu_id'], ondelete=u'CASCADE'),
-#     )
-#
-#     group_id = Column(String(12), primary_key=True, nullable=False)
-#     menu_id = Column(String(12), primary_key=True, nullable=False)
-#     language_code = Column(ForeignKey(u'language.language_code'), primary_key=True, nullable=False, index=True)
-#     audio_id = Column(ForeignKey(u'audio.audio_id'), nullable=False, index=True)
-#
-#     audio = relationship(u'Audio')
-#     group = relationship(u'Ivrmenu')
-#     language = relationship(u'Language')
-
-
-class Menuwelcome(Base):
-    __tablename__ = "menuwelcome"
-
-    menu_id = Column(
-        ForeignKey(u"ivrmenu.menu_id", ondelete=u"CASCADE"),
-        primary_key=True,
-        nullable=False,
-        index=True,
-    )
-    language_code = Column(
-        ForeignKey(u"language.language_code"),
-        primary_key=True,
-        nullable=False,
-        index=True,
-    )
-    audio_id = Column(ForeignKey(u"audio.audio_id"), nullable=False, index=True)
-
     audio = relationship(u"Audio")
-    language = relationship(u"Language")
-    menu = relationship(u"Ivrmenu")
 
 
 class Question(Base):
@@ -383,18 +256,6 @@ class Questiontag(Base):
     tag_name = Column(String(120), primary_key=True, nullable=False)
 
     group = relationship(u"Question")
-
-
-# class Response(Base):
-#     __tablename__ = 'response'
-#
-#     item_id = Column(ForeignKey(u'menuitem.item_id', ondelete=u'CASCADE'), primary_key=True, nullable=False)
-#     resp_num = Column(Integer, primary_key=True, nullable=False)
-#     target_item = Column(ForeignKey(u'menuitem.item_id'), nullable=False, index=True)
-#     resp_default = Column(Integer)
-#
-#     item = relationship(u'Menuitem', primaryjoin='Response.item_id == Menuitem.item_id')
-#     menuitem = relationship(u'Menuitem', primaryjoin='Response.target_item == Menuitem.item_id')
 
 
 class Response(Base):

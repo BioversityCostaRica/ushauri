@@ -54,17 +54,19 @@ class addUser_view(privateView):
                                 else:
                                     error_summary["error"] = message
                             else:
-                                error_summary[
-                                    "district"
-                                ] = "You need to select a district"
+                                error_summary["district"] = self._(
+                                    "You need to select a district"
+                                )
                         else:
-                            error_summary[
-                                "password1"
-                            ] = "The password and its confirmation are not the same"
+                            error_summary["password1"] = self._(
+                                "The password and its confirmation are not the same"
+                            )
                     else:
-                        error_summary["password1"] = "The password cannot be blank"
+                        error_summary["password1"] = self._(
+                            "The password cannot be blank"
+                        )
                 else:
-                    error_summary["user_id"] = "The user ID cannot be blank"
+                    error_summary["user_id"] = self._("The user ID cannot be blank")
 
         return {
             "error_summary": error_summary,
@@ -135,11 +137,11 @@ class modifyUserPass_view(privateView):
                         if modified:
                             return HTTPFound(location=self.request.route_url("users"))
                     else:
-                        error_summary[
-                            "password1"
-                        ] = "The password and its confirmation are not the same"
+                        error_summary["password1"] = self._(
+                            "The password and its confirmation are not the same"
+                        )
                 else:
-                    error_summary["password1"] = "The password cannot be blank"
+                    error_summary["password1"] = self._("The password cannot be blank")
         return {
             "error_summary": error_summary,
             "data": data,

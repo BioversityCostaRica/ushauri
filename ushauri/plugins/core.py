@@ -34,7 +34,10 @@ PLUGINS_ENTRY_POINT_GROUP = "ushauri.plugins"
 # Entry point for test plugins.
 TEST_PLUGINS_ENTRY_POINT_GROUP = "ushauri.test_plugins"
 
-GROUPS = [PLUGINS_ENTRY_POINT_GROUP, TEST_PLUGINS_ENTRY_POINT_GROUP]
+GROUPS = [
+    PLUGINS_ENTRY_POINT_GROUP,
+    TEST_PLUGINS_ENTRY_POINT_GROUP,
+]
 # These lists are used to ensure that the correct extensions are enabled.
 _PLUGINS = []
 _PLUGINS_CLASS = []
@@ -69,8 +72,8 @@ class SingletonPlugin(_pca_SingletonPlugin):
 
 
 def get_plugin(plugin):
-    """ Get an instance of a active plugin by name.  This is helpful for
-    testing. """
+    """Get an instance of a active plugin by name.  This is helpful for
+    testing."""
     if plugin in _PLUGINS_SERVICE:
         return _PLUGINS_SERVICE[plugin]
 

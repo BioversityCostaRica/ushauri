@@ -1,12 +1,12 @@
 <div class="footer {% if fixed %}fixed{% endif %}">
     {% block smallmessage %}
-{#        <div class="pull-right">#}
-{#            10GB of <strong>250GB</strong> Free.#}
-{#        </div>#}
+        <div class="pull-right">
+            {{ _('Version') }}: 1.0
+        </div>
     {% endblock smallmessage %}
     <div>
         {% block copyright %}
-            <strong>{{ _("Copyright") }}</strong> Bioversity International &copy; 2017
+            <strong>{{ _("Copyright") }}</strong> Alliance Bioversity CIAT &copy; 2020
         {% endblock copyright %}
     </div>
 </div>

@@ -39,7 +39,7 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content animated fadeIn">
                 <div class="modal-header">
-                    <button type="button" class="close" onclick="closeModal()"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <button type="button" class="close" onclick="closeModal()"><span aria-hidden="true">&times;</span><span class="sr-only">{{ _('Close') }}</span></button>
                     <h4 class="modal-title" id="modaltitle">Terms of service</h4>
                 </div>
                 <div class="modal-body">
@@ -51,7 +51,7 @@
 
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-white" onclick="closeModal()">Close</button>
+                    <button type="button" class="btn btn-white" onclick="closeModal()">{{ _('Close') }}</button>
                 </div>
             </div>
         </div>
@@ -77,37 +77,7 @@
                 currUrl = ''
             }
         }
-    </script>
-    <script>
-        $(document).ready(function() {
-            $('.resend_question').click(function () {
-                var audio_id = $( this ).attr('data-audio-id');
-                var action_url = $( this ).attr('data-action-url');
 
-                var form = document.createElement('form');
-                form.setAttribute('method', 'post');
-                form.setAttribute('action', action_url);
-                form.style.display = 'hidden';
-
-                var i = document.createElement("input"); //input element, text
-                i.setAttribute('type',"text");
-                i.setAttribute('name',"csrf_token");
-                i.setAttribute('value','{{ request.session.get_csrf_token() }}');
-                form.appendChild(i);
-
-                var i2 = document.createElement("input"); //input element, text
-                i2.setAttribute('type',"text");
-                i2.setAttribute('name',"audio_id");
-                i2.setAttribute('value', audio_id);
-                form.appendChild(i2);
-
-                document.body.appendChild(form);
-                form.submit();
-                $( this ).prop('disabled', true);
-
-            });
-
-        });
     </script>
 {% endblock mainscripts %}
 

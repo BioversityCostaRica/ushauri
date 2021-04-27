@@ -35,13 +35,13 @@ def initialize(pathToTemplates):
 
 
 def render_snippet(template_name, **kw):
-    """ This function will render the snippet.
+    """This function will render the snippet.
 
-    This code is based on CKAN 
+    This code is based on CKAN
     :Copyright (C) 2007 Open Knowledge Foundation
     :license: AGPL V3, see LICENSE for more details.
 
-     """
+    """
 
     request = get_current_request()
     template = jinjaEnv.get_template(template_name)
@@ -54,27 +54,36 @@ def render_snippet(template_name, **kw):
     return literal(output)
 
 
-def renderResource(request, libraryName, resourceType, resourceID):
-    if resourceType == "JS" or resourceType == "CSS":
-        if resourceType == "CSS":
+def renderResource(request, library_name, resource_type, resource_id):  # pragma: no cover
+    """
+    This function will inject a resource from Jinja2 using the jsresource or cssresource tags. Not in Coverage
+    because Coverage cannot track them from Jinja2
+    :param request:
+    :param library_name:
+    :param resource_type:
+    :param resource_id:
+    :return:
+    """
+    if resource_type == "JS" or resource_type == "CSS":
+        if resource_type == "CSS":
             html = '<link href="{{ file }}" rel="stylesheet">'
         else:
             html = '<script src="{{ file }}"></script>'
-        resources = r.need(libraryName, resourceID, resourceType)
-        resourcesToInclude = []
+        resources = r.need(library_name, resource_id, resource_type)
+        resources_to_include = []
         for resource in resources:
             if not request.activeResources.resourceInRequest(
-                libraryName, resource["resourceID"], resourceType
+                library_name, resource["resourceID"], resource_type
             ):
                 request.activeResources.addResource(
-                    libraryName, resource["resourceID"], resourceType
+                    library_name, resource["resourceID"], resource_type
                 )
-                path = urljoin(
-                    request.registry.settings["root.url"], resource["filePath"]
+                resources_to_include.append(
+                    jinjaEnv.from_string(html).render(
+                        file=request.application_url + "/" + resource["filePath"]
+                    )
                 )
-                path = urljoin(request.host_url, path)
-                resourcesToInclude.append(jinjaEnv.from_string(html).render(file=path))
-        return literal("\n".join(resourcesToInclude))
+        return literal("\n".join(resources_to_include))
     else:
         return ""
 
@@ -135,12 +144,12 @@ class extendThis(ext.Extension):
 
 
 class BaseExtension(ext.Extension):
-    """ Base class for creating custom jinja2 tags.
+    """Base class for creating custom jinja2 tags.
     parse expects a tag of the format
     {% tag_name args, kw %}
     after parsing it will call _call(args, kw) which must be defined.
 
-    This code is based on CKAN 
+    This code is based on CKAN
     :Copyright (C) 2007 Open Knowledge Foundation
     :license: AGPL V3, see LICENSE for more details.
 
@@ -165,7 +174,12 @@ class BaseExtension(ext.Extension):
 
         def make_call_node(*kw):
             return self.call_method(
-                "_call", args=[nodes.List(args), nodes.Dict(kwargs)], kwargs=kw
+                "_call",
+                args=[
+                    nodes.List(args),
+                    nodes.Dict(kwargs),
+                ],
+                kwargs=kw,
             )
 
         return nodes.Output([make_call_node()]).set_lineno(tag.lineno)
@@ -192,14 +206,14 @@ class CSSResourceExtension(BaseExtension):
 
 
 class SnippetExtension(BaseExtension):
-    """ 
-    
+    """
+
     This tags inject small portions of reusable code i.e. snippets
     into a jinja2 template
 
     {% snippet <template_name> [, <keyword>=<value>].. %}
 
-    This code is based on CKAN 
+    This code is based on CKAN
     :Copyright (C) 2007 Open Knowledge Foundation
     :license: AGPL V3, see LICENSE for more details.
 
@@ -215,7 +229,7 @@ class SnippetExtension(BaseExtension):
 
 
 def regularise_html(html):
-    """ Take badly formatted html with strings
+    """Take badly formatted html with strings
 
 
     This code is based on CKAN

@@ -9,7 +9,7 @@
                     <a href="{{ request.route_url('dashboard') }}">{{ _("Main Dashboard") }}</a>
                 </li>
                 <li>
-                    Maintenance
+                    {{ _('Maintenance') }}
                 </li>
                 <li class="active">
                     <a href="{{ request.route_url('users') }}">{{ _("Extension Agents") }}</a>
@@ -24,7 +24,7 @@
         <div class="col-md-10">
         </div>
         <div class="col-md-2">
-            <button type="button" onclick="location.href='{{ request.route_url('adduser') }}';" class="btn btn-primary btn-block">Add agent</button>
+            <button type="button" onclick="location.href='{{ request.route_url('adduser') }}';" class="btn btn-primary btn-block">{{ _('Add agent') }}</button>
         </div>
         <hr>
     </div>
@@ -63,9 +63,9 @@
                                 {{ user.subcounty_name }}
                             </td>
                             <td class="project-actions">
-                                <button class="btn btn-warning btn-circle" onclick="location.href='{{ request.route_url('modifyuser',user=user.user_id) }}';" type="button" title="Edit"><i class="fa fa-edit"></i></button>
-                                <button class="btn btn-default btn-circle" onclick="location.href='{{ request.route_url('modifyuserpass',user=user.user_id) }}';" type="button" title="Set password"><i class="fa fa-key"></i></button>
-                                <button class="btn btn-danger btn-circle" onclick="ShowConfirmModal('{{ request.route_url('deleteuser',user=user.user_id) }}','Delete user','Do you want to delete the user {{ user.user_name }}?')" type="button" title="Delete"><i class="fa fa-trash"></i></button>
+                                <button class="btn btn-warning btn-circle" onclick="location.href='{{ request.route_url('modifyuser',user=user.user_id) }}';" type="button" title="{{ _('Edit') }}"><i class="fa fa-edit"></i></button>
+                                <button class="btn btn-default btn-circle" onclick="location.href='{{ request.route_url('modifyuserpass',user=user.user_id) }}';" type="button" title="{{ _('Set password') }}"><i class="fa fa-key"></i></button>
+                                <button class="btn btn-danger btn-circle" onclick="ShowConfirmModal('{{ request.route_url('deleteuser',user=user.user_id) }}','{{ _('Delete user') }}','{{ _('Do you want to delete the user') }} {{ user.user_name }}?')" type="button" title="{{ _('Delete') }}"><i class="fa fa-trash"></i></button>
                             </td>
                         </tr>
                     {% endfor %}
@@ -82,7 +82,7 @@
         <div class="modal-dialog modal-sm">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">{{ _('Close') }}</span></button>
                     <h4 class="modal-title" id="confirm_title">Modal title</h4>
                 </div>
                 <div class="modal-body">
@@ -91,8 +91,8 @@
                     <p id="confirm_content"></p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-white" data-dismiss="modal">Cancel</button>
-                    <button type="button" onclick="proceed();" class="btn btn-primary">Confirm</button>
+                    <button type="button" class="btn btn-white" data-dismiss="modal">{{ _('Cancel') }}</button>
+                    <button type="button" onclick="proceed();" class="btn btn-primary">{{ _('Confirm') }}</button>
                 </div>
             </div>
         </div>

@@ -3,17 +3,21 @@
         <div class="row m-b-lg">
             <div class="col-lg-12 text-center">
                 <div class="navy-line"></div>
-                <h1>Contact Us</h1>
-                <p>Please give us your comments and suggestions.</p>
+                {% block contact_message %}
+                    <h1>{{ _('Contact Us') }}</h1>
+                    <p>{{ _('Please give us your comments and suggestions') }}</p>
+                {% endblock contact_message %}
             </div>
         </div>
         <div class="row m-b-lg">
             <div class="col-lg-3 col-lg-offset-3">
                 <address>
-                    <strong><span class="navy">Bioversity International (Costa Rica)</span></strong><br/>
-                    CATIE, Sede Central<br/>
-                    Cartago, Turrialba, Costa Rica<br/>
-                    <abbr title="Phone">P:</abbr> (506)2558-2000
+                    {% block contact_details %}
+                        <strong><span class="navy">Bioversity International (Costa Rica)</span></strong><br/>
+                        CATIE, Sede Central<br/>
+                        Cartago, Turrialba, Costa Rica<br/>
+                        <abbr title="Phone">P:</abbr> (506)2558-2000
+                    {% endblock contact_details %}
                 </address>
             </div>
             <div class="col-lg-4">
@@ -22,26 +26,38 @@
                 </p>
             </div>
         </div>
-        <div class="row">
-            <div class="col-lg-12 text-center">
-                <a href="mailto:j.steinke@cgiar.org" class="btn btn-primary">Send us mail</a>
-                <p class="m-t-sm">
-                    Or follow us on social platform
-                </p>
-                <ul class="list-inline social-icon">
-                    <li><a href="https://twitter.com/bioversityint"><i class="fa fa-twitter"></i></a>
-                    </li>
-                    <li><a href="https://www.facebook.com/bioversityinternational"><i class="fa fa-facebook"></i></a>
-                    </li>
-                    <li><a href="https://www.linkedin.com/company/bioversity-international"><i class="fa fa-linkedin"></i></a>
-                    </li>
-                </ul>
+        {% block social_section %}
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    {% block send_email %}
+                        <a href="mailto:j.steinke@cgiar.org" class="btn btn-primary">{{ _('Send us an email') }}</a>
+                    {% endblock send_email %}
+                    <p class="m-t-sm">
+                        {% block social_message %}
+                            {{ _('Or follow us on social platforms') }}
+                        {% endblock social_message %}
+                    </p>
+                    {% block social_links %}
+                        <ul class="list-inline social-icon">
+                            <li><a href="https://twitter.com/bioversityint"><i class="fa fa-twitter"></i></a>
+                            </li>
+                            <li><a href="https://www.facebook.com/bioversityinternational"><i class="fa fa-facebook"></i></a>
+                            </li>
+                            <li><a href="https://www.linkedin.com/company/bioversity-international"><i class="fa fa-linkedin"></i></a>
+                            </li>
+                        </ul>
+                    {% endblock social_links %}
+                </div>
             </div>
-        </div>
-        <div class="row">
-            <div class="col-lg-8 col-lg-offset-2 text-center m-t-lg m-b-lg">
-                <p><strong>&copy; 2018 Biovertity International (Costa Rica office)</strong><br/> This software is open-source licensed under AGPL V3.0. It comes without warranty of any kind.</p>
+        {% endblock social_section %}
+        {% block copy_right %}
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 text-center m-t-lg m-b-lg">
+                    {% block copy_message %}
+                        <p><strong>&copy; 2018 Biovertity International (Costa Rica office)</strong><br/> {{ _('This software is open-source licensed under AGPL V3.0. It comes without warranty of any kind') }}</p>
+                    {% endblock copy_message %}
+                </div>
             </div>
-        </div>
-    </div>
+            </div>
+    {% endblock copy_right %}
 </section>

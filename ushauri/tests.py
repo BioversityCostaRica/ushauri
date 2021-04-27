@@ -14,7 +14,11 @@ class BaseTest(unittest.TestCase):
         self.config.include(".models")
         settings = self.config.get_settings()
 
-        from .models import get_engine, get_session_factory, get_tm_session
+        from .models import (
+            get_engine,
+            get_session_factory,
+            get_tm_session,
+        )
 
         self.engine = get_engine(settings)
         session_factory = get_session_factory(self.engine)

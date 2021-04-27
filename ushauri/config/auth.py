@@ -1,6 +1,6 @@
 from ushauri.models import User
 from ushauri.processes import getUserPassword, isUserActive, getUserData
-from ushauri.config.encdecdata import encodeData
+from ushauri.config.encdecdata import AESCipher
 import hashlib, urllib
 
 
@@ -69,7 +69,8 @@ def checkLogin(userID, password, request):
 
 
 def changePassword(userID, password, request):
-    encPass = encodeData(request, password)
+    cipher = AESCipher(key=request.registry.settings["aes.key"])
+    encPass = cipher.encrypt(password)
     request.dbsession.query(User).filter(User.user_id == userID).update(
         {"user_pass": encPass}
     )

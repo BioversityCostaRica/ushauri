@@ -1,16 +1,16 @@
 <tr>
     <td class="project-status">
         {% if question.question_status == -1 %}
-            <span class="label label-danger">Reply failed</span>
+            <span class="label label-danger">{{ _('Reply failed') }}</span>
         {% endif %}
         {% if question.question_status == 1 %}
-            <span class="label label-warning">Active</span>
+            <span class="label label-warning">{{ _('Active') }}</span>
         {% endif %}
         {% if question.question_status == 2 %}
-            <span class="label label-success">Reply sent</span>
+            <span class="label label-success">{{ _('Reply sent') }}</span>
         {% endif %}
         {% if question.question_status == 3 %}
-            <span class="label label-success">Completed</span>
+            <span class="label label-success">{{ _('Completed') }}</span>
         {% endif %}
     </td>
     <td class="project-title">
@@ -25,21 +25,21 @@
     </td>
     <td class="project-people">
         {% if question.question_status != 1 %}
-            Audio replied: {{ question.audioreply_desc }} {{ question.question_id }}
+            {{ _('Audio replied') }}: {{ question.audioreply_desc }} {{ question.question_id }}
         {% endif %}
     </td>
     <td class="project-actions">
-        <button class="btn btn-default btn-circle" type="button" onclick="playAudio('{{ request.route_url('getaudio',audioid=question.question_audiofile) }}')" title="Listen to question"><i class="fa fa-headphones"></i></button>
+        <button class="btn btn-default btn-circle" type="button" onclick="playAudio('{{ request.route_url('getaudio',audioid=question.question_audiofile) }}')" title="{{ _('Listen to question') }}"><i class="fa fa-headphones"></i></button>
         {% if question.question_status != 1 %}
-            <button class="btn btn-default btn-circle" style="background-color: #1c84c6" type="button" onclick="playAudio('{{ request.route_url('playaudio',audio=question.audioreply_id) }}')" title="Listen to reply"><i class="fa fa-headphones" style="color: white"></i></button>
+            <button class="btn btn-default btn-circle" style="background-color: #1c84c6" type="button" onclick="playAudio('{{ request.route_url('playaudio',audio=question.audioreply_id) }}')" title="{{ _('Listen to reply') }}"><i class="fa fa-headphones" style="color: white"></i></button>
         {% endif %}
         {#        <button class="btn btn-primary btn-circle" type="button" title="Write/review answers"><i class="fa fa-info"></i></button>#}
         {% if question.question_status == 1 %}
-            <button class="btn btn-success btn-circle" style="background-color: #3ec641" type="button" onclick="location.href='{{ request.route_url('replytomember',group=question.group_id,question=question.question_id) }}';" title="Reply"><i class="fa fa-undo"></i></button>
+            <button class="btn btn-success btn-circle" style="background-color: #3ec641" type="button" onclick="location.href='{{ request.route_url('replytomember',group=question.group_id,question=question.question_id) }}';" title="{{ _('Reply') }}"><i class="fa fa-undo"></i></button>
         {% endif %}
         {% if question.question_status == -1 %}
-            <button class="btn btn-danger btn-circle resend_question" type="button" data-action-url="{{ request.route_url('replytomember',group=question.group_id,question=question.question_id,_query={'next': request.url}) }}" data-audio-id="{{ question.audioreply_id }}" title="Try again"><i class="fa fa-undo"></i></button>
+            <button class="btn btn-danger btn-circle" type="button" onclick="location.href='{{ request.route_url('replytomember',group=question.group_id,question=question.question_id) }}';" title="{{ _('Try again') }}"><i class="fa fa-undo"></i></button>
         {% endif %}
-        <button class="btn btn-warning btn-circle" type="button" onclick="location.href='{{ request.route_url('modifyquestion',group=question.group_id,question=question.question_id) }}';" title="Edit"><i class="fa fa-pencil"></i></button>
+        <button class="btn btn-warning btn-circle" type="button" onclick="location.href='{{ request.route_url('modifyquestion',group=question.group_id,question=question.question_id) }}';" title="{{ _('Edit') }}"><i class="fa fa-pencil"></i></button>
     </td>
 </tr>

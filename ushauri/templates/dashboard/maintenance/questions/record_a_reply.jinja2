@@ -89,7 +89,7 @@
 {% block maincontent %}
     <div class="row">
         <div class="col-md-12">
-            <h3 class="font-bold text-center">Record and reply to question by {{ data.member.member_name }} on {{ data.question_dtime }}</h3>
+            <h3 class="font-bold text-center">{{ _('Record and reply to question by') }} {{ data.member.member_name }} {{ _('on') }} {{ data.question_dtime }}</h3>
             <form class="form-horizontal">
                 <div class="form-group">
                     <label class="col-sm-2 control-label">{{ _('Audio description:') }}</label>
@@ -138,14 +138,14 @@
         <div class="modal-dialog modal-sm">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                    <h4 class="modal-title" id="confirm_title">Sending audio</h4>
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">{{ _('Close') }}</span></button>
+                    <h4 class="modal-title" id="confirm_title">{{ _('Sending audio') }}</h4>
                 </div>
                 <div class="modal-body">
-                    We are sending your audio. Please wait... Once the audio is uploaded this window will close.
+                    {{ _('We are sending your audio. Please wait... Once the audio is uploaded this window will close.') }}
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-white" data-dismiss="modal">{{ _('Close') }}</button>
                 </div>
             </div>
         </div>
@@ -176,7 +176,7 @@
                 }
             }
             else {
-                alert("Record an audio first");
+                alert("{{ _('Record an audio first') }}");
             }
         }
     </script>
@@ -186,11 +186,11 @@
             var link = document.getElementById("save");
             var dataURL = link.href;
             if (dataURL != "{{ request.route_url('recordandreplytomember',group=groupid,question=questionid) }}#")
-            {                
+            {
+                $("#save").attr("href", "#");
                 var audioDescription = $('#audio_desc').val();
                 if (audioDescription != "")
                 {
-                    $("#save").attr("href", "#");
                     $('#sending').modal('show');
                     var xhr = new XMLHttpRequest();
                     xhr.open('GET', dataURL, true);
@@ -217,12 +217,12 @@
                     xhr.send();
                 }
                 else {
-                    alert("Audio description cannot be empty")
+                    alert("{{ _('Audio description cannot be empty') }}")
                 }
             }
             else
             {
-                alert("Record an audio first")
+                alert("{{ _('Record an audio first') }}")
             }
         }
     </script>

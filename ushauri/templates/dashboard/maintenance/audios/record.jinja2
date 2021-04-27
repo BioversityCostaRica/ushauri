@@ -76,7 +76,7 @@
                     <a href="{{ request.route_url('dashboard') }}">{{ _("Main Dashboard") }}</a>
                 </li>
                 <li>
-                    Maintenance
+                    {{ _('Maintenance') }}
                 </li>
                 <li>
                     <a href="{{ request.route_url('audios') }}">{{ _("Audios") }}</a>
@@ -140,14 +140,14 @@
         <div class="modal-dialog modal-sm">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                    <h4 class="modal-title" id="confirm_title">Sending audio</h4>
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">{{ _('Close') }}</span></button>
+                    <h4 class="modal-title" id="confirm_title">{{ _('Close') }}</h4>
                 </div>
                 <div class="modal-body">
-                    We are sending your audio. Please wait... Once the audio is uploaded this window will close.
+                    {{ _('We are sending your audio. Please wait... Once the audio is uploaded this window will close.') }}
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-white" data-dismiss="modal">{{ _('Close') }}</button>
                 </div>
             </div>
         </div>

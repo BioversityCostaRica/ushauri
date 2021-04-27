@@ -9,7 +9,7 @@
                     <a href="{{ request.route_url('dashboard') }}">{{ _("Main Dashboard") }}</a>
                 </li>
                 <li class="active">
-                    Maintenance
+                    {{ _('Maintenance') }}
                 </li>
                 <li>
                     <a href="{{ request.route_url('groups') }}">{{ _("Groups") }}</a>
@@ -27,7 +27,7 @@
         <div class="col-md-10">
         </div>
         <div class="col-md-2">
-            <button type="button" onclick="location.href='{{ request.route_url('addagent',group=groupid) }}';" class="btn btn-primary btn-block">Add agent</button>
+            <button type="button" onclick="location.href='{{ request.route_url('addagent',group=groupid) }}';" class="btn btn-primary btn-block">{{ _('Add agent') }}</button>
         </div>
         <hr>
     </div>
@@ -47,10 +47,10 @@
                                 {{ agent.user_name }}
                             </td>
                             <td>
-                                {% if agent.access_type == 1 %}Can comment{% else %}Can comment and register{% endif %}
+                                {% if agent.access_type == 1 %}{{ _('Can comment') }}{% else %}{{ _('Can comment and register') }}{% endif %}
                             </td>
                             <td class="project-actions">
-                                <button class="btn btn-danger btn-circle" type="button" onclick="ShowConfirmModal('{{ request.route_url('deleteagent',group=groupid,agent=agent.user_id) }}','Delete agent','Do you want to delete the agent {{ agent.user_name }}?')" title="Delete"><i class="fa fa-trash"></i></button>
+                                <button class="btn btn-danger btn-circle" type="button" onclick="ShowConfirmModal('{{ request.route_url('deleteagent',group=groupid,agent=agent.user_id) }}','{{ _('Delete agent') }}','{{ _('Do you want to delete the agent') }} {{ agent.user_name }}?')" title="{{ _('Delete') }}"><i class="fa fa-trash"></i></button>
                             </td>
                         </tr>
                     {% endfor %}
@@ -67,7 +67,7 @@
         <div class="modal-dialog modal-sm">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">{{ _('Close') }}</span></button>
                     <h4 class="modal-title" id="confirm_title">Modal title</h4>
                 </div>
                 <div class="modal-body">
@@ -76,8 +76,8 @@
                     <p id="confirm_content"></p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-white" data-dismiss="modal">Cancel</button>
-                    <button type="button" onclick="proceed();" class="btn btn-primary">Confirm</button>
+                    <button type="button" class="btn btn-white" data-dismiss="modal">{{ _('Cancel') }}</button>
+                    <button type="button" onclick="proceed();" class="btn btn-primary">{{ _('Confirm') }}</button>
                 </div>
             </div>
         </div>

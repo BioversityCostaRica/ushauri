@@ -13,7 +13,7 @@
                     <a href="{{ request.route_url('dashboard') }}">{{ _("Main Dashboard") }}</a>
                 </li>
                 <li>
-                    Maintenance
+                    {{ _('Maintenance') }}
                 </li>
                 <li>
                     <a href="{{ request.route_url('menus') }}">{{ _("IVR Menus") }}</a>
@@ -32,7 +32,7 @@
 {% block maincontent %}
     <div class="row">
         <div class="col-md-12">
-            <h3 class="font-bold text-center">Add new menu item</h3>
+            <h3 class="font-bold text-center">{{ _('Add new menu item') }}</h3>
             <hr>
             {% snippet 'dashboard/snippets/error.jinja2', error_summary=error_summary %}
             <form class="form-horizontal" role="form" method="post" action="{{ request.path }}">
@@ -53,9 +53,9 @@
                     <label class="col-sm-2 control-label">{{ _('Type:') }}</label>
                     <div class="col-sm-10">
                         <select class="form-control m-b" id="item_type" name="item_type">
-                            <option value="1" {% if data.item_type == '1' %}selected{% endif %}>Prompt</option>
-                            <option value="2" {% if data.item_type == '2' %}selected{% endif %}>Gather voice</option>
-                            <option value="3" {% if data.item_type == '3' %}selected{% endif %}>Content</option>
+                            <option value="1" {% if data.item_type == '1' %}selected{% endif %}>{{ _('Prompt') }}</option>
+                            <option value="2" {% if data.item_type == '2' %}selected{% endif %}>{{ _('Gather voice') }}</option>
+                            <option value="3" {% if data.item_type == '3' %}selected{% endif %}>{{ _('Content') }}</option>
                         </select>
                     </div>
                 </div>
@@ -63,7 +63,7 @@
                     <label class="col-sm-2 control-label">{{ _('Audio:') }}</label>
                     <div class="col-sm-10">
                         <select class="form-control m-b" id="audio_id" name="audio_id">
-                            <option value="None">None</option>
+                            <option value="None">{{ _('None') }}</option>
                             {% for audio in audios %}
                                 <option value="{{ audio.audio_id }}">{{ audio.audio_desc }}</option>
                             {% endfor %}
@@ -75,7 +75,7 @@
                     <div class="col-sm-10">
                         <select class="form-control m-b" id="next_item" name="next_item">
                             <optgroup label="None">
-                                <option value="None">None</option>
+                                <option value="None">{{ _('None') }}</option>
                             </optgroup>
                             {% for menu in menus %}
                                 {% if menu.mitems|length > 0 %}

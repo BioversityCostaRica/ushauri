@@ -1,4 +1,4 @@
-from ushauri.config.encdecdata import decodeData
+from ushauri.config.encdecdata import AESCipher
 from ushauri.models import User, Groupuser, Advgroup, Member
 import json, uuid
 
@@ -17,8 +17,9 @@ def isUserActive(request, userID):
 def getUserPassword(request, userID):
     user = request.dbsession.query(User).filter(User.user_id == userID).first()
     encodedPass = user.user_pass.encode()
-    decrypted = decodeData(request, encodedPass)
-    return decrypted.decode()
+    cipher = AESCipher(key=request.registry.settings["aes.key"])
+    decrypted = cipher.decrypt(encodedPass)
+    return decrypted
 
 
 def userCanRegister(request, groupID, userID):
@@ -52,9 +53,10 @@ def storeRegistration(request, JSONFile, groupID):
         uid = uid[-12:]
         data = json.load(open(JSONFile))
         tele = data["grpaitechinfo/mobile"]
-        if tele[:4] != "+255":
+        country_code = request.registry.settings["country.code"]
+        if tele[: len(country_code)] != country_code:
             if tele[:1] == "0":
-                tele = "+255" + tele[1:]
+                tele = country_code + tele[1:]
 
         newMember = Member(
             group_id=groupID,
@@ -63,7 +65,9 @@ def storeRegistration(request, JSONFile, groupID):
             member_tele=tele,
             member_gender=data["grpaitechinfo/gender"],
             member_village=data["grpaitechinfo/village"],
+            member_gardentype=data["grpaitechinfo/gardentype"],
         )
+
         request.dbsession.add(newMember)
         return True, ""
     except Exception as e:

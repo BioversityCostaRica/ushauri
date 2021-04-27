@@ -1,8 +1,8 @@
 {% if questions|length > 0 %}
-    <h5 class="text-center">All questions directed to "{{ groupdetails.group_name }}"</h5>
+    <h5 class="text-center">{{ _('All questions directed to') }} "{{ groupdetails.group_name }}"</h5>
     <div class="row">
         <div class="col-md-2">
-            <button type="button" onclick="location.href='{{ request.route_url('dashboard', _query={'group':groupid}) }}';" id="loading-example-btn" class="btn btn-white btn-block" ><i class="fa fa-refresh"></i> Refresh</button>
+            <button type="button" onclick="location.href='{{ request.route_url('dashboard', _query={'group':groupid}) }}';" id="loading-example-btn" class="btn btn-white btn-block" ><i class="fa fa-refresh"></i> {{ _('Refresh') }}</button>
         </div>
         <div class="col-md-10">
 
@@ -24,7 +24,7 @@
 {% else %}
     <div class="row">
         <div class="col-md-12">
-            <h5 class="text-center" style="color: red">"{{ groupdetails.group_name }}" do not have questions</h5>
+            <h5 class="text-center" style="color: red">"{{ groupdetails.group_name }}" {{ _('do not have questions') }}</h5>
         </div>
     </div>
 {% endif %}

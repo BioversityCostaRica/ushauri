@@ -13,7 +13,7 @@
 {#                        <li><a href="contacts.html">Contacts</a></li>#}
 {#                        <li><a href="mailbox.html">Mailbox</a></li>#}
 {#                        <li class="divider"></li>#}
-                        <li><a href="{{ request.route_url('logout') }}">Logout</a></li>
+                        <li><a href="{{ request.route_url('logout') }}">{{ _('Logout') }}</a></li>
                     </ul>
                 </div>
                 <div class="logo-element">
@@ -22,19 +22,19 @@
             </li>
 
             <li>
-                <a><i class="fa fa-pencil-square"></i> <span class="nav-label">Maintenance</span><span class="fa arrow"></span></a>
+                <a><i class="fa fa-pencil-square"></i> <span class="nav-label">{{ _('Maintenance') }}</span><span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level collapse">
                     {% if activeUser.admin %}
-                        <li><a href="{{ request.route_url('counties') }}">Regions & Districts</a></li>
+                        <li><a href="{{ request.route_url('counties') }}">{{ _('Regions & Districts') }}</a></li>
                     {% endif %}
-                    <li><a href="{{ request.route_url('groups') }}">Advisory groups</a></li>
+                    <li><a href="{{ request.route_url('groups') }}">{{ _('Advisory groups') }}</a></li>
                     {% if activeUser.admin %}
-                        <li><a href="{{ request.route_url('menus') }}">IVR Menus</a></li>
+                        <li><a href="{{ request.route_url('menus') }}">{{ _('IVR Menus') }}</a></li>
                     {% endif %}
-                    <li><a href="{{ request.route_url('audios') }}">Audios</a></li>
+                    <li><a href="{{ request.route_url('audios') }}">{{ _('Audios') }}</a></li>
 {#                    <li><a onclick="showLanguages('about:blank');">Languages</a></li>#}
                     {% if activeUser.admin %}
-                        <li><a href="{{ request.route_url('users') }}">Agents</a></li>
+                        <li><a href="{{ request.route_url('users') }}">{{ _('Agents') }}</a></li>
                     {% endif %}
                 </ul>
             </li>
@@ -44,8 +44,8 @@
                     <a href=""><i>{{ group.group_twoword }}</i> <span>{{ group.group_name }}</span></a>
                     <ul class="nav nav-second-level">
 {#                        <li><span class="mini-nav-label">{{ group.group_name }}</span></li>#}
-                        <li><a href="{{ request.route_url('members',group=group.group_id) }}"><i class="fa fa-user"></i>Members<span class="label label-warning pull-right">{{ group.members }}</span></a></li>
-                        <li><a href="{{ request.route_url('dashboard', _query={'group':group.group_id}) }}"><i class="fa fa-comments-o"></i>Q&A <span class="label label-warning pull-right">{{ group.questions }}</span></a></li>
+                        <li><a href="{{ request.route_url('members',group=group.group_id) }}"><i class="fa fa-user"></i>{{ _('Members') }}<span class="label label-warning pull-right">{{ group.members }}</span></a></li>
+                        <li><a href="{{ request.route_url('dashboard', _query={'group':group.group_id}) }}"><i class="fa fa-comments-o"></i>{{ _('Q&A') }} <span class="label label-warning pull-right">{{ group.questions }}</span></a></li>
 {#                        <li><a href="#"><i class="fa fa-phone"></i>Set IVR menu<span class="label label-warning pull-right">1</span></a></li>#}
                         {#                    <li><a href="dashboard_2.html">Dashboard v.2</a></li>#}
                         {#                    <li><a href="dashboard_3.html">Dashboard v.3</a></li>#}

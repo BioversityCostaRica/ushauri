@@ -9,7 +9,7 @@
                     <a href="{{ request.route_url('dashboard') }}">{{ _("Main Dashboard") }}</a>
                 </li>
                 <li>
-                    Maintenance
+                    {{ _('Maintenance') }}
                 </li>
                 <li>
                     <a href="{{ request.route_url('counties') }}">{{ _("Regions") }}</a>
@@ -28,7 +28,7 @@
 {% block maincontent %}
     <div class="row">
         <div class="col-md-12">
-            <h3 class="font-bold text-center">Add new district</h3>
+            <h3 class="font-bold text-center">{{ _('Add new district') }}</h3>
             <hr>
             {% snippet 'dashboard/snippets/error.jinja2', error_summary=error_summary %}
             <form class="form-horizontal" role="form" method="post" action="{{ request.path }}">

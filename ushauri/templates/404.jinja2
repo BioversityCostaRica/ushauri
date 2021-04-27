@@ -1,8 +1,18 @@
-{% extends "layout.jinja2" %}
+{% extends 'landing/page.jinja2' %}
 
-{% block content %}
-<div class="content">
-  <h1><span class="font-semi-bold">Pyramid</span> <span class="smaller">Alchemy scaffold</span></h1>
-  <p class="lead"><span class="font-semi-bold">404</span> Page Not Found</p>
-</div>
-{% endblock content %}
+{% block title %}{{ _('Page not found') }}{% endblock title %}
+
+{% block bodyattributes %}class="gray-bg"{% endblock bodyattributes %}
+
+{% block bodycontent %}
+    {% block error_message %}
+        <div class="middle-box text-center animated fadeInDown">
+            <h1>404</h1>
+            <h3 class="font-bold">{{ _('Page Not Found') }}</h3>
+
+            <div class="error-desc">
+                {{ _('Sorry, but the page you are looking for has not been found. Try checking the URL for errors.') }}
+            </div>
+        </div>
+    {% endblock error_message %}
+{% endblock bodycontent %}

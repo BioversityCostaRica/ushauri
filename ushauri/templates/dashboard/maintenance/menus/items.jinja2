@@ -9,7 +9,7 @@
                     <a href="{{ request.route_url('dashboard') }}">{{ _("Main Dashboard") }}</a>
                 </li>
                 <li>
-                    Maintenance
+                    {{ _('Maintenance') }}
                 </li>
                 <li>
                     <a href="{{ request.route_url('menus') }}">{{ _("IVR Menus") }}</a>
@@ -27,7 +27,7 @@
         <div class="col-md-10">
         </div>
         <div class="col-md-2">
-            <button type="button" onclick="location.href='{{ request.route_url('additem',menu=menuid) }}';" class="btn btn-primary btn-block">Add item</button>
+            <button type="button" onclick="location.href='{{ request.route_url('additem',menu=menuid) }}';" class="btn btn-primary btn-block">{{ _('Add item') }}</button>
         </div>
         <hr>
     </div>
@@ -46,12 +46,12 @@
                     {% for item in items %}
                         <tr>
                             <td>
-                                {{ item.item_name }} {% if item.item_start == 1 %}<span class="label label-success">Start</span>{% endif %}
+                                {{ item.item_name }} {% if item.item_start == 1 %}<span class="label label-success">{{ _('Start') }}</span>{% endif %}
                             </td>
                             <td>
-                                {% if item.item_type == 1 %}Prompt{% endif %}
-                                {% if item.item_type == 2 %}Gather voice{% endif %}
-                                {% if item.item_type == 3 %}Content{% endif %}
+                                {% if item.item_type == 1 %}{{ _('Prompt') }}{% endif %}
+                                {% if item.item_type == 2 %}{{ _('Gather voice') }}{% endif %}
+                                {% if item.item_type == 3 %}{{ _('Content') }}{% endif %}
                             </td>
                             <td>
                                 <span title="{{ item.item_desc }}">{{ item.item_desc|truncate(44, True) }}</span>
@@ -61,11 +61,11 @@
                             </td>
                             <td class="project-actions">
                                 {% if item.item_type == 1 %}
-                                    <button class="btn btn-default btn-circle" onclick="location.href='{{ request.route_url('responses',menu=menuid,item=item.item_id) }}';" type="button" title="Edit responses"><i class="fa fa-list"></i></button>
+                                    <button class="btn btn-default btn-circle" onclick="location.href='{{ request.route_url('responses',menu=menuid,item=item.item_id) }}';" type="button" title="{{ _('Edit responses') }}"><i class="fa fa-list"></i></button>
                                 {% endif %}
-                                <button class="btn btn-default btn-circle" onclick="ShowConfirmModal('{{ request.route_url('itemstart',menu=menuid,item=item.item_id) }}','Set item as start','Do you want to set the item {{ item.item_name }} as start?')" type="button" title="Set as start"><i class="fa fa-play"></i></button>
-                                <button class="btn btn-warning btn-circle" onclick="location.href='{{ request.route_url('edititem',menu=menuid,item=item.item_id) }}';" type="button" title="Modify"><i class="fa fa-edit"></i></button>
-                                <button class="btn btn-danger btn-circle" onclick="ShowConfirmModal('{{ request.route_url('deleteitem',menu=menuid,item=item.item_id) }}','Delete item','Do you want to delete the item {{ item.item_name }}?')" type="button" title="Delete"><i class="fa fa-trash"></i></button>
+                                <button class="btn btn-default btn-circle" onclick="ShowConfirmModal('{{ request.route_url('itemstart',menu=menuid,item=item.item_id) }}','{{ _('Set item as start') }}','{{ _('Do you want to set the item') }} {{ item.item_name }} {{ _('as start?') }}')" type="button" title="{{ _('Set as start') }}"><i class="fa fa-play"></i></button>
+                                <button class="btn btn-warning btn-circle" onclick="location.href='{{ request.route_url('edititem',menu=menuid,item=item.item_id) }}';" type="button" title="{{ _('Modify') }}"><i class="fa fa-edit"></i></button>
+                                <button class="btn btn-danger btn-circle" onclick="ShowConfirmModal('{{ request.route_url('deleteitem',menu=menuid,item=item.item_id) }}','{{ _('Delete item') }}','{{ _('Do you want to delete the item') }} {{ item.item_name }}?')" type="button" title="{{ _('Delete') }}"><i class="fa fa-trash"></i></button>
                             </td>
                         </tr>
                     {% endfor %}
@@ -82,7 +82,7 @@
         <div class="modal-dialog modal-sm">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">{{ _('Close') }}</span></button>
                     <h4 class="modal-title" id="confirm_title">Modal title</h4>
                 </div>
                 <div class="modal-body">
@@ -91,8 +91,8 @@
                     <p id="confirm_content"></p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-white" data-dismiss="modal">Cancel</button>
-                    <button type="button" onclick="proceed();" class="btn btn-primary">Confirm</button>
+                    <button type="button" class="btn btn-white" data-dismiss="modal">{{ _('Cancel') }}</button>
+                    <button type="button" onclick="proceed();" class="btn btn-primary">{{ _('Confirm') }}</button>
                 </div>
             </div>
         </div>

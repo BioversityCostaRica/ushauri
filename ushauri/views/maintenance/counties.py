@@ -154,7 +154,7 @@ class editSubCounty_view(privateView):
                     else:
                         error_summary["error"] = message
                 else:
-                    error_summary["county_name"] = "The name cannot be empty"
+                    error_summary["county_name"] = self._("The name cannot be empty")
         return {
             "error_summary": error_summary,
             "data": data,

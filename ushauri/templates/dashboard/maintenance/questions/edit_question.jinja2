@@ -19,8 +19,8 @@
 {% block maincontent %}
     <div class="row">
         <div class="col-md-12">
-            <h3 class="font-bold text-center">Modify question by {{ data.member.member_name }} on {{ data.question_dtime }}</h3>
-            <button class="btn btn-default btn-block" style="background-color: #1c84c6; color: white" type="button" onclick="playAudio('{{ request.route_url('getaudio',audioid=data.question_audiofile) }}')" title="Listen to reply">Listen</button>
+            <h3 class="font-bold text-center">{{ _('Modify question by') }} {{ data.member.member_name }} {{ _('on') }} {{ data.question_dtime }}</h3>
+            <button class="btn btn-default btn-block" style="background-color: #1c84c6; color: white" type="button" onclick="playAudio('{{ request.route_url('getaudio',audioid=data.question_audiofile) }}')" title="{{ _('Listen to reply') }}">{{ _('Listen') }}</button>
             <hr>
             {% snippet 'dashboard/snippets/error.jinja2', error_summary=error_summary %}
             <form class="form-horizontal" role="form" method="post" action="{{ request.path }}">
@@ -31,14 +31,14 @@
                         <input type="text" class="form-control" value="{{ data.question_tags }}" id="question_tags" name="question_tags" placeholder=" ">
                     </div>
                 </div>
-{#                <div class="form-group">#}
-{#                    <label class="col-sm-2 control-label">{{ _('Transcription:') }}</label>#}
-{#                    <div class="col-sm-10">#}
-{#                        <textarea class="form-control" id="question_text" name="question_text">{{ data.question_text }}</textarea>#}
-{#                    </div>#}
-{#                </div>#}
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">{{ _('Transcription:') }}</label>
+                    <div class="col-sm-10">
+                        <textarea class="form-control" id="question_text" name="question_text">{{ data.question_text }}</textarea>
+                    </div>
+                </div>
 
-                <button class="btn btn-primary btn-block" type="submit" name="edit"> {{ _('Save') }}</button>
+                <button class="btn btn-primary btn-block" type="submit" name="edit"> {{ _('Edit') }}</button>
             </form>
         </div>
     </div>

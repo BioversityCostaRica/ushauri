@@ -13,7 +13,7 @@
                     <a href="{{ request.route_url('dashboard') }}">{{ _("Main Dashboard") }}</a>
                 </li>
                 <li class="active">
-                    Maintenance
+                    {{ _('Maintenance') }}
                 </li>
                 <li>
                     <a href="{{ request.route_url('groups') }}">{{ _("Groups") }}</a>
@@ -53,8 +53,8 @@
                     <label class="col-sm-2 control-label">{{ _('Access:') }}</label>
                     <div class="col-sm-10">
                         <select class="form-control m-b" id="access_type" name="access_type">
-                            <option value="1">Can comment</option>
-                            <option value="2">Can comment and register</option>
+                            <option value="1">{{ _('Can comment') }}</option>
+                            <option value="2">{{ _('Can comment and register') }}</option>
                         </select>
                     </div>
                 </div>

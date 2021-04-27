@@ -81,7 +81,7 @@ class IConfig(Interface):
 
 class IResource(Interface):
     """
-        Allows to hook into the creation of JS and CSS libraries or resources
+    Allows to hook into the creation of JS and CSS libraries or resources
     """
 
     def add_libraries(self, config):
@@ -96,8 +96,8 @@ class IResource(Interface):
     def add_JSResources(self, config):
         """
         Called by ushauri so plugins can add new JS Resources
-        
-        :param config: ``pyramid.config`` object        
+
+        :param config: ``pyramid.config`` object
         :return Returns a dict array [{'libraryname':'mylibrary','id':'myResourceID','file':'/relative/path/to/jsFile','depends':'resourceID'}]
         """
         return []
@@ -106,7 +106,7 @@ class IResource(Interface):
         """
         Called by ushauri so plugins can add new CSS Resources
 
-        :param config: ``pyramid.config`` object        
+        :param config: ``pyramid.config`` object
         :return Returns a dict array [{'libraryname':'mylibrary','id':'myResourceID','file':'/relative/path/to/jsFile','depends':'resourceID'}]
         """
         return []
@@ -114,25 +114,25 @@ class IResource(Interface):
 
 class IPluralize(Interface):
     """
-        Allows to hook into the pluralization function so plugins can extend the pluralization of ushauri
+    Allows to hook into the pluralization function so plugins can extend the pluralization of ushauri
     """
 
     def pluralize(self, noun, locale):
         """
-            Called the packages are created
+        Called the packages are created
 
-            :param noun: ``Noun to be pluralized``
-            :param locale: ``The current locate code e.g. en``
-            :return the noun in plural form
+        :param noun: ``Noun to be pluralized``
+        :param locale: ``The current locate code e.g. en``
+        :return the noun in plural form
         """
 
 
 class ISchema(Interface):
     """
-        Allows to hook into the schema layer and add new fields into it.
-        The schema is a layer on top of the database schema so plugin developers can
-        add new fields to ushauri tables without affecting the structure
-        of the database. New fields are stored in extra as JSON keys
+    Allows to hook into the schema layer and add new fields into it.
+    The schema is a layer on top of the database schema so plugin developers can
+    add new fields to ushauri tables without affecting the structure
+    of the database. New fields are stored in extra as JSON keys
     """
 
     def update_schema(self, config):
@@ -160,8 +160,8 @@ class ISchema(Interface):
 
 class IDatabase(Interface):
     """
-        Allows to hook into the database schema so plugins can add new tables
-        After calling this
+    Allows to hook into the database schema so plugins can add new tables
+    After calling this
     """
 
     def update_schema(self, config, Base):
@@ -176,8 +176,8 @@ class IDatabase(Interface):
 
 class IAuthorize(Interface):
     """
-        Allows to hook into the user authorization
-        After calling this
+    Allows to hook into the user authorization
+    After calling this
     """
 
     def after_login(self, request, user):

@@ -33,17 +33,13 @@ def twiml(resp):
 
 
 def sendReply(request, number, audioID, questionID):
-    account_sid = request.registry.settings["account_sid"]
-    auth_token = request.registry.settings["auth_token"]
+    account_sid = request.registry.settings["twilio.account.sid"]
+    auth_token = request.registry.settings["twilio.auth.token"]
     client = Client(account_sid, auth_token)
-    # print("*************************R33")
-    # print(number)
-    # print("-----------------------")
-    # print(audioID)
-    # print("*************************R33")
+
     call = client.calls.create(
         to=number,
-        from_=request.registry.settings["call_from"],
+        from_=request.registry.settings["twilio.number"],
         url=request.route_url("sendreply", audioid=audioID),
         method="GET",
         status_callback=request.route_url(
@@ -60,9 +56,6 @@ def ivrSend_view(request):
         loop=0,
     )
     response.hangup()
-    print("****************ivrSend_view******************")
-    print(response.to_xml())
-    print("****************ivrSend_view******************")
     return twiml(response)
 
 
@@ -71,7 +64,6 @@ def ivrReplyStatus_view(request):
         questionID = request.matchdict["questionid"]
         audioID = request.matchdict["audioid"]
         print("************************A99")
-        print(request.POST)
         classStatus = request.POST.get("CallStatus", "failed")
         if classStatus == "completed":
             setQuestionStatus(request, questionID, 3, audioID)
@@ -84,16 +76,15 @@ def ivrReplyStatus_view(request):
 
 def ivrVoiceStart_view(request):
     number = request.params["From"]
-    # If the number is malformed like +792490972 then remove the + and add +cuntry code
-    if number[:len(request.registry.settings["country_code"])] != request.registry.settings["country_code"]:
+    # If the number is malformed like +792490972 then remove the + and add country code
+    country_code = request.registry.settings["country.code"]
+    if number[: len()] != country_code:
         print("*****************90")
         print("Fixing" + number)
         print("--------------------------")
         print(request.params)
-        print("-------------------------")
-        number = request.registry.settings["country_code"] + number[2:]
-        print(number)
         print("*****************90")
+        number = country_code + number[1:]
 
     agent = isNumberAnAgent(request, number)
     # agent = None #Only for Skype test. Remove soon
@@ -105,9 +96,6 @@ def ivrVoiceStart_view(request):
             response.redirect(
                 request.route_url("ivrget", itemid=menuItem), method="GET"
             )
-            print("****************Agent menu******************")
-            print(response.to_xml())
-            print("****************Agent menu******************")
             return twiml(response)
         else:
             resp = VoiceResponse()
@@ -117,7 +105,7 @@ def ivrVoiceStart_view(request):
     else:
         member = isNumberAMember(request, number)
 
-        # member = "ce8576be358a" #Only for Skype test. Remove soon
+        # member = "2aade9ca2adb" #Only for Skype test. Remove soon
 
         if member is not None:
             menuItem = getMemberStartItem(request, member)
@@ -126,9 +114,6 @@ def ivrVoiceStart_view(request):
                 response.redirect(
                     request.route_url("ivrget", itemid=menuItem), method="GET"
                 )
-                print("****************Member menu******************")
-                print(response.to_xml())
-                print("****************Member menu******************")
                 return twiml(response)
             else:
                 resp = VoiceResponse()
@@ -141,22 +126,20 @@ def ivrVoiceStart_view(request):
                 "Contact your extension agent so he/she register you for this service"
             )
             resp.hangup()
-            print("****************No member response******************")
-            print(resp.to_xml())
-            print("****************No member response******************")
             return twiml(resp)
 
 
 def ivrMessage_view(request):
     number = request.params["From"]
-    # If the number is malformed like +792490972 then remove the + and add +country code
-    if number[:len(request.registry.settings["country_code"])] != request.registry.settings["country_code"]:
+    # If the number is malformed like +792490972 then remove the + and add country code
+    country_code = request.registry.settings["country.code"]
+    if number[: len(country_code)] != country_code:
         print("*****************91")
         print("Fixing" + number)
         print("------------------------")
         print(request.params)
         print("*****************91")
-        number = request.registry.settings["country_code"] + number[2:]
+        number = country_code + number[1:]
     agent = isNumberAnAgent(request, number)
     if agent is not None:
         menuItem = getAgentStartItem(request, agent)
@@ -166,13 +149,13 @@ def ivrMessage_view(request):
             message.body("Hello Extension Agent! We will call you soon")
             response.append(message)
 
-            account_sid = request.registry.settings["account_sid"]
-            auth_token = request.registry.settings["auth_token"]
+            account_sid = request.registry.settings["twilio.account.sid"]
+            auth_token = request.registry.settings["twilio.auth.token"]
             client = Client(account_sid, auth_token)
 
             call = client.calls.create(
                 to=number,
-                from_=request.registry.settings["call_from"],
+                from_=request.registry.settings["twilio.number"],
                 url=request.route_url("ivrget", itemid=menuItem),
                 method="GET",
             )
@@ -193,13 +176,13 @@ def ivrMessage_view(request):
                 message.body("Hello Member! We will call you soon")
                 response.append(message)
 
-                account_sid = request.registry.settings["account_sid"]
-                auth_token = request.registry.settings["auth_token"]
+                account_sid = request.registry.settings["twilio.account.sid"]
+                auth_token = request.registry.settings["twilio.auth.token"]
                 client = Client(account_sid, auth_token)
 
                 call = client.calls.create(
                     to=number,
-                    from_=request.registry.settings["call_from"],
+                    from_=request.registry.settings["twilio.number"],
                     url=request.route_url("ivrget", itemid=menuItem),
                     method="GET",
                 )
@@ -225,25 +208,21 @@ def ivrGet_view(request):
     itemID = request.matchdict["itemid"]
     itemData = getItemData(request, itemID)
     number = request.params["From"]
-    # If the number is malformed like +792490972 then remove the + and add +country code
-    if number[:len(request.registry.settings["country_code"])] != request.registry.settings["country_code"]:
+    # If the number is malformed like +792490972 then remove the + and add country code
+    country_code = request.registry.settings["country.code"]
+    if number[: len(country_code)] != country_code:
         print("*****************92")
         print("Fixing" + number)
         print("----------------------------")
         print(request.params)
-        print("-------------------")
-        number = request.registry.settings["country_code"] + number[2:]
-        print(number)
         print("*****************92")
-
-    # number = "+50662365878" # Only for Skype
-
+        number = country_code + number[1:]
     recordLog(request, number, itemID)
     if itemData is not None:
         if request.method == "GET":
             if itemData["item_type"] == 1:
                 response = VoiceResponse()
-                audioData = getAudioFile(request, itemID, "en")
+                audioData = getAudioFile(request, itemID)
                 if audioData is None:
                     with response.gather(
                         numDigits=1,
@@ -268,14 +247,11 @@ def ivrGet_view(request):
                             ),
                             loop=3,
                         )
-                print("****************ivrGet_view type 1******************")
-                print(response.to_xml())
-                print("****************ivrGet_view type 1******************")
                 return twiml(response)
 
             if itemData["item_type"] == 2:
                 resp = VoiceResponse()
-                audioData = getAudioFile(request, itemID, "en")
+                audioData = getAudioFile(request, itemID)
                 if audioData is None:
                     resp.say("Record your message after the tone.")
                 else:
@@ -292,16 +268,9 @@ def ivrGet_view(request):
                     finish_on_key="*",
                 )
                 resp.hangup()
-                print(
-                    "****************Record the message after the tone******************"
-                )
-                print(resp.to_xml())
-                print(
-                    "****************Record the message after the tone******************"
-                )
                 return twiml(resp)
             if itemData["item_type"] == 3:
-                audioData = getAudioFile(request, itemID, "en")
+                audioData = getAudioFile(request, itemID)
                 response = VoiceResponse()
                 response.play(
                     request.url_for_static("static/audio/" + audioData["audio_file"]),
@@ -312,23 +281,9 @@ def ivrGet_view(request):
                         request.route_url("ivrget", itemid=itemData["next_item"]),
                         method="GET",
                     )
-                    print(
-                        "****************ivrGet_view type 3 with next******************"
-                    )
-                    print(response.to_xml())
-                    print(
-                        "****************ivrGet_view type 3 with next******************"
-                    )
                     return twiml(response)
                 else:
                     response.hangup()
-                    print(
-                        "****************ivrGet_view type 3 without next******************"
-                    )
-                    print(response.to_xml())
-                    print(
-                        "****************ivrGet_view type 3 without next******************"
-                    )
                     return twiml(response)
         else:
             resp = VoiceResponse()
@@ -366,9 +321,6 @@ def ivrPost_view(request):
                         request.route_url("ivrget", itemid=resp["target_item"]),
                         method="GET",
                     )
-                    print("****************ivrPost_view redirect******************")
-                    print(response.to_xml())
-                    print("****************ivrPost_view redirect******************")
                     return twiml(response)
             resp = VoiceResponse()
             resp.say("Error, was not able to find a response")
@@ -394,14 +346,13 @@ def ivrStore_view(request):
             number = request.POST.get(
                 "From", ""
             )  # We assume here that the platform made the call. Change to From
-            # If the number is malformed like +792490972 then remove the + and add +country code
-            if number[:len(request.registry.settings["country_code"])] != request.registry.settings["country_code"]:
+            # If the number is malformed like +792490972 then remove the + and add country code
+            country_code = request.registry.settings["country.code"]
+            if number[: len(country_code)] != country_code:
                 print("*****************93")
                 print("Fixing" + number)
-                print("---------------------")
-                number = request.registry.settings["country_code"] + number[2:]
-                print(number)
                 print("*****************93")
+                number = country_code + number[1:]
             agent = isNumberAnAgent(request, number)
 
             # agent = None #Only for Skype test. Remove soon
@@ -427,8 +378,8 @@ def ivrStore_view(request):
             else:
                 group, member = getMemberAndGroup(request, number)
 
-                # group = "35f59a27debc" # Only for Skype test. Remove soon
-                # member = "ce8576be358a" # Only for Skype test. Remove soon
+                # group = "eb3f40b10ca4"
+                # member = "2aade9ca2adb"
 
                 path = os.path.join(
                     request.registry.settings["repository"], *[uid + ".wav"]
@@ -437,9 +388,6 @@ def ivrStore_view(request):
                 storeQuestion(request, group, member, uid)
             resp = VoiceResponse()
             resp.hangup()
-            print("****************Hangup after store******************")
-            print(resp.to_xml())
-            print("****************Hangup after store******************")
             return twiml(resp)
         else:
             resp = VoiceResponse()

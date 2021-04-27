@@ -123,11 +123,11 @@ def addFieldToFormSchema(fieldName, fieldDesc):
 # ODKTools view classes
 class ushauriPublicView(publicView):
     """
-        A view class for plugins which require a public (not login required) view.
+    A view class for plugins which require a public (not login required) view.
     """
 
 
 class ushauriPrivateView(privateView):
     """
-        A view class for plugins which require a private (login required) view.
+    A view class for plugins which require a private (login required) view.
     """

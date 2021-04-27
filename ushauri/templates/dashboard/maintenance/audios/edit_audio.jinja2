@@ -13,7 +13,7 @@
                     <a href="{{ request.route_url('dashboard') }}">{{ _("Main Dashboard") }}</a>
                 </li>
                 <li>
-                    Maintenance
+                    {{ _('Maintenance') }}
                 </li>
                 <li>
                     <a href="{{ request.route_url('audios') }}">{{ _("Audios") }}</a>
@@ -29,7 +29,7 @@
 {% block maincontent %}
     <div class="row">
         <div class="col-md-12">
-            <h3 class="font-bold text-center">Edit audio</h3>
+            <h3 class="font-bold text-center">{{ _('Edit audio') }}</h3>
             <hr>
             {% snippet 'dashboard/snippets/error.jinja2', error_summary=error_summary %}
             <form class="form-horizontal" role="form" method="post" action="{{ request.path }}" enctype="multipart/form-data">

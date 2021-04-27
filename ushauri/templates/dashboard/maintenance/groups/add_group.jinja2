@@ -13,7 +13,7 @@
                     <a href="{{ request.route_url('dashboard') }}">{{ _("Main Dashboard") }}</a>
                 </li>
                 <li class="active">
-                    Maintenance
+                    {{ _('Maintenance') }}
                 </li>
                 <li>
                     <a href="{{ request.route_url('groups') }}">{{ _("Groups") }}</a>
@@ -29,7 +29,7 @@
 {% block maincontent %}
     <div class="row">
         <div class="col-md-12">
-            <h3 class="font-bold text-center">Add new Advisory Group</h3>
+            <h3 class="font-bold text-center">{{ _('Add new Advisory Group') }}</h3>
             <hr>
             {% snippet 'dashboard/snippets/error.jinja2', error_summary=error_summary %}
             <form class="form-horizontal" role="form" method="post" action="{{ request.path }}">
@@ -37,13 +37,13 @@
                 <div class="form-group">
                     <label class="col-sm-2 control-label">{{ _('Name:') }}</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" value="{{ data.group_sname }}" id="group_sname" name="group_sname" placeholder=" "><span class="help-block m-b-none text-left">This short name must be unique</span>
+                        <input type="text" class="form-control" value="{{ data.group_sname }}" id="group_sname" name="group_sname" placeholder=" "><span class="help-block m-b-none text-left">{{ _('This short name must be unique') }}</span>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-2 control-label">{{ _('Three letters ID:') }}</label>
                     <div class="col-sm-10">
-                        <input type="text" maxlength="3" pattern="[A-Za-z]{3}" class="form-control" value="{{ data.group_twoword }}" id="group_twoword" name="group_twoword" placeholder=" "><span class="help-block m-b-none text-left">A three letter unique identification </span>
+                        <input type="text" maxlength="3" pattern="[A-Za-z]{3}" class="form-control" value="{{ data.group_twoword }}" id="group_twoword" name="group_twoword" placeholder=" "><span class="help-block m-b-none text-left">{{ _('A three letter unique identification') }} </span>
                     </div>
                 </div>
                 <div class="form-group">

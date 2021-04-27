@@ -9,10 +9,9 @@ from ushauri.models import (
     Menuitem,
     Response,
     Audio,
-    Itemaudio,
     Question,
 )
-from ushauri.config.encdecdata import encodeData
+from ushauri.config.encdecdata import AESCipher
 import uuid, sys, datetime
 from sqlalchemy.exc import IntegrityError
 
@@ -218,11 +217,7 @@ def getAudioDesc2(request, audioID):
 
 def getQuestions(request, groupID):
     result = []
-    questions = (
-        request.dbsession.query(Question)
-        .filter(Question.group_id == groupID)
-        .order_by(Question.question_dtime.desc())
-    )
+    questions = request.dbsession.query(Question).filter(Question.group_id == groupID)
     for question in questions:
         tags = []
         stags = question.question_tags
@@ -318,6 +313,7 @@ def addGroup(
     userID,
     menu,
 ):
+    _ = request.translate
     res = (
         request.dbsession.query(Advgroup)
         .filter(Advgroup.group_sname == groupSName)
@@ -346,7 +342,7 @@ def addGroup(
         except Exception as e:
             return False, str(e)
     else:
-        return False, "Such group name already exists"
+        return False, _("Such group name already exists")
 
 
 def editGroup(request, groupID, groupName, threeLetters, groupWard, menu):
@@ -419,7 +415,9 @@ def getUsers(request):
 
 
 def addUser(request, userID, name, telef, email, county, subcounty, password, menu):
-    encPass = encodeData(request, password)
+    _ = request.translate
+    cipher = AESCipher(key=request.registry.settings["aes.key"])
+    encPass = cipher.encrypt(password)
     newUser = User(
         user_id=userID,
         user_name=name,
@@ -436,7 +434,7 @@ def addUser(request, userID, name, telef, email, county, subcounty, password, me
         request.dbsession.add(newUser)
         return True, ""
     except IntegrityError as e:
-        return False, request.translate("Duplicated user")
+        return False, request.translate(_("Duplicated user"))
     except:
         return False, sys.exc_info()[0]
 
@@ -466,7 +464,8 @@ def modifyUser(request, userID, name, telef, email, menu):
 
 def modifyPassword(request, userID, newPassword):
     try:
-        encPass = encodeData(request, newPassword)
+        cipher = AESCipher(key=request.registry.settings["aes.key"])
+        encPass = cipher.encrypt(newPassword)
         request.dbsession.query(User).filter(User.user_id == userID).update(
             {"user_pass": encPass}
         )
@@ -582,12 +581,7 @@ def getItemName(request, itemID):
 
 # TODO: We need to change this to support multi languages
 def getItemAudio(request, itemID):
-    res = (
-        request.dbsession.query(Itemaudio)
-        .filter(Itemaudio.item_id == itemID)
-        .filter(Itemaudio.language_code == "en")
-        .first()
-    )
+    res = request.dbsession.query(Menuitem).filter(Menuitem.item_id == itemID).first()
     if res is not None:
         return res.audio_id
     else:
@@ -621,13 +615,10 @@ def addItem(request, menuID, type, name, desc, nextItem, audio):
         item_desc=desc,
         next_item=nextItem,
         menu_id=menuID,
+        audio_id=audio,
     )
     try:
         request.dbsession.add(newItem)
-        # TODO: We need to change this to support multi languages
-        if audio is not None:
-            newAudio = Itemaudio(item_id=uid, language_code="en", audio_id=audio)
-            request.dbsession.add(newAudio)
         return True, ""
     except Exception as e:
         return False, str(e)
@@ -636,12 +627,9 @@ def addItem(request, menuID, type, name, desc, nextItem, audio):
 # TODO: We need to change this to support multi languages
 def modifyItemAudio(request, itemID, audio):
     try:
-        request.dbsession.query(Itemaudio).filter(Itemaudio.item_id == itemID).filter(
-            Itemaudio.language_code == "en"
-        ).delete()
-        if audio is not None:
-            newAudio = Itemaudio(item_id=itemID, language_code="en", audio_id=audio)
-            request.dbsession.add(newAudio)
+        request.dbsession.query(Menuitem).filter(Menuitem.item_id == itemID).update(
+            {"audio_id": audio}
+        )
         return True, ""
     except Exception as e:
         return False, str(e)

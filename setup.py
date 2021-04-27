@@ -13,13 +13,11 @@ requires = [
     "alembic",
     "appdirs",
     "arrow",
-    "attrs",
     "Babel",
     "beautifulsoup4",
     "black",
     "bs4",
     "certifi",
-    "Chameleon",
     "chardet",
     "click",
     "FormEncode",
@@ -34,6 +32,7 @@ requires = [
     "lxml",
     "Mako",
     "MarkupSafe",
+    "mypy-extensions",
     "mysql-connector-python",
     "nose",
     "PasteDeploy",
@@ -51,7 +50,6 @@ requires = [
     "pyramid-mako",
     "pyramid-retry",
     "pyramid-tm",
-    "PySocks",
     "python-dateutil",
     "python-editor",
     "pytz",
@@ -69,6 +67,7 @@ requires = [
     "translationstring",
     "twilio",
     "typed-ast",
+    "typing-extensions",
     "unicodecsv",
     "unittest2",
     "urllib3",
@@ -83,7 +82,11 @@ requires = [
     "zope.sqlalchemy",
 ]
 
-tests_require = ["WebTest >= 1.3.1", "pytest", "pytest-cov"]  # py3 compat
+tests_require = [
+    "WebTest >= 1.3.1",  # py3 compat
+    "pytest",
+    "pytest-cov",
+]
 
 setup(
     name="ushauri",
@@ -103,12 +106,16 @@ setup(
     packages=find_packages(),
     include_package_data=True,
     zip_safe=False,
-    extras_require={"testing": tests_require},
+    extras_require={
+        "testing": tests_require,
+    },
     install_requires=requires,
     entry_points={
-        "paste.app_factory": ["main = ushauri:main"],
+        "paste.app_factory": [
+            "main = ushauri:main",
+        ],
         "console_scripts": [
-            "initialize_ushauri_db = ushauri.scripts.initializedb:main"
+            "initialize_ushauri_db = ushauri.scripts.initializedb:main",
         ],
     },
 )

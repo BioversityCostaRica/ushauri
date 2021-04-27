@@ -24,10 +24,12 @@
     <div class="row">
         <div class="col-md-12">
             {% if replied == False %}
-                <h3 class="font-bold text-center">Reply {% if data.question_status == -1 %}<span style="color: red">again </span>{% endif %}to question by {{ data.member.member_name }} on {{ data.question_dtime }}</h3>
-                <button class="btn btn-default btn-block" style="background-color: #1c84c6; color: white" type="button" onclick="playAudio('{{ request.route_url('getaudio',audioid=data.question_audiofile) }}')" title="Listen question again">Listen question again</button>
-                <button type="button" onclick="location.href='{{ request.route_url('recordandreplytomember',group=groupid,question=questionid) }}';" class="btn btn-warning btn-block">Record and reply</button>
-                <h3 class="font-bold text-center">or select an answer to reply</h3>
+                <h3 class="font-bold text-center">{{ _('Reply') }} {% if data.question_status == -1 %}<span style="color: red">{{ _('again') }} </span>{% endif %}{{ _('to question by') }} {{ data.member.member_name }} {{ _('on') }} {{ data.question_dtime }}</h3>
+                <button class="btn btn-default btn-block" style="background-color: #1c84c6; color: white" type="button" onclick="playAudio('{{ request.route_url('getaudio',audioid=data.question_audiofile) }}')" title="{{ _('Listen to question') }}">{{ _('Listen') }}</button>
+                <hr>
+                <button type="button" onclick="location.href='{{ request.route_url('recordandreplytomember',group=groupid,question=questionid) }}';" class="btn btn-warning btn-block">{{ _('Record and reply') }}</button>
+                <hr>
+                <h3 class="font-bold text-center">{{ _('or select and audio to reply') }}</h3>
                 {% snippet 'dashboard/snippets/error.jinja2', error_summary=error_summary %}
                 <form class="form-horizontal" role="form" method="post" action="{{ request.path }}">
                     <input type="hidden" name="csrf_token" value="{{ request.session.get_csrf_token() }}">
@@ -43,12 +45,13 @@
                             </div>
                         </div>
                     </div>
-                    <button class="btn btn-default btn-block" style="background-color: #1c84c6; color: white" type="button" onclick="playCurrentAudio()" title="Listen">{{ _('Listen selected answer') }}</button>
-{#                    <button class="btn btn-default btn-block" type="button" onclick="location.href='{{ request.route_url('audios') }}';" title="Listen">{{ _('Go to the audios maintenance page') }}</button>#}
-                    <button class="btn btn-primary btn-block" type="submit" name="edit"> {{ _('Reply selected answer') }}</button>
+                    <button class="btn btn-default btn-block" style="background-color: #1c84c6; color: white" type="button" onclick="playCurrentAudio()" title="{{ _('Listen') }}">{{ _('Listen selected audio') }}</button>
+                    <button class="btn btn-default btn-block" type="button" onclick="location.href='{{ request.route_url('audios') }}';" title="{{ _('Go to maintenance') }}">{{ _('Go to the audios maintenance page') }}</button>
+                    <hr>
+                    <button class="btn btn-primary btn-block" type="submit" name="edit"> {{ _('Reply selected audio') }}</button>
                 </form>
             {% else %}
-                <h2 style="color: green">Done. Please close this window</h2>
+                <h2 style="color: green">{{ _('Done. Please close this window') }}</h2>
             {% endif %}
         </div>
     </div>

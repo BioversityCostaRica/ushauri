@@ -60,15 +60,19 @@ class addGroup_view(privateView):
                                 else:
                                     error_summary["error"] = message
                             else:
-                                error_summary[
-                                    "district"
-                                ] = "You need to select a district"
+                                error_summary["district"] = self._(
+                                    "You need to select a district"
+                                )
                         else:
-                            error_summary["group_ward"] = "The ward cannot be empty"
+                            error_summary["group_ward"] = self._(
+                                "The ward cannot be empty"
+                            )
                     else:
-                        error_summary["group_name"] = "The full name cannot be empty"
+                        error_summary["group_name"] = self._(
+                            "The full name cannot be empty"
+                        )
                 else:
-                    error_summary["group_sname"] = "The name cannot be empty"
+                    error_summary["group_sname"] = self._("The name cannot be empty")
         return {
             "error_summary": error_summary,
             "data": data,

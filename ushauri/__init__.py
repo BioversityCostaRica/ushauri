@@ -14,8 +14,7 @@ from pyramid.authorization import ACLAuthorizationPolicy
 
 
 def main(global_config, **settings):
-    """ This function returns a Pyramid WSGI application.
-            """
+    """This function returns a Pyramid WSGI application."""
 
     authn_policy = AuthTktAuthenticationPolicy(
         settings["auth.secret"],

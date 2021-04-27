@@ -13,7 +13,7 @@
                     <a href="{{ request.route_url('dashboard') }}">{{ _("Main Dashboard") }}</a>
                 </li>
                 <li class="active">
-                    Maintenance
+                    {{ _('Maintenance') }}
                 </li>
                 <li>
                     <a href="{{ request.route_url('groups') }}">{{ _("Groups") }}</a>
@@ -51,8 +51,8 @@
                     <label class="col-sm-2 control-label">{{ _('Gender:') }}</label>
                     <div class="col-sm-10">
                         <select class="form-control m-b" id="member_gender" name="member_gender">
-                            <option value="1" {% if data.member_gender == '1' %}selected{% endif %}>Male</option>
-                            <option value="2" {% if data.member_gender == '2' %}selected{% endif %}>Female</option>
+                            <option value="1" {% if data.member_gender == '1' %}selected{% endif %}>{{ _('Male') }}</option>
+                            <option value="2" {% if data.member_gender == '2' %}selected{% endif %}>{{ _('Female') }}</option>
                         </select>
                     </div>
                 </div>

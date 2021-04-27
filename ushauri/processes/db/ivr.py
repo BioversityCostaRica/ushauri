@@ -1,4 +1,4 @@
-from ushauri.models import Question, User, Member, Itemaudio, Response, Menuitem, Audio
+from ushauri.models import Question, User, Member, Response, Menuitem, Audio
 import uuid, datetime
 
 
@@ -31,20 +31,11 @@ def getItemResponses(request, itemID):
 
 def getAudioFileName(request, audioID):
     res = request.dbsession.query(Audio).filter(Audio.audio_id == audioID).first()
-    if res is None:
-        print("***************Audio Error****************")
-        print(audioID)
-        print("***************Audio Error****************")
     return res.audio_file
 
 
-def getAudioFile(request, itemID, languageCode):
-    data = (
-        request.dbsession.query(Itemaudio)
-        .filter(Itemaudio.item_id == itemID)
-        .filter(Itemaudio.language_code == languageCode)
-        .first()
-    )
+def getAudioFile(request, itemID):
+    data = request.dbsession.query(Menuitem).filter(Menuitem.item_id == itemID).first()
     if data is not None:
         return {
             "audio_id": data.audio_id,

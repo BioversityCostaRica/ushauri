@@ -17,7 +17,6 @@ from ushauri.processes.db.maintenance import (
     getItemName,
     addRenponse,
     deleteResponse,
-    listAudios,
     listPodcasts,
 )
 from pyramid.httpexceptions import HTTPFound, HTTPNotFound
@@ -43,7 +42,7 @@ class addMenu_view(privateView):
                     else:
                         error_summary["error"] = message
                 else:
-                    error_summary["menu_name"] = "The name cannot be empty"
+                    error_summary["menu_name"] = self._("The name cannot be empty")
         return {"error_summary": error_summary, "data": data}
 
 
@@ -64,7 +63,7 @@ class modifyMenu_view(privateView):
                     else:
                         error_summary["error"] = message
                 else:
-                    error_summary["menu_name"] = "The name cannot be empty"
+                    error_summary["menu_name"] = self._("The name cannot be empty")
         return {"error_summary": error_summary, "data": data, "menuid": menuID}
 
 
@@ -99,7 +98,7 @@ class addMenuItem_view(privateView):
                 data = self.getPostDict()
                 if data["item_name"] != "":
                     if data["item_type"] != "3" and data["item_desc"] == "":
-                        error_summary["item_desc"] = "The item needs content"
+                        error_summary["item_desc"] = self._("The item needs content")
                     else:
                         if data["next_item"] == "None":
                             data["next_item"] = None
@@ -121,7 +120,7 @@ class addMenuItem_view(privateView):
                         else:
                             error_summary["error"] = message
                 else:
-                    error_summary["item_name"] = "The name cannot be empty"
+                    error_summary["item_name"] = self._("The name cannot be empty")
 
         return {
             "menus": menus,
@@ -152,7 +151,7 @@ class editMenuItem_view(privateView):
                 data = self.getPostDict()
                 if data["item_name"] != "":
                     if data["item_type"] != "3" and data["item_desc"] == "":
-                        error_summary["item_desc"] = "The item needs content"
+                        error_summary["item_desc"] = self._("The item needs content")
                     else:
                         if data["next_item"] == "None":
                             data["next_item"] = None
@@ -174,7 +173,7 @@ class editMenuItem_view(privateView):
                         else:
                             error_summary["error"] = message
                 else:
-                    error_summary["item_name"] = "The name cannot be empty"
+                    error_summary["item_name"] = self._("The name cannot be empty")
 
         return {
             "menus": menus,
@@ -252,11 +251,13 @@ class addItemResponse_view(privateView):
                         else:
                             error_summary["error"] = message
                     else:
-                        error_summary[
-                            "resp_num"
-                        ] = "You need to indicate a response number"
+                        error_summary["resp_num"] = self._(
+                            "You need to indicate a response number"
+                        )
                 else:
-                    error_summary["target_item"] = "You need to indicate a target item"
+                    error_summary["target_item"] = self._(
+                        "You need to indicate a target item"
+                    )
 
         return {
             "responses": responses,

@@ -1,23 +1,24 @@
 <div id="inSlider" class="carousel carousel-fade" data-ride="carousel">
     <ol class="carousel-indicators">
-        <li data-target="#inSlider" data-slide-to="0" class="active"></li>
-        <li data-target="#inSlider" data-slide-to="1"></li>
-        <li data-target="#inSlider" data-slide-to="2"></li>
+{#        <li data-target="#inSlider" data-slide-to="0" class="active"></li>#}
+{#        <li data-target="#inSlider" data-slide-to="1"></li>#}
+{#        <li data-target="#inSlider" data-slide-to="2"></li>#}
     </ol>
     <div class="carousel-inner" role="listbox">
         <div class="item active">
             <div class="container">
                 <div class="carousel-caption">
-                    <h1>Welcome to <br/>Ushauri {{ request.registry.settings['country'] }}</h1>
-                    <p>Connecting communities <br/>through agricultural advice.</p>
+                    <h1>{{ _('Welcome to') }} <br/>Ushauri ({{ request.registry.settings['country'] }})</h1>
+                    <p>{{ _('Connecting communities') }} <br/>{{ _('through agricultural advice') }}</p>
                     <p>
 {#                        <a class="btn btn-lg btn-primary" href="{{ request.route_url('login') }}" role="button">LOGIN</a>#}
                     </p>
                 </div>
             </div>
             <!-- Set background for slide in css -->
-            <div class="header-back" style="background-image:url({{request.url_for_static('static/header_three.jpg')}});"></div>
-
+            {% block slider_one_image %}
+                <div class="header-back" style="background-image:url({{request.url_for_static('farmer.jpg')}});"></div>
+            {% endblock slider_one_image %}
         </div>
 {#        <div class="item">#}
 {#            <div class="container">#}
