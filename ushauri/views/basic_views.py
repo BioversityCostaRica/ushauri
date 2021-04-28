@@ -2,7 +2,6 @@ from pyramid.security import remember
 from pyramid.httpexceptions import HTTPFound
 from ushauri.processes import getUserData, register_user
 from ushauri.views.classes import publicView
-from pyramid.security import authenticated_userid
 from pyramid.security import forget
 from pyramid.session import check_csrf_token
 from pyramid.httpexceptions import HTTPNotFound
@@ -27,7 +26,7 @@ class login_view(publicView):
         # If we logged in then go to dashboard
         next = self.request.params.get("next") or self.request.route_url("dashboard")
         if self.request.method == "GET":
-            userID = authenticated_userid(self.request)
+            userID = self.request.authenticated_userid()
             if userID is not None:
                 currentUser = getUserData(self.request, userID)
                 if currentUser is not None:

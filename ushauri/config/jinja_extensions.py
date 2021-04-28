@@ -54,7 +54,9 @@ def render_snippet(template_name, **kw):
     return literal(output)
 
 
-def renderResource(request, library_name, resource_type, resource_id):  # pragma: no cover
+def renderResource(
+    request, library_name, resource_type, resource_id
+):  # pragma: no cover
     """
     This function will inject a resource from Jinja2 using the jsresource or cssresource tags. Not in Coverage
     because Coverage cannot track them from Jinja2

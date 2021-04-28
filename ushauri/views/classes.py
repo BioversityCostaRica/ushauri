@@ -10,7 +10,7 @@
     :license: AGPL, see LICENSE for more details.
 """
 
-from pyramid.security import authenticated_userid, forget
+from pyramid.security import forget
 from pyramid.session import check_csrf_token
 from pyramid.httpexceptions import HTTPNotFound, HTTPFound
 from formencode.variabledecode import variable_decode
@@ -209,7 +209,7 @@ class privateView(object):
             self.resultDict["rtl"] = True
 
     def __call__(self):
-        currentUser = authenticated_userid(self.request)
+        currentUser = self.request.authenticated_userid()
         if currentUser is not None:
             self.user = getUserAccount(currentUser, self.request)
             if self.user is None:
