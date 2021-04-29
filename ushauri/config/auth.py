@@ -60,7 +60,7 @@ def getUserAccount(userID, request):
 def checkLogin(userID, password, request):
     currentPass = getUserPassword(request, userID)
     if currentPass is not None:
-        if currentPass == password:
+        if currentPass.decode() == password:
             return True
         else:
             return False
@@ -69,8 +69,8 @@ def checkLogin(userID, password, request):
 
 
 def changePassword(userID, password, request):
-    cipher = AESCipher(key=request.registry.settings["aes.key"])
-    encPass = cipher.encrypt(password)
+    cipher = AESCipher()
+    encoded_password = cipher.encrypt(request, password)
     request.dbsession.query(User).filter(User.user_id == userID).update(
-        {"user_pass": encPass}
+        {"user_pass": encoded_password}
     )

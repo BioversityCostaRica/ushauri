@@ -209,7 +209,7 @@ class privateView(object):
             self.resultDict["rtl"] = True
 
     def __call__(self):
-        currentUser = self.request.authenticated_userid()
+        currentUser = self.request.authenticated_userid
         if currentUser is not None:
             self.user = getUserAccount(currentUser, self.request)
             if self.user is None:

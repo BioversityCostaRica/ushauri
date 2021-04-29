@@ -10,9 +10,9 @@ log = logging.getLogger(__name__)
 def getUserPassword(request, userID):
     user = request.dbsession.query(User).filter(User.user_id == userID).first()
     if user is not None:
-        encodedPass = user.user_pass.encode()
-        cipher = AESCipher(key=request.registry.settings["aes.key"])
-        decrypted = cipher.decrypt(encodedPass)
+        encoded_password = user.user_pass.encode()
+        cipher = AESCipher()
+        decrypted = cipher.decrypt(request, encoded_password)
         return decrypted
     else:
         return None
@@ -46,9 +46,9 @@ def register_user(request, userData):
     userData["user_active"] = 1
     userData["user_admin"] = 0
     mappedData = mapToSchema(User, userData)
-    cipher = AESCipher(key=request.registry.settings["aes.key"])
-    encPass = cipher.encrypt(mappedData["user_pass"])
-    mappedData["user_pass"] = encPass
+    cipher = AESCipher()
+    encoded_password = cipher.encrypt(request, mappedData["user_pass"])
+    mappedData["user_pass"] = encoded_password
     newUser = User(**mappedData)
     try:
         request.dbsession.add(newUser)

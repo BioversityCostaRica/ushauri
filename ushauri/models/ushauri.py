@@ -302,7 +302,8 @@ class User(Base):
 
     user_id = Column(String(120), primary_key=True)
     user_name = Column(String(45))
-    user_pass = Column(String(120))
+    user_pass = Column(Text)
+    user_apikey = Column(String(64))
     user_telef = Column(String(120))
     user_active = Column(Integer)
     user_admin = Column(Integer)

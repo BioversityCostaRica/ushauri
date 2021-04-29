@@ -17,8 +17,8 @@ def isUserActive(request, userID):
 def getUserPassword(request, userID):
     user = request.dbsession.query(User).filter(User.user_id == userID).first()
     encodedPass = user.user_pass.encode()
-    cipher = AESCipher(key=request.registry.settings["aes.key"])
-    decrypted = cipher.decrypt(encodedPass)
+    cipher = AESCipher()
+    decrypted = cipher.decrypt(request, encodedPass)
     return decrypted
 
 

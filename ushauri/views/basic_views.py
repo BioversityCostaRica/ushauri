@@ -26,7 +26,7 @@ class login_view(publicView):
         # If we logged in then go to dashboard
         next = self.request.params.get("next") or self.request.route_url("dashboard")
         if self.request.method == "GET":
-            userID = self.request.authenticated_userid()
+            userID = self.request.authenticated_userid
             if userID is not None:
                 currentUser = getUserData(self.request, userID)
                 if currentUser is not None:

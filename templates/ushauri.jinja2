@@ -1,0 +1,108 @@
+###
+# app configuration
+# https://docs.pylonsproject.org/projects/pyramid/en/latest/narr/environment.html
+###
+
+[app:ushauri]
+use = egg:ushauri
+
+pyramid.reload_templates = true
+pyramid.debug_authorization = false
+pyramid.debug_notfound = false
+pyramid.debug_routematch = false
+pyramid.default_locale_name = en
+pyramid.includes =
+    pyramid_debugtoolbar
+
+mysql+mysqlconnector://{{ mysql_user_name }}:{{ mysql_user_password }}@{{ mysql_host }}:{{ mysql_port }}/{{ mysql_schema }}?charset=utf8&ssl_disabled=True
+auth.secret = {{ auth_secret }}
+aes.key = {{ aes_key }}
+#Opaque is a permanet key passes thorugh a Digest Authorization
+auth.opaque = {{ auth_opaque }}
+auth.realm = ushauri@alliance.cgiar.org
+retry.attempts = 3
+
+repository = {{ repository_path }}
+odk.repository = {{ repository_path }}/odk
+audioPath = {{ repository_path }}/audios
+
+odktools.path = {{ odktools_path }}
+mysql.cnf = %(here)s/mysql.cnf
+mysql.host = {{ mysql_host }}
+mysql.port = {{ mysql_port }}
+mysql.user = {{ mysql_user_name }}
+mysql.password = {{ mysql_user_password }}
+registryXFormID = USHAURI-REG-20180713
+registryXFormFile = Registration_20180315
+registryXFormzipFile = %(here)s/odk/Registration_20180315.zip
+
+account_sid = ACaa8c3038f45a521b83c74789d51af27d
+auth_token = 7b4d98721967b6428d9aa07f3f74a92d
+call_from = +254203892341
+country = Kenya
+country_code = +254
+
+# By default, the toolbar only appears for clients from IP addresses
+# '127.0.0.1' and '::1'.
+# debugtoolbar.hosts = 127.0.0.1 ::1
+
+###
+# wsgi server configuration
+###
+
+[composite:main]
+use = egg:rutter#urlmap
+/ = ushauri
+
+[server:main]
+use = egg:gunicorn
+host = {{ ushauri_host }}
+port = {{ ushauri_port }}
+workers = 1
+worker_class = gevent
+capture_output = {{ capture_output }}
+proxy_protocol = True
+daemon = {{ daemon }}
+pidfile = {{ pid_file }}
+errorlog = {{ error_log_file }}
+forwarded_allow_ips = {{ forwarded_allow_ip }}
+
+###
+# logging configuration
+# https://docs.pylonsproject.org/projects/pyramid/en/latest/narr/logging.html
+###
+
+[loggers]
+keys = root, ushauri, sqlalchemy
+
+[handlers]
+keys = console
+
+[formatters]
+keys = generic
+
+[logger_root]
+level = INFO
+handlers = console
+
+[logger_ushauri]
+level = DEBUG
+handlers =
+qualname = ushauri
+
+[logger_sqlalchemy]
+level = INFO
+handlers =
+qualname = sqlalchemy.engine
+# "level = INFO" logs SQL queries.
+# "level = DEBUG" logs SQL queries and results.
+# "level = WARN" logs neither.  (Recommended for production systems.)
+
+[handler_console]
+class = StreamHandler
+args = (sys.stderr,)
+level = NOTSET
+formatter = generic
+
+[formatter_generic]
+format = %(asctime)s %(levelname)-5.5s [%(name)s:%(lineno)s][%(threadName)s] %(message)s

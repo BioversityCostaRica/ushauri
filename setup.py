@@ -80,6 +80,8 @@ requires = [
     "zope.event",
     "zope.interface",
     "zope.sqlalchemy",
+    "validators",
+    "cryptography",
 ]
 
 tests_require = [
@@ -115,7 +117,8 @@ setup(
             "main = ushauri:main",
         ],
         "console_scripts": [
-            "initialize_ushauri_db = ushauri.scripts.initializedb:main",
+            "create_superuser = ushauri.scripts.createsuperuser:main",
+            "configure_alembic = ushauri.scripts.configurealembic:main",
         ],
     },
 )

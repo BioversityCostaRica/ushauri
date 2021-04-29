@@ -416,12 +416,12 @@ def getUsers(request):
 
 def addUser(request, userID, name, telef, email, county, subcounty, password, menu):
     _ = request.translate
-    cipher = AESCipher(key=request.registry.settings["aes.key"])
-    encPass = cipher.encrypt(password)
+    cipher = AESCipher()
+    encoded_password = cipher.encrypt(request, password)
     newUser = User(
         user_id=userID,
         user_name=name,
-        user_pass=encPass,
+        user_pass=encoded_password,
         user_telef=telef,
         user_active=1,
         user_admin=0,
@@ -464,10 +464,10 @@ def modifyUser(request, userID, name, telef, email, menu):
 
 def modifyPassword(request, userID, newPassword):
     try:
-        cipher = AESCipher(key=request.registry.settings["aes.key"])
-        encPass = cipher.encrypt(newPassword)
+        cipher = AESCipher()
+        encoded_password = cipher.encrypt(request, newPassword)
         request.dbsession.query(User).filter(User.user_id == userID).update(
-            {"user_pass": encPass}
+            {"user_pass": encoded_password}
         )
         return True, ""
     except Exception as e:
