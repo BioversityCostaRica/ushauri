@@ -137,7 +137,7 @@ mysql -h [MYSQL_HOST_NAME] -u [MYSQL_USER_NAME] --password=[MYSQL_USER_PASSWORD]
 cd /opt/ushauri
 
 # Create the FormShare configuration file
-python create_config.py --mysql_host [MYSQL_HOST_NAME] --forwarded_allow_ip [this server IP address] --pid_file /opt/ushauri_gunicorn/ushauri.pid --error_log_file /opt/ushauri_log/ushauri.log -d -c --repository_path /opt/ushauri_repository --odktools_path /opt/odktools --mysql_schema ushauri --mysql_user_name [MYSQL_USER_NAME] --mysql_user_password [MYSQL_USER_PASSWORD] --ushauri_host localhost --ushauri_port 5900 ./development.ini
+python create_config.py --mysql_host [MYSQL_HOST_NAME] --forwarded_allow_ip [this server IP address] --pid_file /opt/ushauri_gunicorn/ushauri.pid --error_log_file /opt/ushauri_log/ushauri.log -d -c --repository_path /opt/ushauri_repository --odktools_path /opt/odktools --mysql_schema ushauri --mysql_user_name [MYSQL_USER_NAME] --mysql_user_password [MYSQL_USER_PASSWORD] --ushauri_host [this server IP address] --ushauri_port 5900 ./development.ini
 
 # Build the FormShare source code
 python setup.py develop
@@ -148,25 +148,29 @@ python setup.py compile_catalog
 # Create the Alembic configuration file
 configure_alembic ./development.ini .
 
-# Create the MySQL configuration file
-configure_mysql ./development.ini .
-
 # Build the database
 alembic upgrade head
 
 # Create a FormShare super user
-create_superuser --user_id [FORMSHARE_ADMIN_USER] --user_email [FORMSHARE_ADMIN_EMAIL] --user_password [FORMSHARE_ADMIN_PASSWORD] ./development.ini
+# Example: create_superuser --user_id admin --user_name 'Ushauri Admin' --user_telephone +50662365878  --user_email cquiros@qlands.com ./development.ini
+create_superuser --user_id [FORMSHARE_ADMIN_USER] --user_name [USER_NAME] --user_telephone [USER_TELEPHONE]  --user_email [FORMSHARE_ADMIN_EMAIL] --user_password [FORMSHARE_ADMIN_PASSWORD] ./development.ini
+
+# Edit Twilio the country parameters in the INI FILE
+# account_sid =
+# auth_token =
+# call_from = +254XXXX
+# country = Kenya
+# country_code = +254
 
 # Deactivate the FormShare environment
 deactivate
 
-# Start the FormShare Celery Service. You may need to start this service after every server restart
-sudo /etc/init.d/celery_formshare start
-
 # Run the server as service.
-# FormShare will be at http://[THIS_SERVER_IP_ADDRESS]:5900/formshare
-# The service process ID will be stored in /opt/formshare_gunicorn/formshare.pid.
+# Ushauri will be at http://[THIS_SERVER_IP_ADDRESS]:5900
+# The service process ID will be stored in /opt/ushauri_gunicorn/formshare.pid
+# Logs will be stored in /opt/ushauri_log/ushauri.log
 # You may need to run this after every server restart
-source /opt/formshare_env/bin/activate
-cd /opt/formshare
+source /opt/ushauri_env/bin/activate
+cd /opt/ushauri
 pserve ./development.ini
+# Got to https://[this server IP address]:5900
