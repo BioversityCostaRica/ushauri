@@ -1,0 +1,172 @@
+Installation steps to build FormShare from source.
+Tested with Ubuntu Server 20.04
+
+Steps:
+
+# Grab this server IP address. This IP address will be used later on
+ifconfig
+
+# Update system and add repositories
+
+sudo apt-get update
+sudo apt-get -y upgrade
+sudo apt-get install -y software-properties-common
+sudo add-apt-repository universe
+sudo add-apt-repository multiverse
+sudo apt-get update
+
+# ---------------------BEGIN OF IMPORTANT NOTE-------------------------
+You need to install, properly configure and run the following services
+- MySQL - You need root or other user with GRANT ALL ON *.*
+    - sudo apt-get install mysql-server
+    - sudo mysql_secure_installation
+        - VALIDATE PASSWORD COMPONENT = No
+        - Disallow root login remotely = No
+    - sudo mysql -u root -p
+        - ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY '[root_password]';
+        - CREATE USER 'root'@'%' IDENTIFIED BY '[root_password]';
+        - GRANT ALL ON *.* TO 'root'@'%';
+        - FLUSH PRIVILEGES;
+
+# ---------------------END OF IMPORTANT NOTE-------------------------
+
+# Install dependencies
+sudo apt-get install -y build-essential qt5-default qtbase5-private-dev qtdeclarative5-dev libqt5sql5-mysql cmake mongodb jq libboost-all-dev unzip zlib1g-dev automake npm redis-server libmysqlclient-dev mysql-client-8.0 openjdk-11-jdk sqlite3 libqt5sql5-sqlite git wget python3-venv
+
+# Get a patched libqsqlmysql.so https://bugreports.qt.io/browse/QTBUG-84797
+sudo wget http://www.qlands.com/other_files/sql_driver/libqsqlmysql.so /usr/lib/x86_64-linux-gnu/qt5/plugins/sqldrivers/libqsqlmysql.so
+
+# Installing ODK Tools
+
+cd /opt
+sudo git clone https://github.com/qlands/odktools.git
+sudo mkdir odktools-deps
+cd odktools-deps
+sudo wget --user=user https://github.com/mongodb/mongo-c-driver/releases/download/1.6.1/mongo-c-driver-1.6.1.tar.gz
+sudo wget --user=user https://github.com/jmcnamara/libxlsxwriter/archive/RELEASE_0.7.6.tar.gz
+sudo wget https://downloads.sourceforge.net/project/quazip/quazip/0.7.3/quazip-0.7.3.tar.gz
+sudo git clone https://github.com/rgamble/libcsv.git
+
+sudo tar xvfz mongo-c-driver-1.6.1.tar.gz
+cd mongo-c-driver-1.6.1
+sudo ./configure
+sudo make
+sudo make install
+cd ..
+
+sudo tar xvfz quazip-0.7.3.tar.gz
+cd quazip-0.7.3
+sudo mkdir build
+cd build
+sudo cmake -DCMAKE_C_FLAGS:STRING="-fPIC" -DCMAKE_CXX_FLAGS:STRING="-fPIC" ..
+sudo make
+sudo make install
+cd ../..
+
+# ---------------------BEGIN OF IMPORTANT NOTE-------------------------
+# Check current version of ACLocal
+ls /usr/bin/aclocal-*
+# If you have aclocal-1.15 do
+sudo ln -s /usr/bin/aclocal-1.15 /usr/bin/aclocal-1.14
+sudo ln -s /usr/bin/automake-1.15 /usr/bin/automake-1.14
+# If you have aclocal-1.16 do
+sudo ln -s /usr/bin/aclocal-1.16 /usr/bin/aclocal-1.14
+sudo ln -s /usr/bin/automake-1.16 /usr/bin/automake-1.14
+# ---------------------END OF IMPORTANT NOTE-------------------------
+
+sudo tar xvfz RELEASE_0.7.6.tar.gz
+cd libxlsxwriter-RELEASE_0.7.6
+sudo mkdir build
+cd build
+sudo cmake ..
+sudo make
+sudo make install
+cd ../..
+
+cd libcsv
+sudo ./configure
+sudo make
+sudo make install
+
+cd /opt/odktools/dependencies/mongo-cxx-driver-r3.1.1
+sudo mkdir build
+cd build
+sudo cmake -DCMAKE_C_FLAGS:STRING="-O2 -fPIC" -DCMAKE_CXX_FLAGS:STRING="-O2 -fPIC" -DBSONCXX_POLY_USE_BOOST=1 -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr/local ..
+sudo make
+sudo make install
+cd ../../..
+
+# Build ODK Tools
+sudo qmake
+sudo make
+
+# Installing FormShare
+
+# Create the directory structure for FormShare
+cd /opt
+sudo mkdir ushauri_repository
+sudo mkdir ushauri_log
+sudo mkdir ushauri_gunicorn
+
+# Setup permissions for the directory structure
+whoami=$(whoami)
+sudo chown $whoami ushauri_repository
+sudo chown $whoami ushauri_log
+sudo chown $whoami ushauri_gunicorn
+
+
+# Create a separate Python environment for FormShare
+sudo python3 -m venv ushauri_env
+
+# Grab the FormShare source code
+sudo git clone https://github.com/BioversityCostaRica/ushauri.git ushauri
+
+# Setup permissions for FormShare and the Python environment
+sudo chown -R $whoami ushauri
+sudo chown -R $whoami ushauri_env
+
+# Activate the FormShare environment
+source ./ushauri_env/bin/activate
+
+# Install FormShare dependencies
+pip install wheel
+pip install -r /opt/ushauri/requirements.txt
+
+#Create the FormShare schema
+mysql -h [MYSQL_HOST_NAME] -u [MYSQL_USER_NAME] --password=[MYSQL_USER_PASSWORD] --execute='CREATE SCHEMA IF NOT EXISTS ushauri'
+cd /opt/ushauri
+
+# Create the FormShare configuration file
+python create_config.py --mysql_host [MYSQL_HOST_NAME] --forwarded_allow_ip [this server IP address] --pid_file /opt/ushauri_gunicorn/ushauri.pid --error_log_file /opt/ushauri_log/ushauri.log -d -c --repository_path /opt/ushauri_repository --odktools_path /opt/odktools --mysql_schema ushauri --mysql_user_name [MYSQL_USER_NAME] --mysql_user_password [MYSQL_USER_PASSWORD] --ushauri_host localhost --ushauri_port 5900 ./development.ini
+
+# Build the FormShare source code
+python setup.py develop
+
+# Build the language catalogs
+python setup.py compile_catalog
+
+# Create the Alembic configuration file
+configure_alembic ./development.ini .
+
+# Create the MySQL configuration file
+configure_mysql ./development.ini .
+
+# Build the database
+alembic upgrade head
+
+# Create a FormShare super user
+create_superuser --user_id [FORMSHARE_ADMIN_USER] --user_email [FORMSHARE_ADMIN_EMAIL] --user_password [FORMSHARE_ADMIN_PASSWORD] ./development.ini
+
+# Deactivate the FormShare environment
+deactivate
+
+# Start the FormShare Celery Service. You may need to start this service after every server restart
+sudo /etc/init.d/celery_formshare start
+
+# Run the server as service.
+# FormShare will be at http://[THIS_SERVER_IP_ADDRESS]:5900/formshare
+# The service process ID will be stored in /opt/formshare_gunicorn/formshare.pid.
+# You may need to run this after every server restart
+source /opt/formshare_env/bin/activate
+cd /opt/formshare
+pserve ./development.ini

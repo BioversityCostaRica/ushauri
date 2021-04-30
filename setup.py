@@ -41,7 +41,6 @@ requires = [
     "plaster-pastedeploy",
     "polib",
     "protobuf",
-    "pycrypto",
     "Pygments",
     "PyJWT",
     "pyramid",
