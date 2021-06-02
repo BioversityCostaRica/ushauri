@@ -63,7 +63,7 @@ typed-ast==1.4.3
 typing-extensions==3.7.4.3
 unicodecsv==0.14.1
 unittest2==1.1.0
-urllib3==1.26.4
+urllib3==1.26.5
 validators==0.18.2
 venusian==3.0.0
 waitress==2.0.0
