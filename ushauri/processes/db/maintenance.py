@@ -365,6 +365,7 @@ def getGroupDetails(request, groupID):
     if res is not None:
         return {
             "group_name": res.group_name,
+            "group_sname": res.group_sname,
             "group_ward": res.group_ward,
             "menu_id": res.menu_id,
             "group_twoword": res.group_twoword,

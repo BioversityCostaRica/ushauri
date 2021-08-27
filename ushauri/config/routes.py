@@ -49,6 +49,7 @@ from ushauri.views.maintenance.counties import (
 )
 from ushauri.views.maintenance.groups import (
     groupList_view,
+    GroupQRCode,
     addGroup_view,
     membersList_view,
     deleteMember_view,
@@ -217,6 +218,14 @@ def loadRoutes(config):
             "/group/{group}/modify",
             modifyGroup_view,
             "dashboard/maintenance/groups/edit_group.jinja2",
+        )
+    )
+    routes.append(
+        addRoute(
+            "groupQR",
+            "/group/{group}/qr",
+            GroupQRCode,
+            None,
         )
     )
 

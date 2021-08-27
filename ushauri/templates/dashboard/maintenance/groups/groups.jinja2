@@ -59,6 +59,7 @@
                                 {{ group.group_ward }}
                             </td>
                             <td class="project-actions">
+                                <button data-toggle="modal" data-target="#qrcode" class="btn btn-default btn-circle qrbutton" urn="{{ request.route_url('groupQR',group=group.group_id) }}" type="button" title="{{ _('ODK Collect configuration') }}"><i class="fa fa-qrcode"></i></button>
                                 <button class="btn btn-default btn-circle" onclick="location.href='{{ request.route_url('members',group=group.group_id) }}';" type="button" title="{{ _('Members') }} ({{ group.members }})"><i class="fa fa-users"></i></button>
                                 <button class="btn btn-default btn-circle" onclick="location.href='{{ request.route_url('agents',group=group.group_id) }}';" type="button" title="{{ _('Privileges of extension agents') }}"><i class="fa fa-key"></i></button>
                                 <button class="btn btn-warning btn-circle" onclick="location.href='{{ request.route_url('modifygroup',group=group.group_id) }}';" type="button" title="{{ _('Edit') }}"><i class="fa fa-edit"></i></button>
@@ -94,8 +95,38 @@
             </div>
         </div>
     </div>
+
+    <div class="modal inmodal" id="qrcode" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content animated fadeIn">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">{{ _('Close') }}</span></button>
+                    <h4 class="modal-title">{{ _('QR Code') }}</h4>
+                    <small class="font-bold">{{ _('Use this QR Code to configure ODK collect') }}</small>
+                </div>
+                <div class="modal-body">
+                    <div style="text-align: center">
+                        <img style="max-width: 150px" id="qrimage" alt="QR Code" src="">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-white" data-dismiss="modal">{{ _('Close') }}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 {% endblock bodybottom %}
 
 {% block mainscripts %}
     {% jsresource request,'dashboard','confirm' %}
+
+    <script>
+        $(document).ready(function() {
+            $('.qrbutton').click(function () {
+                var qr_url = $( this ).attr('urn');
+                $("#qrimage").attr("src",qr_url);
+            });
+        });
+    </script>
 {% endblock mainscripts %}

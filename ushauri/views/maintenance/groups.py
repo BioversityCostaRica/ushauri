@@ -1,5 +1,5 @@
 from pyramid.httpexceptions import HTTPFound, HTTPNotFound
-
+from ushauri.processes.color_hash import ColorHash
 from ushauri.odk.api import addFormToGroup
 from ushauri.processes.db.maintenance import (
     getUserGroups,
@@ -20,12 +20,62 @@ from ushauri.processes.db.maintenance import (
     addAgentToGroup,
 )
 from ushauri.views.classes import privateView
+import json
+import zlib
+import os
+import base64
+import uuid
+import qrcode
+from pyramid.response import FileResponse
 
 
 class groupList_view(privateView):
     def processView(self):
         groups = getUserGroups(self.request, self.user.id)
         return {"groups": groups}
+
+
+class GroupQRCode(privateView):
+    def processView(self):
+        group_id = self.request.matchdict["group"]
+
+        data = getGroupDetails(self.request, group_id)
+        url = self.request.route_url("odkformlist", group=data["group_sname"])
+        url = url.replace("/formList", "")
+        group_color = ColorHash(data["group_sname"]).hex
+        odk_settings = {
+            "admin": {"change_server": True, "change_form_metadata": False},
+            "general": {
+                "change_server": True,
+                "navigation": "buttons",
+                "server_url": url,
+            },
+            "project": {
+                "name": data["group_name"],
+                "icon": data["group_sname"][0],
+                "color": group_color,
+            },
+        }
+        qr_json = json.dumps(odk_settings).encode()
+        zip_json = zlib.compress(qr_json)
+        serialization = base64.encodebytes(zip_json)
+        serialization = serialization.decode()
+        serialization = serialization.replace("\n", "")
+        img = qrcode.make(serialization)
+
+        repository_path = self.request.registry.settings["repository"]
+        if not os.path.exists(repository_path):
+            os.makedirs(repository_path)
+        unique_id = str(uuid.uuid4())
+        temp_path = os.path.join(repository_path, *["tmp", unique_id])
+        os.makedirs(temp_path)
+
+        qr_file = os.path.join(temp_path, *[group_id + ".png"])
+        img.save(qr_file)
+        response = FileResponse(qr_file, request=self.request, content_type="image/png")
+        response.content_disposition = 'attachment; filename="' + group_id + '.png"'
+        self.justReturn = True
+        return response
 
 
 class addGroup_view(privateView):

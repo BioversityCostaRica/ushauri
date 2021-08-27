@@ -311,6 +311,7 @@ def storeSubmission(groupID, userID, request):
                             return True, 201
                         else:
                             if resCode == 1:
+                                print(message)
                                 return False, 500
                             else:
                                 return True, 201
