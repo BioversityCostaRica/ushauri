@@ -1,4 +1,5 @@
-from ushauri.views.classes import privateView
+from pyramid.httpexceptions import HTTPFound, HTTPNotFound
+
 from ushauri.processes.db.maintenance import (
     getRegions,
     addCounty,
@@ -12,7 +13,7 @@ from ushauri.processes.db.maintenance import (
     getSubCountyData,
     updateSubCounty,
 )
-from pyramid.httpexceptions import HTTPFound, HTTPNotFound
+from ushauri.views.classes import privateView
 
 
 class countiesList_view(privateView):

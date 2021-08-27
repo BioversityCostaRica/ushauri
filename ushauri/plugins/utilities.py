@@ -6,6 +6,7 @@ to manipulate the host behaviour without the trouble if dealing with it
 
 import inspect
 import os
+
 from ushauri.views.classes import publicView, privateView
 
 __all__ = [

@@ -10,14 +10,15 @@
     :license: AGPL, see LICENSE for more details.
 """
 
+import hashlib
+import uuid
+
+from babel import Locale
+from formencode.variabledecode import variable_decode
+from pyramid.httpexceptions import HTTPNotFound, HTTPFound
+from pyramid.response import Response
 from pyramid.security import forget
 from pyramid.session import check_csrf_token
-from pyramid.httpexceptions import HTTPNotFound, HTTPFound
-from formencode.variabledecode import variable_decode
-from pyramid.response import Response
-import hashlib
-from babel import Locale
-import uuid
 
 # from odktools.odk.processes import getProjectIDFromName,getFormData
 from ushauri.config.auth import getUserAccount

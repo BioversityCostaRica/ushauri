@@ -1,8 +1,11 @@
+import logging
+import sys
+
+from sqlalchemy.exc import IntegrityError
+
 from ushauri.config.encdecdata import AESCipher
 from ushauri.models import User
 from ushauri.models.schema import mapToSchema
-from sqlalchemy.exc import IntegrityError
-import logging, sys
 
 log = logging.getLogger(__name__)
 

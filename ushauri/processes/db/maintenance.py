@@ -1,3 +1,10 @@
+import datetime
+import sys
+import uuid
+
+from sqlalchemy.exc import IntegrityError
+
+from ushauri.config.encdecdata import AESCipher
 from ushauri.models import (
     Advgroup,
     Member,
@@ -11,9 +18,6 @@ from ushauri.models import (
     Audio,
     Question,
 )
-from ushauri.config.encdecdata import AESCipher
-import uuid, sys, datetime
-from sqlalchemy.exc import IntegrityError
 
 
 def getMemberCount(request, groupID):

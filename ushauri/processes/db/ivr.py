@@ -1,5 +1,7 @@
+import datetime
+import uuid
+
 from ushauri.models import Question, User, Member, Response, Menuitem, Audio
-import uuid, datetime
 
 
 def getItemData(request, itemID):

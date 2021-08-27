@@ -9,8 +9,9 @@
     :license: AGPL, see LICENSE for more details.
 """
 
-from ago import human
 import arrow
+from ago import human
+
 import ushauri.plugins as p
 
 __all__ = ["helper"]

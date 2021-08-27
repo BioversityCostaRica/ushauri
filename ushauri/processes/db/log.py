@@ -1,5 +1,7 @@
+import datetime
+import uuid
+
 from ushauri.models import Ivrlog, Member
-import uuid, datetime
 
 
 def recordLog(request, number, item):

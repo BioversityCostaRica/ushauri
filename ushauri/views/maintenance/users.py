@@ -1,4 +1,5 @@
-from ushauri.views.classes import privateView
+from pyramid.httpexceptions import HTTPFound, HTTPNotFound
+
 from ushauri.processes.db.maintenance import (
     getUsers,
     getSubCounties,
@@ -9,7 +10,7 @@ from ushauri.processes.db.maintenance import (
     listMenus,
     modifyPassword,
 )
-from pyramid.httpexceptions import HTTPFound, HTTPNotFound
+from ushauri.views.classes import privateView
 
 
 class userList_view(privateView):

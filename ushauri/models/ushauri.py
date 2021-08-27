@@ -20,7 +20,7 @@ class Advgroup(Base):
     __table_args__ = (
         ForeignKeyConstraint(
             ["county_id", "subcounty_id"],
-            [u"subcounty.county_id", u"subcounty.subcounty_id"],
+            ["subcounty.county_id", "subcounty.subcounty_id"],
         ),
         Index("fk_advgroup_subcounty1_idx", "county_id", "subcounty_id"),
     )
@@ -35,28 +35,28 @@ class Advgroup(Base):
     group_elev = Column(Numeric(11, 3))
     county_id = Column(String(12), nullable=False)
     subcounty_id = Column(String(12), nullable=False)
-    menu_id = Column(ForeignKey(u"ivrmenu.menu_id"), index=True)
+    menu_id = Column(ForeignKey("ivrmenu.menu_id"), index=True)
 
-    county = relationship(u"Subcounty")
-    menu = relationship(u"Ivrmenu")
+    county = relationship("Subcounty")
+    menu = relationship("Ivrmenu")
 
 
 class Answer(Base):
     __tablename__ = "answer"
 
     group_id = Column(
-        ForeignKey(u"advgroup.group_id", ondelete=u"CASCADE"),
+        ForeignKey("advgroup.group_id", ondelete="CASCADE"),
         primary_key=True,
         nullable=False,
         index=True,
     )
     answer_id = Column(String(12), primary_key=True, nullable=False)
-    user_id = Column(ForeignKey(u"user.user_id"), nullable=False, index=True)
+    user_id = Column(ForeignKey("user.user_id"), nullable=False, index=True)
     answer_text = Column(Text)
     answer_votes = Column(Integer)
 
-    group = relationship(u"Advgroup")
-    user = relationship(u"User")
+    group = relationship("Advgroup")
+    user = relationship("User")
 
 
 class Answeraudio(Base):
@@ -64,19 +64,19 @@ class Answeraudio(Base):
     __table_args__ = (
         ForeignKeyConstraint(
             ["group_id", "answer_id"],
-            [u"answer.group_id", u"answer.answer_id"],
-            ondelete=u"CASCADE",
+            ["answer.group_id", "answer.answer_id"],
+            ondelete="CASCADE",
         ),
     )
 
     group_id = Column(String(12), primary_key=True, nullable=False)
     answer_id = Column(String(12), primary_key=True, nullable=False)
     audio_id = Column(
-        ForeignKey(u"audio.audio_id"), primary_key=True, nullable=False, index=True
+        ForeignKey("audio.audio_id"), primary_key=True, nullable=False, index=True
     )
 
-    audio = relationship(u"Audio")
-    group = relationship(u"Answer")
+    audio = relationship("Audio")
+    group = relationship("Answer")
 
 
 class Audio(Base):
@@ -85,16 +85,13 @@ class Audio(Base):
     audio_id = Column(String(80), primary_key=True)
     audio_desc = Column(String(120))
     audio_file = Column(Text)
-    group_id = Column(
-        ForeignKey(u"advgroup.group_id", ondelete=u"SET NULL"), index=True
-    )
+    group_id = Column(ForeignKey("advgroup.group_id", ondelete="SET NULL"), index=True)
     audio_dtime = Column(DateTime)
     audio_type = Column(Integer)
-    user_id = Column(ForeignKey(u"user.user_id"), index=True)
+    user_id = Column(ForeignKey("user.user_id"), index=True)
 
-    group = relationship(u"Advgroup")
-    groups = relationship(u"Answer", secondary="answeraudio")
-    user = relationship(u"User")
+    group = relationship("Advgroup")
+    user = relationship("User")
 
 
 class County(Base):
@@ -108,12 +105,12 @@ class Groupuser(Base):
     __tablename__ = "groupuser"
 
     group_id = Column(
-        ForeignKey(u"advgroup.group_id", ondelete=u"CASCADE"),
+        ForeignKey("advgroup.group_id", ondelete="CASCADE"),
         primary_key=True,
         nullable=False,
     )
     user_id = Column(
-        ForeignKey(u"user.user_id", ondelete=u"CASCADE"),
+        ForeignKey("user.user_id", ondelete="CASCADE"),
         primary_key=True,
         nullable=False,
         index=True,
@@ -121,15 +118,15 @@ class Groupuser(Base):
     access_type = Column(Integer)
     group_active = Column(Integer)
 
-    group = relationship(u"Advgroup")
-    user = relationship(u"User")
+    group = relationship("Advgroup")
+    user = relationship("User")
 
 
 class Ivrlog(Base):
     __tablename__ = "ivrlog"
     __table_args__ = (
         ForeignKeyConstraint(
-            ["group_id", "member_id"], [u"member.group_id", u"member.member_id"]
+            ["group_id", "member_id"], ["member.group_id", "member.member_id"]
         ),
         Index("fk_ivrlog_member1_idx", "group_id", "member_id"),
     )
@@ -138,10 +135,10 @@ class Ivrlog(Base):
     log_dtime = Column(DateTime)
     group_id = Column(String(12), nullable=False)
     member_id = Column(String(45), nullable=False)
-    item_id = Column(ForeignKey(u"menuitem.item_id"), nullable=False, index=True)
+    item_id = Column(ForeignKey("menuitem.item_id"), nullable=False, index=True)
 
-    group = relationship(u"Member")
-    item = relationship(u"Menuitem")
+    group = relationship("Member")
+    item = relationship("Menuitem")
 
 
 class Ivrmenu(Base):
@@ -155,7 +152,7 @@ class Member(Base):
     __tablename__ = "member"
 
     group_id = Column(
-        ForeignKey(u"advgroup.group_id", ondelete=u"CASCADE"),
+        ForeignKey("advgroup.group_id", ondelete="CASCADE"),
         primary_key=True,
         nullable=False,
     )
@@ -166,7 +163,7 @@ class Member(Base):
     member_village = Column(String(120))
     member_gardentype = Column(String(32))
 
-    group = relationship(u"Advgroup")
+    group = relationship("Advgroup")
 
 
 class Menuitem(Base):
@@ -177,15 +174,15 @@ class Menuitem(Base):
     item_name = Column(String(120))
     item_desc = Column(Text)
     item_start = Column(Integer)
-    next_item = Column(ForeignKey(u"menuitem.item_id"), index=True)
+    next_item = Column(ForeignKey("menuitem.item_id"), index=True)
     menu_id = Column(
-        ForeignKey(u"ivrmenu.menu_id", ondelete=u"CASCADE"), nullable=False, index=True
+        ForeignKey("ivrmenu.menu_id", ondelete="CASCADE"), nullable=False, index=True
     )
-    audio_id = Column(ForeignKey(u"audio.audio_id"), nullable=False, index=True)
+    audio_id = Column(ForeignKey("audio.audio_id"), nullable=False, index=True)
 
-    menu = relationship(u"Ivrmenu")
-    parent = relationship(u"Menuitem", remote_side=[item_id])
-    audio = relationship(u"Audio")
+    menu = relationship("Ivrmenu")
+    parent = relationship("Menuitem", remote_side=[item_id])
+    audio = relationship("Audio")
 
 
 class Question(Base):
@@ -193,8 +190,8 @@ class Question(Base):
     __table_args__ = (
         ForeignKeyConstraint(
             ["group_id", "member_id"],
-            [u"member.group_id", u"member.member_id"],
-            ondelete=u"CASCADE",
+            ["member.group_id", "member.member_id"],
+            ondelete="CASCADE",
         ),
     )
 
@@ -206,11 +203,11 @@ class Question(Base):
     question_text = Column(Text)
     question_tags = Column(Text)
     question_status = Column(Integer)
-    audioreply_id = Column(ForeignKey(u"audio.audio_id"), index=True)
+    audioreply_id = Column(ForeignKey("audio.audio_id"), index=True)
 
-    audio = relationship(u"Audio")
+    audio = relationship("Audio")
 
-    group = relationship(u"Member")
+    group = relationship("Member")
 
 
 class Questionanswer(Base):
@@ -218,13 +215,13 @@ class Questionanswer(Base):
     __table_args__ = (
         ForeignKeyConstraint(
             ["answer_group", "answer_id"],
-            [u"answer.group_id", u"answer.answer_id"],
-            ondelete=u"CASCADE",
+            ["answer.group_id", "answer.answer_id"],
+            ondelete="CASCADE",
         ),
         ForeignKeyConstraint(
             ["group_id", "member_id", "question_id"],
-            [u"question.group_id", u"question.member_id", u"question.question_id"],
-            ondelete=u"CASCADE",
+            ["question.group_id", "question.member_id", "question.question_id"],
+            ondelete="CASCADE",
         ),
         Index("fk_questionanswer_answer1_idx", "answer_group", "answer_id"),
     )
@@ -236,8 +233,8 @@ class Questionanswer(Base):
     answer_id = Column(String(12), primary_key=True, nullable=False)
     answer_sent = Column(Integer)
 
-    answer = relationship(u"Answer")
-    group = relationship(u"Question")
+    answer = relationship("Answer")
+    group = relationship("Question")
 
 
 class Questiontag(Base):
@@ -245,8 +242,8 @@ class Questiontag(Base):
     __table_args__ = (
         ForeignKeyConstraint(
             ["group_id", "member_id", "question_id"],
-            [u"question.group_id", u"question.member_id", u"question.question_id"],
-            ondelete=u"CASCADE",
+            ["question.group_id", "question.member_id", "question.question_id"],
+            ondelete="CASCADE",
         ),
     )
 
@@ -255,24 +252,24 @@ class Questiontag(Base):
     question_id = Column(String(12), primary_key=True, nullable=False)
     tag_name = Column(String(120), primary_key=True, nullable=False)
 
-    group = relationship(u"Question")
+    group = relationship("Question")
 
 
 class Response(Base):
     __tablename__ = "response"
 
     item_id = Column(
-        ForeignKey(u"menuitem.item_id", ondelete=u"CASCADE"),
+        ForeignKey("menuitem.item_id", ondelete="CASCADE"),
         primary_key=True,
         nullable=False,
     )
     resp_num = Column(Integer, primary_key=True, nullable=False)
-    target_item = Column(ForeignKey(u"menuitem.item_id"), nullable=False, index=True)
+    target_item = Column(ForeignKey("menuitem.item_id"), nullable=False, index=True)
     resp_default = Column(Integer)
 
-    item = relationship(u"Menuitem", primaryjoin="Response.item_id == Menuitem.item_id")
+    item = relationship("Menuitem", primaryjoin="Response.item_id == Menuitem.item_id")
     menuitem = relationship(
-        u"Menuitem", primaryjoin="Response.target_item == Menuitem.item_id"
+        "Menuitem", primaryjoin="Response.target_item == Menuitem.item_id"
     )
 
 
@@ -280,14 +277,14 @@ class Subcounty(Base):
     __tablename__ = "subcounty"
 
     county_id = Column(
-        ForeignKey(u"county.county_id", ondelete=u"CASCADE"),
+        ForeignKey("county.county_id", ondelete="CASCADE"),
         primary_key=True,
         nullable=False,
     )
     subcounty_id = Column(String(12), primary_key=True, nullable=False)
     subcounty_name = Column(String(120))
 
-    county = relationship(u"County")
+    county = relationship("County")
 
 
 class User(Base):
@@ -295,7 +292,7 @@ class User(Base):
     __table_args__ = (
         ForeignKeyConstraint(
             ["county_id", "subcounty_id"],
-            [u"subcounty.county_id", u"subcounty.subcounty_id"],
+            ["subcounty.county_id", "subcounty.subcounty_id"],
         ),
         Index("fk_user_subcounty1_idx", "county_id", "subcounty_id"),
     )
@@ -310,7 +307,7 @@ class User(Base):
     user_email = Column(Text)
     county_id = Column(String(12))
     subcounty_id = Column(String(12))
-    menu_id = Column(ForeignKey(u"ivrmenu.menu_id"), index=True)
+    menu_id = Column(ForeignKey("ivrmenu.menu_id"), index=True)
 
-    county = relationship(u"Subcounty")
-    menu = relationship(u"Ivrmenu")
+    county = relationship("Subcounty")
+    menu = relationship("Ivrmenu")

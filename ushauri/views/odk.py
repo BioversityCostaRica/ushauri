@@ -1,4 +1,5 @@
-from ushauri.views.classes import odkView
+from pyramid.response import Response
+
 from ushauri.odk.api import (
     getManifest,
     getMediaFile,
@@ -12,7 +13,7 @@ from ushauri.odk.processes import (
     getUserPassword,
     isUserActive,
 )
-from pyramid.response import Response
+from ushauri.views.classes import odkView
 
 
 class formList_view(odkView):

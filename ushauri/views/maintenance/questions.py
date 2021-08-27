@@ -1,4 +1,9 @@
-from ushauri.views.classes import privateView
+import os
+import shutil
+import uuid
+
+from pyramid.httpexceptions import HTTPFound
+
 from ushauri.processes.db.maintenance import (
     getQuestionDetails,
     updateQuestion,
@@ -7,9 +12,8 @@ from ushauri.processes.db.maintenance import (
     addAudio,
     listAnswers,
 )
+from ushauri.views.classes import privateView
 from ushauri.views.ivr import sendReply
-from pyramid.httpexceptions import HTTPFound
-import os, uuid, shutil
 
 
 class modifyQuestion_view(privateView):

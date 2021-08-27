@@ -1,4 +1,5 @@
-from ushauri.views.classes import privateView
+from pyramid.httpexceptions import HTTPFound, HTTPNotFound
+
 from ushauri.processes.db.maintenance import (
     getQuestions,
     getGroupDetails,
@@ -6,7 +7,7 @@ from ushauri.processes.db.maintenance import (
     getActiveGroup,
     setActiveGroup,
 )
-from pyramid.httpexceptions import HTTPFound, HTTPNotFound
+from ushauri.views.classes import privateView
 
 
 class dashboard_view(privateView):

@@ -1,7 +1,9 @@
+import hashlib
+import urllib
+
+from ushauri.config.encdecdata import AESCipher
 from ushauri.models import User
 from ushauri.processes import getUserPassword, isUserActive, getUserData
-from ushauri.config.encdecdata import AESCipher
-import hashlib, urllib
 
 
 class AUser(object):

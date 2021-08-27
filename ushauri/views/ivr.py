@@ -1,7 +1,15 @@
-from twilio.twiml.voice_response import VoiceResponse
-from twilio.twiml.messaging_response import Message, MessagingResponse
-from twilio.rest import Client
+import arrow
+import logging
+import os
+import uuid
+from datetime import datetime, timedelta
+from urllib.request import urlretrieve
+
 from pyramid.response import Response, FileResponse
+from twilio.rest import Client
+from twilio.twiml.messaging_response import Message, MessagingResponse
+from twilio.twiml.voice_response import VoiceResponse
+
 from ushauri.processes import (
     getItemData,
     getItemResponses,
@@ -15,13 +23,7 @@ from ushauri.processes import (
     getAudioFileName,
     recordLog,
 )
-import uuid, os, arrow
-from datetime import datetime, timedelta
-from urllib.request import urlretrieve
 from ushauri.processes.db.maintenance import getUserDetails, addAudio, setQuestionStatus
-
-
-import logging
 
 log = logging.getLogger(__name__)
 

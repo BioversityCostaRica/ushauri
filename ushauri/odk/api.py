@@ -1,14 +1,20 @@
-from lxml import etree
-import os, glob, io, json, mimetypes, shutil
-from hashlib import md5
-from pyramid.httpexceptions import HTTPNotFound
-from uuid import uuid4
-from subprocess import Popen, PIPE
-from pyramid.response import FileResponse
-from ushauri.odk.processes import userCanRegister, storeRegistration
-import zipfile
-
+import glob
+import io
+import json
 import logging
+import mimetypes
+import os
+import shutil
+import zipfile
+from hashlib import md5
+from subprocess import Popen, PIPE
+from uuid import uuid4
+
+from lxml import etree
+from pyramid.httpexceptions import HTTPNotFound
+from pyramid.response import FileResponse
+
+from ushauri.odk.processes import userCanRegister, storeRegistration
 
 log = logging.getLogger(__name__)
 

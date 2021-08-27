@@ -1,4 +1,5 @@
-from ushauri.views.classes import privateView
+from pyramid.httpexceptions import HTTPFound, HTTPNotFound
+
 from ushauri.processes.db.maintenance import (
     listMenus,
     addMenu,
@@ -19,7 +20,7 @@ from ushauri.processes.db.maintenance import (
     deleteResponse,
     listPodcasts,
 )
-from pyramid.httpexceptions import HTTPFound, HTTPNotFound
+from ushauri.views.classes import privateView
 
 
 class menusList_view(privateView):

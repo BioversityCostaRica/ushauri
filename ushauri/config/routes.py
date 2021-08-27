@@ -9,8 +9,8 @@
     :license: AGPL, see LICENSE for more details.
 """
 
-from ushauri.plugins.utilities import addRoute
 import ushauri.plugins as p
+from ushauri.plugins.utilities import addRoute
 from ushauri.views.basic_views import (
     notfound_view,
     home_view,
@@ -19,6 +19,24 @@ from ushauri.views.basic_views import (
     register_view,
 )
 from ushauri.views.dashboard import dashboard_view
+from ushauri.views.ivr import (
+    ivrGet_view,
+    ivrPost_view,
+    ivrStore_view,
+    ivrGetAudio_view,
+    ivrMessage_view,
+    ivrSend_view,
+    ivrVoiceStart_view,
+    ivrReplyStatus_view,
+)
+from ushauri.views.maintenance.audios import (
+    audiosList_view,
+    addAudio_view,
+    modifyAudio_view,
+    deleteAudio_view,
+    getAudio_view,
+    recordAudio_view,
+)
 from ushauri.views.maintenance.counties import (
     countiesList_view,
     addCounty_view,
@@ -41,13 +59,6 @@ from ushauri.views.maintenance.groups import (
     deleteAgent_view,
     addAgent_view,
 )
-from ushauri.views.maintenance.users import (
-    userList_view,
-    addUser_view,
-    deleteUser_view,
-    modifyUser_view,
-    modifyUserPass_view,
-)
 from ushauri.views.maintenance.menus import (
     menusList_view,
     addMenu_view,
@@ -62,28 +73,17 @@ from ushauri.views.maintenance.menus import (
     addItemResponse_view,
     deleteItemResponse_view,
 )
-from ushauri.views.maintenance.audios import (
-    audiosList_view,
-    addAudio_view,
-    modifyAudio_view,
-    deleteAudio_view,
-    getAudio_view,
-    recordAudio_view,
-)
 from ushauri.views.maintenance.questions import (
     modifyQuestion_view,
     replyToMember_view,
     recordAndReplyToMember_view,
 )
-from ushauri.views.ivr import (
-    ivrGet_view,
-    ivrPost_view,
-    ivrStore_view,
-    ivrGetAudio_view,
-    ivrMessage_view,
-    ivrSend_view,
-    ivrVoiceStart_view,
-    ivrReplyStatus_view,
+from ushauri.views.maintenance.users import (
+    userList_view,
+    addUser_view,
+    deleteUser_view,
+    modifyUser_view,
+    modifyUserPass_view,
 )
 from ushauri.views.odk import (
     formList_view,

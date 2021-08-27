@@ -9,8 +9,9 @@
     :license: AGPL, see LICENSE for more details.
 """
 
-import ushauri.resources as r
 import os
+
+import ushauri.resources as r
 
 
 def createResources(apppath, config):

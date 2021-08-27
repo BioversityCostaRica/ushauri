@@ -1,4 +1,6 @@
-from ushauri.views.classes import privateView
+from pyramid.httpexceptions import HTTPFound, HTTPNotFound
+
+from ushauri.odk.api import addFormToGroup
 from ushauri.processes.db.maintenance import (
     getUserGroups,
     getSubCounties,
@@ -17,8 +19,7 @@ from ushauri.processes.db.maintenance import (
     getAgents,
     addAgentToGroup,
 )
-from ushauri.odk.api import addFormToGroup
-from pyramid.httpexceptions import HTTPFound, HTTPNotFound
+from ushauri.views.classes import privateView
 
 
 class groupList_view(privateView):

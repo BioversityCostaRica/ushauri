@@ -1,4 +1,10 @@
-from ushauri.views.classes import privateView
+import os
+import shutil
+import uuid
+
+from pyramid.httpexceptions import HTTPFound, HTTPNotFound
+from pyramid.response import FileResponse
+
 from ushauri.processes.db.maintenance import (
     listAudios,
     addAudio,
@@ -8,9 +14,7 @@ from ushauri.processes.db.maintenance import (
     getActiveGroup,
     getAudioFile,
 )
-from pyramid.httpexceptions import HTTPFound, HTTPNotFound
-import uuid, os, shutil
-from pyramid.response import FileResponse
+from ushauri.views.classes import privateView
 
 
 class audiosList_view(privateView):

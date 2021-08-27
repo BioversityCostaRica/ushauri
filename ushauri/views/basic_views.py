@@ -1,13 +1,14 @@
-from pyramid.security import remember
-from pyramid.httpexceptions import HTTPFound
-from ushauri.processes import getUserData, register_user
-from ushauri.views.classes import publicView
-from pyramid.security import forget
-from pyramid.session import check_csrf_token
-from pyramid.httpexceptions import HTTPNotFound
 from formencode.variabledecode import variable_decode
+from pyramid.httpexceptions import HTTPFound
+from pyramid.httpexceptions import HTTPNotFound
+from pyramid.security import forget
+from pyramid.security import remember
+from pyramid.session import check_csrf_token
+
 import ushauri.plugins as p
 from ushauri.config.auth import checkLogin
+from ushauri.processes import getUserData, register_user
+from ushauri.views.classes import publicView
 
 
 class home_view(publicView):

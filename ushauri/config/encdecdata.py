@@ -2,8 +2,8 @@
 
 import base64
 import logging
-from cryptography.fernet import Fernet
 
+from cryptography.fernet import Fernet
 
 log = logging.getLogger("ushauri")
 

@@ -1,6 +1,8 @@
-from .meta import metadata
 import json
+
 from sqlalchemy import inspect
+
+from .meta import metadata
 
 # from future.utils import iteritems
 

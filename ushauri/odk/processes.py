@@ -1,6 +1,8 @@
+import json
+import uuid
+
 from ushauri.config.encdecdata import AESCipher
 from ushauri.models import User, Groupuser, Advgroup, Member
-import json, uuid
 
 
 def isUserActive(request, userID):

@@ -5,8 +5,8 @@ Revises: 5af1f502ac5c
 Create Date: 2018-03-17 06:34:39.844037
 
 """
-from alembic import op
 import sqlalchemy as sa
+from alembic import op
 from sqlalchemy.dialects import mysql
 
 # revision identifiers, used by Alembic.

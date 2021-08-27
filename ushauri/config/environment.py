@@ -10,12 +10,12 @@
 """
 
 import os
+
 from pyramid.session import SignedCookieSessionFactory
+from sqlalchemy.orm import configure_mappers
+
 import ushauri.plugins as p
 import ushauri.resources as r
-from ushauri.models import addColumnToSchema
-from ushauri.models.meta import Base, metadata
-from sqlalchemy.orm import configure_mappers
 from ushauri.config.jinja_extensions import (
     initialize,
     SnippetExtension,
@@ -24,9 +24,10 @@ from ushauri.config.jinja_extensions import (
     JSResourceExtension,
 )
 from ushauri.config.mainresources import createResources
-from ushauri.utility.helpers import helper
 from ushauri.config.routes import loadRoutes
-from urllib.parse import urljoin
+from ushauri.models import addColumnToSchema
+from ushauri.models.meta import Base
+from ushauri.utility.helpers import helper
 
 my_session_factory = SignedCookieSessionFactory('`h6N[wQ8@S"B$bGy;')
 

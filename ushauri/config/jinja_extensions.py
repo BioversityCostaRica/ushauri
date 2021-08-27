@@ -9,17 +9,18 @@
     :license: AGPL, see LICENSE for more details.
 """
 
-from jinja2 import nodes
-from jinja2 import ext
 import logging
-from jinja2 import Environment
-from webhelpers2.html import literal
-from jinja2 import FileSystemLoader
-import os, re
-import ushauri.resources as r
-from pyramid.threadlocal import get_current_request
-from urllib.parse import urljoin
+import os
+import re
 
+from jinja2 import Environment
+from jinja2 import FileSystemLoader
+from jinja2 import ext
+from jinja2 import nodes
+from pyramid.threadlocal import get_current_request
+from webhelpers2.html import literal
+
+import ushauri.resources as r
 
 jinjaEnv = Environment()
 log = logging.getLogger(__name__)
