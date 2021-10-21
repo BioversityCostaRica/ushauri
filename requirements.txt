@@ -2,7 +2,7 @@ ago==0.0.93
 alembic==1.5.8
 appdirs==1.4.4
 arrow==1.1.0
-Babel==2.9.0
+Babel==2.9.1
 beautifulsoup4==4.9.3
 black==21.4b1
 bs4==0.0.1
