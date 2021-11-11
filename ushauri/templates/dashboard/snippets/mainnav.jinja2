@@ -36,6 +36,9 @@
                     {% if activeUser.admin %}
                         <li><a href="{{ request.route_url('users') }}">{{ _('Agents') }}</a></li>
                     {% endif %}
+                    {% block links_extra %}
+
+                    {% endblock links_extra %}
                 </ul>
             </li>
 

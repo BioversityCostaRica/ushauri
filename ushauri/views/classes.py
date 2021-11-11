@@ -172,6 +172,7 @@ class publicView(object):
         self._ = self.request.translate
         self.resultDict = {}
         self.errors = []
+        self.justReturn = False
         locale = Locale(request.locale_name)
         if locale.character_order == "left-to-right":
             self.resultDict["rtl"] = False
@@ -181,7 +182,7 @@ class publicView(object):
     def __call__(self):
         self.resultDict["errors"] = self.errors
         processDict = self.processView()
-        if type(processDict) == dict:
+        if type(processDict) == dict and not self.justReturn:
             self.resultDict.update(processDict)
             return self.resultDict
         else:
