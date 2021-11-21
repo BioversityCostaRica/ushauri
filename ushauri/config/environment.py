@@ -180,9 +180,9 @@ def load_environment(settings, config, apppath):
                     field["schema"], field["fieldname"], field["fielddesc"]
                 )
 
-    # Call any connected plugins to add their tables
+    # Call any connected plugins to update FormShare ORM. For example: Add new tables
     for plugin in p.PluginImplementations(p.IDatabase):
-        plugin.update_schema(config, Base)
+        plugin.update_orm(config.registry["dbsession_metadata"])
 
     # run configure_mappers after calling plugins implementing IDatabase
     # all relationships can be setup

@@ -6,6 +6,7 @@ from sqlalchemy.orm import sessionmaker
 # import or define all models here to ensure they are attached to the
 # Base.metadata prior to any initialization routines
 from .ushauri import (
+    Base,
     Advgroup,
     Answer,
     Answeraudio,
@@ -32,12 +33,22 @@ from .schema import *
 
 
 def get_engine(settings, prefix="sqlalchemy."):
-    return engine_from_config(settings, prefix, pool_recycle=2000)
+    pool_size = int(settings.get("pool.size", "30"))
+    max_overflow = int(settings.get("pool.max.overflow", "10"))
+    pool_recycle = int(settings.get("pool.recycle", "2000"))
+    return engine_from_config(
+        settings,
+        prefix,
+        pool_recycle=pool_recycle,
+        pool_size=pool_size,
+        max_overflow=max_overflow,
+    )
 
 
 def get_session_factory(engine):
     factory = sessionmaker()
     factory.configure(bind=engine)
+    Base.metadata.bind = engine
     return factory
 
 
@@ -71,7 +82,7 @@ def includeme(config):
     """
     Initialize the model for a Pyramid app.
 
-    Activate this setup using ``config.include('ushauri.models')``.
+    Activate this setup using ``config.include('formshare.models')``.
 
     """
     settings = config.get_settings()
@@ -85,6 +96,7 @@ def includeme(config):
 
     session_factory = get_session_factory(get_engine(settings))
     config.registry["dbsession_factory"] = session_factory
+    config.registry["dbsession_metadata"] = Base.metadata
 
     # make request.dbsession available for use in Pyramid
     config.add_request_method(
