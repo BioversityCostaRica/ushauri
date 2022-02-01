@@ -19,16 +19,6 @@ from ushauri.views.basic_views import (
     register_view,
 )
 from ushauri.views.dashboard import dashboard_view
-from ushauri.views.ivr import (
-    ivrGet_view,
-    ivrPost_view,
-    ivrStore_view,
-    ivrGetAudio_view,
-    ivrMessage_view,
-    ivrSend_view,
-    ivrVoiceStart_view,
-    ivrReplyStatus_view,
-)
 from ushauri.views.maintenance.audios import (
     audiosList_view,
     addAudio_view,
@@ -458,23 +448,6 @@ def loadRoutes(config):
             "/group/{group}/question/{question}/record",
             recordAndReplyToMember_view,
             "dashboard/maintenance/questions/record_a_reply.jinja2",
-        )
-    )
-
-    # IVR
-    routes.append(addRoute("ivrget", "/ivrget/{itemid}", ivrGet_view, None))
-    routes.append(addRoute("ivrpost", "/ivrpost/{itemid}", ivrPost_view, None))
-    routes.append(addRoute("ivrstore", "/ivr/{itemid}/store", ivrStore_view, None))
-    routes.append(addRoute("getaudio", "/ivr/{audioid}/play", ivrGetAudio_view, None))
-    routes.append(addRoute("messagein", "/message", ivrMessage_view, None))
-    routes.append(addRoute("sendreply", "/send/{audioid}", ivrSend_view, None))
-    routes.append(addRoute("ivrstart", "/start", ivrVoiceStart_view, None))
-    routes.append(
-        addRoute(
-            "replystatus",
-            "/replystatus/{questionid}/{audioid}",
-            ivrReplyStatus_view,
-            None,
         )
     )
 
