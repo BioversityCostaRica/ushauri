@@ -19,6 +19,7 @@ __all__ = [
     "ISchema",
     "IDatabase",
     "IAuthorize",
+    "IIVR",
 ]
 
 
@@ -239,4 +240,19 @@ class IPluginObserver(Interface):
         """
         Called after a plugin has been unloaded.
         This method is passed the instantiated service object.
+        """
+
+
+class IIVR(Interface):
+    """
+    Allows the modification of the Pyramid config. For example to add new templates or static directories
+    """
+
+    def sendReply(self, request, number, audio_id, question_id):
+        """
+        Called by ushauri when sending calling a farmer and play a reply to the farmer
+        :param request: ``pyramid.request`` object
+        :param number: number to call
+        :param audio_id: Audio ID to play
+        :param question_id: Question ID
         """

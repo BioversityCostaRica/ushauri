@@ -97,7 +97,6 @@ def load_environment(settings, config, apppath):
     config.registry.settings["jinja2.extensions"] = [
         "jinja2.ext.i18n",
         "jinja2.ext.do",
-        "jinja2.ext.with_",
         SnippetExtension,
         extendThis,
         CSSResourceExtension,

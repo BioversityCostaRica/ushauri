@@ -13,7 +13,7 @@ from ushauri.processes.db.maintenance import (
     listAnswers,
 )
 from ushauri.views.classes import privateView
-from ushauri.views.ivr import sendReply
+import ushauri.plugins as p
 
 
 class modifyQuestion_view(privateView):
@@ -52,7 +52,9 @@ class replyToMember_view(privateView):
         if self.request.method == "POST":
             data = self.getPostDict()
             setQuestionStatus(self.request, questionID, 2, data["audio_id"])
-            sendReply(self.request, number, data["audio_id"], questionID)
+            for plugin in p.PluginImplementations(p.IIVR):
+                plugin.sendReply(self.request, number, data["audio_id"], questionID)
+                break  # Only one plugin implementing IVR will be called
             replied = True
 
         return {
@@ -95,8 +97,9 @@ class recordAndReplyToMember_view(privateView):
             )
             print("***************************88")
             setQuestionStatus(self.request, questionID, 2, uid)
-            sendReply(self.request, number, uid, questionID)
-
+            for plugin in p.PluginImplementations(p.IIVR):
+                plugin.sendReply(self.request, number, uid, questionID)
+                break  # Only one plugin will send a reply
         return {
             "error_summary": error_summary,
             "data": data,
