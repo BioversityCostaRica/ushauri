@@ -77,7 +77,7 @@ unittest2==1.1.0
 urllib3==1.26.9
 validators==0.19.0
 venusian==3.0.0
-waitress==2.1.1
+waitress==2.1.2
 WebHelpers2==2.0
 WebOb==1.8.7
 xlrd==1.2.0
